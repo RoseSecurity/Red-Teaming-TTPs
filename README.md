@@ -260,3 +260,48 @@ func main() {
   "readme": "https://ipinfo.io/missingauth"
 }
 ```
+
+# Email Recon
+
+```curl emailrep.io/john.smith@gmail.com```
+
+```
+{
+  "email": "john.smith@gmail.com",
+  "reputation": "high",
+  "suspicious": false,
+  "references": 91,
+  "details": {
+    "blacklisted": false,
+    "malicious_activity": false,
+    "malicious_activity_recent": false,
+    "credentials_leaked": true,
+    "credentials_leaked_recent": false,
+    "data_breach": true,
+    "last_seen": "07/27/2019",
+    "domain_exists": true,
+    "domain_reputation": "n/a",
+    "new_domain": false,
+    "days_since_domain_creation": 8773,
+    "suspicious_tld": false,
+    "spam": false,
+    "free_provider": true,
+    "disposable": false,
+    "deliverable": true,
+    "accept_all": false,
+    "valid_mx": true,
+    "spoofable": true,
+    "spf_strict": true,
+    "dmarc_enforced": false,
+    "profiles": [
+      "lastfm",
+      "pinterest",
+      "foursquare",
+      "aboutme",
+      "spotify",
+      "twitter",
+      "vimeo"
+    ]
+  }
+}
+```
