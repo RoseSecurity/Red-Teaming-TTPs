@@ -242,3 +242,21 @@ func main() {
     }
 }
 ```
+
+# Enumerating IPs with IPInfo
+
+```curl ipinfo.io/54.90.107.240```
+
+```
+{
+  "ip": "54.90.107.240",
+  "hostname": "ec2-54-90-107-240.compute-1.amazonaws.com",
+  "city": "Virginia Beach",
+  "region": "Virginia",
+  "country": "US",
+  "loc": "36.8512,-76.1692",
+  "org": "AS14618 Amazon.com, Inc.",
+  "postal": "23465",
+  "readme": "https://ipinfo.io/missingauth"
+}
+```
