@@ -20,6 +20,7 @@ ifconfig -a | grep -Po '\b(?!255)(?:\d{1,3}\.){3}(?!255)\d{1,3}\b' | xargs nmap 
 
 ## Important Files:
 
+```
 /boot/vmlinuz : The Linux Kernel file.
 /dev/had : Device file for the first IDE HDD (Hard Disk Drive) /dev/hdc : Device file for the IDE Cdrom, commonly
 /dev/null : A pseudo device
@@ -42,4 +43,4 @@ ifconfig -a | grep -Po '\b(?!255)(?:\d{1,3}\.){3}(?!255)\d{1,3}\b' | xargs nmap 
 /proc/stat : Detailed Statistics of the current System. /proc/swaps : Swap File Information.
 /version : Linux Version Information.
 /var/log/auth* : Log of authorization login attempts. /var/log/lastlog : Log of last boot process.
-
+```
