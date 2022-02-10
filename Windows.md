@@ -112,7 +112,7 @@ tcpdump -r <file> 'not src host 8.8.8.8'
 tcpdump -r <file> 'icmp and (src host 8.8.8.8'
 ```
 
-## Windows Domain Controller Hash Harvesting
+## Windows Domain Controller Hash Harvesting:
 
 GOAL: Obtain ```NTDS.dit``` and SYSTEM registry hive data
 
