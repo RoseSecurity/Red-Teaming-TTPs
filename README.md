@@ -388,7 +388,7 @@ ARGS:
     <filename>    File containing an IP per line. Non-IPs are ignored
 ```
 
-# Enumerating Anonymous FTP Logins:
+# Enumerating Anonymous FTP Logins Using Python:
 
 ```
 #!/usr/bin/python3
@@ -413,6 +413,6 @@ for item in r:
         print("="*70+"\n")
 ```
 
-Usage : ```python3 FTPLoginChecker.py ip_addresses.txt```
-Note : Use shodan_eye.py to search for FTP servers that have the ```anon``` login enabled.
-Search Keyword : ```230 anonymous```
+1. Usage : ```python3 FTPLoginChecker.py ip_addresses.txt```
+2. Note : Use shodan_eye.py to search for FTP servers that have the ```anon``` login enabled.
+3. Search Keyword : ```230 anonymous```
