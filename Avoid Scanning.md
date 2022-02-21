@@ -2,6 +2,8 @@
 
 **The following is a collection of network blocks that should not be enumerated, scanned, or reconned; this list is purely for educational purposes for individuals performing mass scanning of IP spaces**
 
+Source: (https://pastebin.com/YEMhHn3C)
+
 ```
 64.70.*.* Do not scan
 64.224.* Do not Scan
