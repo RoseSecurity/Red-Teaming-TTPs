@@ -53,3 +53,10 @@ nmap -Pn -sT -n -T4 -p5033 <target>
 ## Omron
 
 ```nmap -Pn -sU -p9600 --script omrom-info <target>```
+
+## PCWorx Devices
+
+PCWorx devices allow unaunthenticated requests that query for system information.
+
+```nmap -Pn -sT -p1962 --script pcworx-info <target>```
+
