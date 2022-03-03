@@ -62,6 +62,8 @@ PCWorx devices allow unaunthenticated requests that query for system information
 
 # Shodan.io Queries
 
+## Maritime 
+
 K4 Edge Routers and Maritime VSAT
 
 ```
