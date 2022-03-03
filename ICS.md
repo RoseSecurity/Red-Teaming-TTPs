@@ -60,3 +60,11 @@ PCWorx devices allow unaunthenticated requests that query for system information
 
 ```nmap -Pn -sT -p1962 --script pcworx-info <target>```
 
+# Shodan.io Queries
+
+K4 Edge Routers and Maritime VSAT
+
+```
+"k4DCP5" country:US
+```
+
