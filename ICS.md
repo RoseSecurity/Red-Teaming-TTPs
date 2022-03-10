@@ -62,6 +62,26 @@ PCWorx devices allow unaunthenticated requests that query for system information
 
 # Shodan.io Queries
 
+## PLCs
+
+Siemens S7-1200 PLC
+
+```
+Location: /Default.mwsl
+```
+
+Omron CJ2 PLCs
+
+```
+Product name: CJ2*
+```
+
+Schneider Electric PLCs
+
+```
+Device Identification: Schneider Electric
+```
+
 ## Maritime 
 
 K4 Edge Routers and Maritime VSAT
