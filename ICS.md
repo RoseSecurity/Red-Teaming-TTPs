@@ -101,3 +101,11 @@ Cobham Sailor 900
 ```
 title:”sailor 900"
 ```
+
+## Miscellaneous
+
+TeamViewer
+
+```
+port:5938 "\x17$\x11\x04\x00"
+```
