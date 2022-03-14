@@ -109,3 +109,10 @@ TeamViewer
 ```
 port:5938 "\x17$\x11\x04\x00"
 ```
+
+Yealink T49G VOIP Phones
+
+```
+Yealink T49G
+```
+
