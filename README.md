@@ -416,3 +416,13 @@ for item in r:
 1. Usage : ```python3 FTPLoginChecker.py ip_addresses.txt```
 2. Note : Use shodan_eye.py to search for FTP servers that have the ```anon``` login enabled.
 3. Search Keyword : ```230 anonymous```
+
+# Cloud:
+
+## AWS:
+
+Shodan.io query to enumerate AWS Instance Metadata Service Access
+
+```
+/latest/meta-data/iam/security-credentials
+```
