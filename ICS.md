@@ -1,6 +1,4 @@
-# ICS/SCADA enumeration techniques for safe and effective scanning, network reconnaissance, and tactical host probing.
-
-######################################################################
+# :mechanical_arm:	 ICS/SCADA Enumeration Techniques for Effective Scanning, Network Reconnaissance, and Tactical Host Probing:
 
 ## General Enumeration:
 
@@ -11,7 +9,31 @@ nmap -Pn -sT --scan-delay 1s --max-parallelism 1 \
     <target>
 ```
 
-######################################################################
+## Siemens S7
+
+Enumerates Siemens S7 PLC Devices and collects their device information. This script is based off PLCScan that was developed by Positive Research and Scadastrangelove (https://code.google.com/p/plcscan/). This script is meant to provide the same functionality as PLCScan inside of Nmap. Some of the information that is collected by PLCScan was not ported over; this information can be parsed out of the packets that are received.
+
+Usage:
+
+```
+nmap --script s7-info.nse -p 102 <host/s>
+```
+
+Output:
+
+```
+102/tcp open  Siemens S7 PLC
+| s7-info:
+|   Basic Hardware: 6ES7 315-2AG10-0AB0
+|   System Name: SIMATIC 300(1)
+|   Copyright: Original Siemens Equipment
+|   Version: 2.6.9
+|   Module Type: CPU 315-2 DP
+|   Module: 6ES7 315-2AG10-0AB0
+|_  Serial Number: S C-X4U421302009
+```
+
+
 
 ## Modbus Scanning
 
@@ -21,7 +43,7 @@ nmap -Pn -sT -p502 --script modbus-discover <target>
 nmap -sT -Pn -p502 --script modbus-discover --script-args modbus-discover.aggressive=true <target>
 ```
 
-######################################################################
+
 
 ## Bacnet
 
@@ -33,21 +55,20 @@ nmap -Pn -sU -p47808 --script bacnet-info <target>
 nmap -Pn -sT -n -T4 -p5033 <target> 
 ```
 
-######################################################################
+
 
 
 ## Enip
 
 ```nmap -Pn -sU -p44818 --script enip-info <target>```
 
-######################################################################
+
 
 
 ## Niagara fOX
 
 ```nmap -Pn -sT -p1911,4911 --script fox-info <target>```
 
-######################################################################
 
 
 ## Omron
