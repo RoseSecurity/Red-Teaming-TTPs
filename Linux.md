@@ -127,3 +127,16 @@ user@victim $ grep -iR password /var/www
 user@victim $ cat /home/*/.ssh/id*
 ```
 
+## Unusual Accounts:
+
+Look in /etc/passwd for new accounts in a sorted list:
+
+```
+user@RoseSecurity $ sort -nk3 -t: /etc/passwd | less
+```
+
+Look for users with a UID of 0:
+
+```
+user@RoseSecurity $ grep :0: /etc/passwd
+```
