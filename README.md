@@ -437,3 +437,15 @@ Shodan.io query to enumerate AWS Instance Metadata Service Access
 ```
 /latest/meta-data/iam/security-credentials
 ```
+
+Google Dorking for AWS Access Keys
+
+```
+inurl:pastebin "AWS_ACCESS_KEY"
+```
+
+S3 Log Google Dorking
+
+```
+s3 site:amazonaws.com filetype:log
+```
