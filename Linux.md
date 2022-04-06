@@ -145,3 +145,14 @@ Look for users with a UID of 0:
 ```
 user@RoseSecurity $ grep :0: /etc/passwd
 ```
+
+# Routers:
+
+Resources:
+
+```
+ https://www.routerpasswords.com
+```
+
+
+ 
