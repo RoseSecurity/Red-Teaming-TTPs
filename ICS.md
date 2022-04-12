@@ -137,3 +137,10 @@ Yealink T49G VOIP Phones
 Yealink T49G
 ```
 
+Search for devices vulnerable to CVE-2022-22954:
+
+VMware Workspace ONE Access and Identity Manager contain a remote code execution vulnerability due to server-side template injection. A malicious actor with network access can trigger a server-side template injection that may result in remote code execution.
+
+```
+http.favicon.hash:-1250474341
+```
