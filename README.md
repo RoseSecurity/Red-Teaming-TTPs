@@ -151,6 +151,13 @@ Linux : 64
 Network : 255 
 Solaris : 255
 ```
+# XSS Testing
+
+Use this string on all input fields and identify what remains after filtering for XSS attacks:
+
+```
+'';!--"<XSS>=&{()}
+```
 
 # Cisco IOS 11.2 - 12.2 Vulnerability
 
