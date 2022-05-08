@@ -28,6 +28,15 @@ sudo tcpdump 'ether host XX:XX:XX:XX:XX:XX' -i en0 -vnt > CheckScan.txt |  tee C
 ```
 sudo tcpdump -s 0 -A -n -l | egrep -i "POST /|pwd=|passwd=|password=|Host:"
 ```
+## BPF'ing DNS Records:
+
+```
+# All queries
+tcpdump -nt 'dst port 53 and udp[10] & 0x80 = 0'
+
+# All responses
+tcpdump -nt 'src port 53 and udp[10] & 0x80 = 0x80'
+```
 
 ## Important Files:
 
