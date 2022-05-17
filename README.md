@@ -312,6 +312,7 @@ echo 'package main;import"os/exec";import"net";func main(){c,_:=net.Dial("tcp","
   "readme": "https://ipinfo.io/missingauth"
 }
 ```
+You can also utilize https://cybergordon.com/ to check for IP reputation!
 
 # Email Recon
 
