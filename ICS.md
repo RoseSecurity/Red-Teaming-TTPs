@@ -91,6 +91,12 @@ Siemens S7-1200 PLC
 Location: /Default.mwsl
 ```
 
+Siemens APOGEE Building Systems
+
+```
+Model Name: Siemens BACnet Field Panel
+```
+
 Omron CJ2 PLCs
 
 ```
