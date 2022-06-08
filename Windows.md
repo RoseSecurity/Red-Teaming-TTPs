@@ -60,6 +60,16 @@ wmic process list brief
 wmic process get name, parentprocessid,processid
 wmic process where processid=pid get commandline
 ```
+## WMI Recon:
+
+```
+wmic process get CSName,Description,ExecutablePath,ProcessId
+wmic useraccount list full
+wmic group list full
+wmic netuse list full
+wmic qfe get Caption,Description,HotFixID,InstralledOn
+wmic startup get Caption,Command,Location,User
+```
 
 ## Examining Network Usage:
 
