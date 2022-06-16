@@ -1,4 +1,4 @@
-# Anti-Forensics
+# :fu: Anti-Forensics
 
 ## Disabling Prefetch:
 
