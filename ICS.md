@@ -171,3 +171,40 @@ title:"USG FLEX 100","USG FLEX 100w","USG FLEX 200","USG FLEX 500","USG FLEX 700
 poc:http://<IP>/cgi-bin/admin.cgi?Command=sysCommand&Cmd=id
 ```
 
+## Setting Up Shodan for Target Monitoring
+
+1. Determine your home IP or target of interest's IP address
+
+```
+root@RoseSecurity# shodan myip
+69.69.69.69
+```
+
+2. Create network alert
+
+```
+root@RoseSecurity# shodan create home 69.69.69.69
+Successfully created network alert!
+Alert ID: 34W09AETJKAHEDPX
+```
+
+3. Confirm that alert is generated
+
+```
+root@RoseSecurity# shodan alert info home 
+home
+Created: 2022-03-01:69:69:69000
+Notifications: Disabled
+
+Network Range(s):
+> 69.69.69.69
+Triggers:
+> any
+```
+
+4. Turn on notification
+
+```
+root@RoseSecurity# shodan alert enable 34W09AETJKAHEDPX any
+Successfully enabled Trigger: any
+```
