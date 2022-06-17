@@ -9,3 +9,50 @@ The following command requires Administrator privileges, but disables Prefetch w
 ```
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v EnablePrefetcher /t REG_DWORD /f /d 0
 ```
+
+## Windows AutoStart Persistence Locations:
+
+Locations for automatically starting at system boot or user logon
+
+```
+NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Run
+NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\RunOnce
+SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce
+SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Userinit
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\Shell
+HKCU\Software\Microsoft\Windows\CurrentVersion\Run\Windows Debug Tools-%LOCALAPPDATA%\
+HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Svchost
+software\microsoft\windows\currentversion\run\microsoft windows html help
+%AppData%\Microsoft\Windows\Start Menu\Programs\Startup
+HKCU\Software\Microsoft\Windows\CurrentVersion\Run\IAStorD
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunServicesOnce 
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunServicesOnce 
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunServices 
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunServices
+```
+
+## WMIC Tricks and Tips:
+
+Enumeration
+
+```
+wmic environment list
+wmic useraccount get /ALL /format:csv
+wmic process get caption,executablepath,commandline /format:csv
+wmic qfe get description,installedOn /format:csv
+# PowerShell
+Invoke-WmiMethod -Path #{new_class} -Name create -ArgumentList #{process_to_execute}
+```
+
+Lateral Movement
+
+```
+wmic /node:<IP> /user:administrator process call create "cmd.exe /c <backdoor>"
+```
+
+Uninstall Program
+
+```
+wmic /node:"#{node}" product where "name like '#{product}%%'" call uninstall
+```
