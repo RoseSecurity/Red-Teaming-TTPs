@@ -123,10 +123,14 @@ KVH Commbox Terminals
 html:commbox
 ```
 
-Cobham Sailor 900
+Cobham Sailor VSAT
 
 ```
 title:”sailor 900"
+```
+
+```
+SAILOR 800 VSAT
 ```
 
 Pepwave Cellular Routers
