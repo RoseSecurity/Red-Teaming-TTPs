@@ -129,6 +129,16 @@ Cobham Sailor 900
 title:”sailor 900"
 ```
 
+Pepwave Cellular Routers
+
+```
+"Pepwave MAX"
+```
+
+```
+cgi-bin/MANGA/index.cgi
+```
+
 ## Miscellaneous
 
 TeamViewer
