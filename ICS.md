@@ -109,6 +109,12 @@ Schneider Electric PLCs
 Device Identification: Schneider Electric
 ```
 
+Schweitzer Engineering Laboratories Power Quality and Revenue Meter
+
+```
+SEL-735 Telnet Server
+```
+
 ## Maritime 
 
 K4 Edge Routers and Maritime VSAT
