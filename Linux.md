@@ -168,7 +168,6 @@ Resources:
 ```
  https://www.routerpasswords.com
 ```
-
 # Metasploit Callback Automation:
 
 Use AutoRunScript to run commands on a reverse shell callback
@@ -185,6 +184,43 @@ Example:
 run post/windows/manage/migrate
 run post/windows/manage/killfw
 run post/windows/gather/checkvm
+```
+## Metasploit Session Management:
+
+List all sessions
+
+```
+msf6> sessions
+```
+Execute command across all sessions
+
+```
+msf6> sessions -C <command>
+```
+
+Kill all sessions
+
+```
+msf6> sessions -K
+```
+
+Upgrade a shell to a meterpreter session on many platforms
+
+```
+msf6> sessions -u
+```
+
+## Metasploit Tips I Discovered Too Late:
+
+In order to save a lot of typing during a pentest, you can set global variables within msfconsole. You can do this with the setg command. Once these have been set, you can use them in as many exploits and auxiliary modules as you like. You can also save them for use the next time you start msfconsole. However, the pitfall is forgetting you have saved globals, so always check your options before you run or exploit. Conversely, you can use the unsetg command to unset a global variable. In the examples that follow, variables are entered in all-caps (ie: LHOST), but Metasploit is case-insensitive so it is not necessary to do so.
+
+```
+msf > setg LHOST 192.168.1.101
+LHOST => 192.168.1.101
+msf > setg RHOSTS 192.168.1.0/24
+RHOSTS => 192.168.1.0/24
+msf > setg RHOST 192.168.1.136
+RHOST => 192.168.1.136
 ```
 
 # Confluence CVE-2022-26134:
