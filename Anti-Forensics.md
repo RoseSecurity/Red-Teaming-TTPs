@@ -56,3 +56,15 @@ Uninstall Program
 ```
 wmic /node:"#{node}" product where "name like '#{product}%%'" call uninstall
 ```
+
+Execute a .EXE file stored as an Alternate Data Stream (ADS)
+
+```
+wmic.exe process call create "c:\ads\notsus.txt:malicious.exe"
+```
+
+Execute malicious.exe on a remote system
+
+```
+wmic.exe /node:"192.168.0.99" process call create "malicious.exe"
+```
