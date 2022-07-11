@@ -33,7 +33,11 @@ Output:
 |_  Serial Number: S C-X4U421302009
 ```
 
+For scalable scanning and reconnaissance, utilize masscan for faster enumeration:
 
+```
+masscan <IP Range> -p 102 -oL Possible_ICS.txt; cat Possible_ICS.txt | while read LINE; do nmap --script s7-info.nse -p 102 $(awk '{print $4}'); done
+```
 
 ## Modbus Scanning
 
