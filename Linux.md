@@ -259,6 +259,12 @@ msf > setg RHOST 192.168.1.136
 RHOST => 192.168.1.136
 ```
 
+To capture the output of modules ran within Metasploit, utilize the spool command and designate a destination log file.
+
+```
+msf6> spool /tmp/Company_A_DC.log
+```
+
 # Confluence CVE-2022-26134:
 
 CVE-2022-26314 is an unauthenticated and remote OGNL injection vulnerability resulting in code execution in the context of the Confluence server (typically the confluence user on Linux installations). Given the nature of the vulnerability, internet-facing Confluence servers are at very high risk.
