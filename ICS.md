@@ -89,6 +89,12 @@ PCWorx devices allow unaunthenticated requests that query for system information
 
 ## PLCs
 
+Shodan one-liner for enumerating Siemens PLCs, SCADA software, and HMI web pages
+
+```
+root@RoseSecurity:~# shodan search --fields ip_str,port siemens > Siemens.txt; echo "$(cat Siemens.txt | awk '{if ($2 == "80" || $2 == "443") {print $1;} }')" > Siemens.txt; eyewitness -f Siemens.txt
+```
+
 Siemens S7-1200 PLC
 
 ```
