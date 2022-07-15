@@ -68,3 +68,48 @@ Execute malicious.exe on a remote system
 ```
 wmic.exe /node:"192.168.0.99" process call create "malicious.exe"
 ```
+
+## Offline Microsoft Azure Active Directory Harvesting with PowerShell:
+
+This script demonstrates how to interact with Microsoft Azure Active Directory via PowerShell.  You will need an Azure AD account first, which is free: http://azure.microsoft.com/en-us/services/active-directory/
+
+```
+# Import the Azure AD PowerShell module:
+Import-Module -Name Azure
+# List the cmdlets provided by the module (750+):
+Get-Command -Module Azure 
+Add-AzureAccount
+Get-AzureAccount
+Get-AzureSubscription
+
+# Import the Azure AD PowerShell module for MSOnline:
+Import-Module -Name MSOnline
+# List the cmdlets provided by the MSOnline module:
+Get-Command -Module MSOnline
+
+# Connect and authenticate to Azure AD, where your username will
+# be similar to '<yourusername>@<yourdomain>.onmicrosoft.com':
+$creds = Get-Credential
+Connect-MsolService -Credential $creds
+
+
+# Get subscriber company contact information:
+Get-MsolCompanyInformation
+
+
+# Get subscription and license information:
+Get-MsolSubscription | Format-List *
+Get-MsolAccountSku   | Format-List *
+
+
+# Get Azure AD users:
+Get-MsolUser
+
+
+# Get list of Azure AD management roles:
+Get-MsolRole
+
+
+# Show the members of each management role:
+Get-MsolRole | ForEach { "`n`n" ; "-" * 30 ; $_.Name ; "-" * 30 ; Get-MsolRoleMember -RoleObjectId $_.ObjectId | ForEach { $_.DisplayName } }
+```
