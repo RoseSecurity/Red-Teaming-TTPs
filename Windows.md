@@ -36,6 +36,17 @@ Get-WinEvent -LogName "Windows PowerShell" |
 }
 ```
 
+Disabling PowerShell Version 2
+
+```
+# Query the current status of PowerShell 2.0 components:
+Get-WindowsOptionalFeature -Online -FeatureName "*PowerShellV2*"
+
+# Disable PowerShell 2.0:
+Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2
+Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root
+```
+
 ## TrickBot PowerShell Download TTP:
 
 1. Insert base64 string for malicious web server
