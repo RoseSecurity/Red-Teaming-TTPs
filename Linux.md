@@ -37,7 +37,7 @@ Locate targets with builtin ```ping6``` command
 
 ```
 $ ping6 ff02::1
-$ ping ff02::2
+$ ping6 ff02::2
 
 # Look for neighbors
 $ ip neigh
