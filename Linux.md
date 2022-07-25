@@ -30,7 +30,7 @@ The regex is a POSIX ERE expression that matches
 
 To output matches, add -o option to grep
 
-## Utilize Crt.sh and EyeWitness to Enumerate Web Pages
+## Utilize Crt.sh and EyeWitness to Enumerate Web Pages:
 
 Uses crt.sh to identify certificates for target domain before screenshotting and actively scanning each webpage for login forms to use common credentials on.
 
@@ -59,6 +59,11 @@ $ ping6 ff02::2
 $ ip neigh
 
 $ nmap -Pn -sV -6 fe80::20c0 -e eth0 --packet-trace
+```
+## Nmap to Evaluate HTTPS Support:
+
+```
+nmap -p 443 --script=ssl-enum-ciphers <Target Domain>
 ```
 
 ## Apache Flink Directory Traversal:
