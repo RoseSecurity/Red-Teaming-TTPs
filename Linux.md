@@ -66,6 +66,24 @@ $ nmap -Pn -sV -6 fe80::20c0 -e eth0 --packet-trace
 nmap -p 443 --script=ssl-enum-ciphers <Target Domain>
 ```
 
+## Testssl.sh:
+
+Enumerating ciphers and encryption weaknesses using Testssl command line tool:
+
+Download: https://testssl.sh/
+
+The normal use case is  ```testssl.sh <hostname>```. 
+
+Special cases:
+
+```
+testssl.sh --starttls smtp <smtphost>.<tld>:587 
+testssl.sh --starttls ftp <ftphost>.<tld>:21
+testssl.sh -t xmpp <jabberhost>.<tld>:5222 
+testssl.sh -t xmpp --xmpphost <XMPP domain> <jabberhost>.<tld>:5222 
+testssl.sh --starttls imap <imaphost>.<tld>:143
+```
+
 ## Apache Flink Directory Traversal:
 
 ```
