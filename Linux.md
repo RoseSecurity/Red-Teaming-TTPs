@@ -22,6 +22,14 @@ The regex is a POSIX ERE expression that matches
 
 To output matches, add -o option to grep
 
+## Utilize Crt.sh and EyeWitness to Enumerate Web Pages
+
+Uses crt.sh to identify certificates for target domain before screenshotting and actively scanning each webpage for login forms to use common credentials on.
+
+```
+root@RoseSecurity:~# curl -s 'https://crt.sh/?q=<Website_You_Want_To_Enumerate>&output=json' | jq -r '.[].name_value' | sed 's/\*\.//g' | sort -u > ~/URLs.txt; eyewitness -f ~/URLs.txt --active-scan
+```
+
 ## Nmap Scan Every Interface that is Assigned an IP:
 
 ```
