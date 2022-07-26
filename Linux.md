@@ -188,6 +188,13 @@ Netcat port scanner
 echo "" | nc -nvw2 <IP> <Port Range>
 ```
 
+Netcat and OpenSSL banner grabbing
+
+```
+ncat -vC --ssl www.target.org 443
+openssl s_client -crlf -connect www.target.org:443
+```
+
 ## Java:
 
 ```
