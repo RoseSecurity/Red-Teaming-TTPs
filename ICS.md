@@ -127,6 +127,12 @@ SEL-735 Telnet Server
 
 ## Maritime 
 
+Subsea Mission Control Panels
+
+```
+title:"Slocum Fleet Mission Control"
+```
+
 K4 Edge Routers and Maritime VSAT
 
 ```
@@ -160,6 +166,18 @@ cgi-bin/MANGA/index.cgi
 ```
 
 ## Miscellaneous
+
+Nordex Wind Turbine Farms
+
+```
+http.title:"Nordex Control" "Windows 2000 5.0 x86" "Jetty/3.1 (JSP 1.1; Servlet 2.2; java 1.6.0_14)"
+```
+
+DICOM Medical X-Ray Machines
+
+```
+"DICOM Server Response" port:104
+```
 
 TeamViewer
 
