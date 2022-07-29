@@ -83,6 +83,13 @@ Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2
 Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root
 ```
 
+PowerShell Data Compression for Exfiltration
+
+```
+PS > Compress-Archive -Path <files to zip> -CompressionLevel
+Optimal -DestinationPath <output path>
+```
+
 ## TrickBot PowerShell Download TTP:
 
 1. Insert base64 string for malicious web server
