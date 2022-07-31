@@ -113,3 +113,12 @@ Get-MsolRole
 # Show the members of each management role:
 Get-MsolRole | ForEach { "`n`n" ; "-" * 30 ; $_.Name ; "-" * 30 ; Get-MsolRoleMember -RoleObjectId $_.ObjectId | ForEach { $_.DisplayName } }
 ```
+
+## PowerShell:
+
+Pull Windows Defender event logs 1116 (malware detected) and 1117 (malware blocked)
+from a saved evtx file:
+
+```
+PS C:\> Get-WinEvent -FilterHashtable @{path="WindowsDefender.evtx";id=1116,1117}
+```
