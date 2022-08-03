@@ -100,6 +100,16 @@ cat hosts | httpx -nc -t 300 -p 80,443,8080,8443,8888,8088 -path "/jobmanager/lo
 sudo tcpdump 'ether host XX:XX:XX:XX:XX:XX' -i en0 -vnt > CheckScan.txt |  tee CheckScan.txt | grep --line-buffered pattern | ( while read -r line; do sudo nmap -sV -n -T4 -O2 -oX NMAPScan.xml; rm CheckScan.txt; done; ) &
 ```
 
+## Turn Nmap into a Vulnerability Scanner:
+
+Download: https://github.com/scipag/vulscan
+
+Usage:
+
+```
+nmap -sV --script=vulscan/vulscan.nse www.rosesecurity.com
+```
+
 ## Scalable Heartbleed Hunting with Shodan:
 
 Hunt for components susceptible to the Heartbleed vulnerability before exploiting the devices memory with this one-liner. This command requires an Academic Plus Shodan API key.
