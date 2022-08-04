@@ -397,3 +397,11 @@ ${new javax.script.ScriptEngineManager().getEngineByName("nashorn").eval("new ja
 --page-requisites - download JS and CSS files to retain the original page style when browsing a local mirror.
 --adjust-extension - adds the appropriate extensions (e.g. html, css, js) to files if they were retrieved without them.
 ```
+
+## Spidering the Web with Wget:
+
+```
+$ export https_proxy=https://127.0.0.1:8080
+
+$ wget -r -P /tmp --no-check-certificate -e robots=off ‐‐recursive ‐‐no-parent http://example.com/
+```
