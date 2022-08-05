@@ -119,6 +119,12 @@ Schneider Electric PLCs
 Device Identification: Schneider Electric
 ```
 
+Schneider Electric PowerLogic Series 800 Power Meter	
+
+```
+PowerLogic PM800
+```
+
 Schweitzer Engineering Laboratories Power Quality and Revenue Meter
 
 ```
