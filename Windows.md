@@ -90,6 +90,12 @@ PS > Compress-Archive -Path <files to zip> -CompressionLevel
 Optimal -DestinationPath <output path>
 ```
 
+PowerShell File Hashing for Blue Teamers
+
+```
+Get-ChildItem -Path D:\Potentially_Malicious\Folder\ | Get-FileHash | Export-Csv -Path D:\PowerShell\FilesHashes_For_VirusTotal.csv -NoTypeInformation
+```
+
 ## TrickBot PowerShell Download TTP:
 
 1. Insert base64 string for malicious web server
