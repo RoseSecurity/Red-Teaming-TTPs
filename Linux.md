@@ -405,10 +405,10 @@ No extra overhead. TCP takes care of error correction. SSH has already encrypted
 
 ```
 # Read a PCAP file
-$ tshark -r <pcap> 'ntlmssp.auth.username' | awk '{print $13}'
+$ tshark -r <pcap> 'ntlmssp.auth.username' | awk '{print $13}' | sort -u
 
 # Active interface
-$ tshark -i <interface> 'ntlmssp.auth.username' | awk '{print $13}'
+$ tshark -i <interface> 'ntlmssp.auth.username' | awk '{print $13}' | sort -u
 ```
 
  ## Cloning Websites for Social Engineering with Wget:
