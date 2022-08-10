@@ -401,6 +401,15 @@ $ ncat -v -w 2 127.0.0.1 31000 < file
 
 No extra overhead. TCP takes care of error correction. SSH has already encrypted the pipe.
 
+## Tsharking for Domain Users:
+
+```
+# Read a PCAP file
+$ tshark -r <pcap> 'ntlmssp.auth.username' | awk '{print $13}'
+
+# Active interface
+$ tshark -i <interface> 'ntlmssp.auth.username' | awk '{print $13}'
+```
 
  ## Cloning Websites for Social Engineering with Wget:
  
