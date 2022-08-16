@@ -248,6 +248,12 @@ user@victim $ grep -iR password /var/www
 user@victim $ cat /home/*/.ssh/id*
 ```
 
+Enumerate password and account information with ```chage```
+
+```
+user@victim $ chage -l
+```
+
 ## Unusual Accounts:
 
 Look in /etc/passwd for new accounts in a sorted list:
