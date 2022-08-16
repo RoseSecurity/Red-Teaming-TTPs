@@ -445,3 +445,14 @@ $ export https_proxy=https://127.0.0.1:8080
 
 $ wget -r -P /tmp --no-check-certificate -e robots=off ‐‐recursive ‐‐no-parent http://example.com/
 ```
+
+## Hiding PID Listings From Non-Root Users:
+
+To prevent a user from seeing all the processes running on a system, mount the /proc file system using the hidepid=2 option:
+
+```
+$ sudo mount -o remount,rw,nosuid,nodev,noexec,relatime,hidepid=2 /proc
+
+# 2: Process files are invisible to non-root users. The existence of a process can be learned by other means, but its effective user ID (UID) and group ID (GID) are hidden.
+```
+
