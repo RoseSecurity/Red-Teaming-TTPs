@@ -342,6 +342,19 @@ Cleanup RDP:
 meterpreter > run multi_console_command -rc /root/.msf4/logs/scripts/getgui/clean_up__20110112.2448.rc
 ```
 
+Search for interesting files:
+
+```
+meterpreter> search -f *.txt
+meterpreter> search -f *.zip
+meterpreter> search -f *.doc
+meterpreter> search -f *.xls
+meterpreter> search -f config*
+meterpreter> search -f *.rar
+meterpreter> search -f *.docx
+meterpreter> search -f *.sql
+```
+
 # Confluence CVE-2022-26134:
 
 CVE-2022-26314 is an unauthenticated and remote OGNL injection vulnerability resulting in code execution in the context of the Confluence server (typically the confluence user on Linux installations). Given the nature of the vulnerability, internet-facing Confluence servers are at very high risk.
