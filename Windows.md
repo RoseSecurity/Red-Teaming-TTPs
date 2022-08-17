@@ -202,6 +202,11 @@ HKLM\Software\Microsoft\Windows\CurrentVersion\RunOncEx
 # NOTE: Inspect both HKCU and HKLM
 ```
 
+Disabling Windows Defender in the Registry:
+
+```
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender" /v DisableAntiSpyware /t REG_DWORD /d 1 /f
+```
 ## Examining Unusual Accounts:
 
 ```
