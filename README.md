@@ -84,6 +84,15 @@ tcpdump -i ethO port XX dst X.X.X.X
 
 ```
 ver
+time
+net session
+psloglist "Security" -i 528 -s | find /i "Logon Type: 10"
+net statistics
+date
+hostname
+ipconfig
+arp -a
+route print
 sc query state=all
 tasklist /svc
 tasklist /m
