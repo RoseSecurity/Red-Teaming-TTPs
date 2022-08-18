@@ -107,6 +107,12 @@ Siemens APOGEE Building Systems
 Model Name: Siemens BACnet Field Panel
 ```
 
+Siemens Desigo CC Building System Workstations
+
+```
+Model Name: Desigo CC
+```
+
 Omron CJ2 PLCs
 
 ```
