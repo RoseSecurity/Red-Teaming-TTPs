@@ -30,6 +30,14 @@ The regex is a POSIX ERE expression that matches
 
 To output matches, add -o option to grep
 
+## Username Enumeration with Getent:
+
+```getent``` is a Unix command that helps a user get entries in a number of important text files called databases. This includes the passwd and group databases which store user information – hence getent is a common way to look up user details on Unix.
+
+```
+getent passwd <username>
+```
+
 ## Utilize Crt.sh and EyeWitness to Enumerate Web Pages:
 
 Uses crt.sh to identify certificates for target domain before screenshotting and actively scanning each webpage for login forms to use common credentials on.
