@@ -12,6 +12,12 @@
 
 ```PS> (Get-Item "C:\ Windows\system32\MyDir\payload.txt ").LastAccessTime=("01 March 2019 19:00:00")```
 
+## PowerShell Disabling Firewall:
+
+```
+PS> powershell.exe -command "netsh advfirewall set allprofiles state off"
+```
+
 ## Enumerating Domain Users with PowerShell:
 
 
