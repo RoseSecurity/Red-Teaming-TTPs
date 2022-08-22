@@ -469,4 +469,20 @@ $ sudo mount -o remount,rw,nosuid,nodev,noexec,relatime,hidepid=2 /proc
 
 # 2: Process files are invisible to non-root users. The existence of a process can be learned by other means, but its effective user ID (UID) and group ID (GID) are hidden.
 ```
+## Exporting Objects with Tshark:
 
+To extract a file, read in a file, use the --export-objects flag and specify the protocol and directory to save the files. Without -Q, tshark will read packets and send to stdout even though it is exporting objects.
+
+```
+tshark -Q -r $pcap_file --export-objects $protocol,$dest_dir
+```
+
+Supported Protocols:
+
+```
+dicom: medical image
+http: web document
+imf: email contents
+smb: Windows network share file
+tftp: Unsecured file
+```
