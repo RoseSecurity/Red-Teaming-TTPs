@@ -141,6 +141,12 @@ Password managers offer many benefits for selection and storage of passwords.
 PS C:\> $x=""; while($true) { $y=get-clipboard -raw; if ($x -ne $y) { Write-Host $y; $x=$y} }
 ```
 
+## Searching the Registry for Passwords:
+
+```
+reg query HKLM /f password  /t REG_SZ  /s 
+```
+
 # Living off the Land:
 
 ## Cscript/Wscript:
