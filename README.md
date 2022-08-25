@@ -616,3 +616,9 @@ with open("/tmp/website_enum.txt", "r") as file:
     robots = os.system("grep robots.txt /tmp/website_enum.txt")
     print("\nFull Data Can Be Found in /tmp/website_enum.txt\n")
 ```
+
+Or use this one-liner to screenshot web pages with EyeWitness!
+
+```
+root@RoseSecurity:~# python3 -c 'import requests; import os; url = str("https://web.archive.org/cdx/search/cdx?url=<website>/*&output=text&fl=original&collapse=urlkey"); url_request = requests.get(url); web_file = open("/tmp/website_enum.txt", "a"); web_file.write(url_request.text); web_file.close()'; eyewitness -f /tmp/website_enum.txt
+```
