@@ -122,6 +122,11 @@ from a saved evtx file:
 ```
 PS C:\> Get-WinEvent -FilterHashtable @{path="WindowsDefender.evtx";id=1116,1117}
 ```
+Check for installed antivirus:
+
+```
+Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntivirusProduct
+```
 
 ## Execute Payloads Utilizing Windows Event Logs:
 
