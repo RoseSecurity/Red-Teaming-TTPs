@@ -276,6 +276,18 @@ Look for users with a UID of 0:
 user@RoseSecurity $ grep :0: /etc/passwd
 ```
 
+## Changing MAC Addresses:
+
+Look up vendor MAC you want to impersonate: https://mac2vendor.com/
+
+Change MAC:
+
+```
+sudo ifconfig <interface-name> down
+sudo ifconfig <interface-name> hw ether <new-mac-address> 
+sudo ifconfig <interface-name> up
+```
+
 # Routers:
 
 Resources:
