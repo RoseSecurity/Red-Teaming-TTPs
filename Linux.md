@@ -118,6 +118,14 @@ Usage:
 nmap -sV --script=vulscan/vulscan.nse www.rosesecurity.com
 ```
 
+## IDS/IPS Nmap Evasion:
+
+Low and slow (-T2), Fast mode (-F), Append random data to sent packets (--data-length), Randomize hosts, and verbosely conduct service detection on a file of hosts and output to XML.
+
+```
+nmap -T2 -F --data-length 5 --randomize-hosts -sV -v -iL (targets.txt) -oX (output.xml)
+```
+
 ## Scalable Heartbleed Hunting with Shodan:
 
 Hunt for components susceptible to the Heartbleed vulnerability before exploiting the devices memory with this one-liner. This command requires an Academic Plus Shodan API key.
