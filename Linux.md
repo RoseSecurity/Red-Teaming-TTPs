@@ -126,6 +126,14 @@ Low and slow (-T2), Fast mode (-F), Append random data to sent packets (--data-l
 nmap -T2 -F --data-length 5 --randomize-hosts -sV -v -iL (targets.txt) -oX (output.xml)
 ```
 
+## Finding Open FTP Servers:
+
+Finding FTP servers that allow anonymous logons can assist in numerous red-teaming activities such as Nmap FTP bounce scans.
+
+```
+masscan -p 21 <IP Range> -oL ftp_servers.txt; nmap -iL ftp_servers.txt —script ftp-anon -oL open_ftp_servers.txt
+```
+
 ## Scalable Heartbleed Hunting with Shodan:
 
 Hunt for components susceptible to the Heartbleed vulnerability before exploiting the devices memory with this one-liner. This command requires an Academic Plus Shodan API key.
