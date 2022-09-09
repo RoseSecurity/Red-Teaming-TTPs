@@ -147,6 +147,18 @@ PS C:\> $x=""; while($true) { $y=get-clipboard -raw; if ($x -ne $y) { Write-Host
 reg query HKLM /f password  /t REG_SZ  /s 
 ```
 
+## Searching the File System for Files of Interest:
+
+```
+dir /s *pass* == *cred* == *vnc* == *.config*
+```
+
+Search certain file types for a keyword, this can generate a lot of output.
+
+```
+findstr /si password *.xml *.ini *.txt
+```
+
 # Living off the Land:
 
 ## Cscript/Wscript:
@@ -233,7 +245,7 @@ net localgroup <group>
 schtasks
 ```
 
-## Eamining Unusual Log Entries:
+## Examining Unusual Log Entries:
 
 ```
 wevutil qe security /f:text
