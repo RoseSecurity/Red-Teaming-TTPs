@@ -68,6 +68,13 @@ $ ip neigh
 
 $ nmap -Pn -sV -6 fe80::20c0 -e eth0 --packet-trace
 ```
+
+Utilize `ndp` to enumerate all of the current ndp entries.
+
+```
+$ ndp -an
+```
+
 ## Nmap to Evaluate HTTPS Support:
 
 ```
