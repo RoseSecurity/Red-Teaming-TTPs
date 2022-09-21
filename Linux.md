@@ -30,6 +30,12 @@ The regex is a POSIX ERE expression that matches
 
 To output matches, add -o option to grep
 
+## Search for Passwords in Memory:
+
+```
+strings -n 10 /dev/mem | grep -i pass
+```
+
 ## Username Enumeration with Getent:
 
 ```getent``` is a Unix command that helps a user get entries in a number of important text files called databases. This includes the passwd and group databases which store user information – hence getent is a common way to look up user details on Unix.
