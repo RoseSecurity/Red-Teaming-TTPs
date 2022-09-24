@@ -30,11 +30,27 @@ The regex is a POSIX ERE expression that matches
 
 To output matches, add -o option to grep
 
-## Search for Passwords in Memory:
+## Search for Passwords in Memory and Core Dumps:
+
+Memory:
 
 ```
 strings -n 10 /dev/mem | grep -i pass
 ```
+
+Core Dump:
+
+```
+# Find PID
+root@RoseSecurity# ps -eo pid,command
+
+# Core dump PID
+root@RoseSecurity# gcore <pid> -o dumpfile
+
+# Search for passwords
+root@RoseSecurity# strings -n 5 dumpfile | grep -i pass
+```
+ 
 
 ## Username Enumeration with Getent:
 
