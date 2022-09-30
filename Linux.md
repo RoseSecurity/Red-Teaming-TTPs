@@ -481,6 +481,29 @@ LPORT 9999
 exploit
 ```
 
+Ingest Other Tools' Output Files:
+
+```
+# Start database
+$ sudo systemctl start postgresql
+
+# Initialize Metasploit database
+$ sudo msfdb init
+
+# Start msfconsole
+$ msfconsole -q
+msf6 >
+
+# Help menu
+msf6 > db_import -h
+
+# Import other tool's output
+msf6 > db_import ~/nmap_scan.xml
+
+[*] Importing NMAP XML data
+[*] Successfully imported  /home/kali/nmap_scan.xml
+```
+
 # Confluence CVE-2022-26134:
 
 CVE-2022-26314 is an unauthenticated and remote OGNL injection vulnerability resulting in code execution in the context of the Confluence server (typically the confluence user on Linux installations). Given the nature of the vulnerability, internet-facing Confluence servers are at very high risk.
