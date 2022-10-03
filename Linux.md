@@ -146,6 +146,15 @@ Usage:
 ```
 nmap -sV --script=vulscan/vulscan.nse www.rosesecurity.com
 ```
+## Nmap Using Multiple Scripts on One Target:
+
+Usage:
+
+```
+nmap --script "http-*" <IP>
+nmap --script "sql-*" <IP>
+nmap --script "ftp-*" <IP>
+```
 
 ## IDS/IPS Nmap Evasion:
 
