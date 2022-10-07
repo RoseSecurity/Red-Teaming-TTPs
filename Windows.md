@@ -484,7 +484,7 @@ Signature appended.
 FIN.
 ```
 
-## Plundering Account Information with RPCClient:
+## Plundering Account Information with RPCClient and SMBClient:
 
 Once you have a user name and password and open SMB access of a target Windows client or server over TCP port 445, you can use rpcclient to open an authenticated SMB session to a target machine by running the following command on your Linux system:
 
@@ -526,3 +526,21 @@ rpcclient $> createdomuser hacker
 rpcclient $> setuserinfo2 hacker 24 Password@1
 rpcclient $> enumdomusers
 ```
+
+Use smbclient to enumerate a list of file shares:
+
+```
+$ smbclient -L ip -U username
+
+# Check for NULL sessions
+$ smbclient -N -L ip
+```
+
+Evaluate what the minimum SMB version is for the server:
+
+```
+$ smbclient -L ip -U username -m NT1
+$ smbclient -L ip -U username -m SMB2
+$ smbclient -L ip -U username -m SMB3
+```
+
