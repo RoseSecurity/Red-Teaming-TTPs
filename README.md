@@ -50,6 +50,7 @@ df -h
 uname -a
 mount
 cat /etc/issue
+cat /etc/*-release
 cat /etc/release
 cat /proc/version
 ```
