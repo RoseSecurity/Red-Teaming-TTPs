@@ -478,6 +478,12 @@ Google Dorking for AWS Access Keys
 inurl:pastebin "AWS_ACCESS_KEY"
 ```
 
+Recursively searching for AWS Access Keys on *Nix containers
+
+```
+$ grep -ER "AKIA[A-Z0-9]{16}|ASIA[A-Z0-9]{16}" /
+```
+
 S3 Log Google Dorking
 
 ```
