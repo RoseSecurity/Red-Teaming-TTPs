@@ -109,6 +109,12 @@ $ ndp -an
 nmap -p 443 --script=ssl-enum-ciphers <Target Domain>
 ```
 
+## Encrypt Files with Vim:
+
+```
+$ vim –x <filename.txt>
+```
+
 ## Testssl.sh:
 
 Enumerating ciphers and encryption weaknesses using Testssl command line tool:
