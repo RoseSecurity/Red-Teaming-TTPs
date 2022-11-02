@@ -175,7 +175,9 @@ Low and slow (-T2), Fast mode (-F), Append random data to sent packets (--data-l
 ```
 nmap -T2 -F --data-length 5 --randomize-hosts -sV -v -iL (targets.txt) -oX (output.xml)
 ```
-## Scanning Large Networks:
+## Scanning Large Networks and Avoiding Sensitive IP Ranges:
+
+Set ```exclude.txt``` equal to the contents of https://pastebin.com/53DP2HNV
 
 ```
 masscan 0.0.0.0/0 -p0-65535 –excludedfile exclude.txt
