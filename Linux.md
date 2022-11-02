@@ -175,6 +175,11 @@ Low and slow (-T2), Fast mode (-F), Append random data to sent packets (--data-l
 ```
 nmap -T2 -F --data-length 5 --randomize-hosts -sV -v -iL (targets.txt) -oX (output.xml)
 ```
+## Scanning Large Networks:
+
+```
+masscan 0.0.0.0/0 -p0-65535 –excludedfile exclude.txt
+```
 
 ## Finding Open FTP Servers:
 
