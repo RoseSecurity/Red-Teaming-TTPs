@@ -230,3 +230,19 @@ Use the -r option and the file we want to inherit its access and modification ti
 ```
 $ touch -r normal.elf payload.elf
 ```
+
+## Taking Apart URL Shorteners with cURL:
+
+Ever get a "shortened" url (bit.ly, tinyurl.com or whatever) and stress about "clicking that link"?  Or worse yet, have that "Oh No" moment after you just clicked it? Let's use cURL to avoid this!
+
+```
+$ curl -k -v -I <URL> 2>&1 | grep -i "< location" | cut -d " " -f 3
+```
+
+Output:
+
+```
+$ curl -k -v -I https://bit.ly/3ABvcy5 2>&1 | grep -i "< location" | cut -d " " -f 3
+https://isc.sans.edu/
+```
+
