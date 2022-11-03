@@ -1,5 +1,79 @@
 # PowerShell Tricks:
 
+## PowerShell Port Scanning:
+
+Powershell Test-NetConnection, ```tnc``` for short, host and port scanning:
+
+```
+PS L:\> tnc 8.8.8.8
+
+ComputerName           : 8.8.8.8
+
+RemoteAddress          : 8.8.8.8
+
+InterfaceAlias         : Ethernet 2
+
+SourceAddress          : 192.168.122.201
+
+PingSucceeded          : True
+
+PingReplyDetails (RTT) : 15 ms
+```
+
+Traceroute:
+
+```
+PS L:\> tnc 8.8.8.8 -traceroute
+
+ComputerName           : 8.8.8.8
+
+RemoteAddress          : 8.8.8.8
+
+InterfaceAlias         : Ethernet 2
+
+SourceAddress          : 192.168.122.201
+
+PingSucceeded          : True
+
+PingReplyDetails (RTT) : 13 ms
+
+TraceRoute             : 192.168.122.1
+
+                         99.254.226.1
+
+                         66.185.90.177
+
+                         24.156.147.129
+
+                         209.148.235.222
+
+                         72.14.216.54
+
+                         108.170.228.0
+
+                         172.253.69.113
+
+                         8.8.8.8
+```
+
+Port Scanning:
+
+```
+PS L:\> tnc 8.8.8.8 -port 443
+
+ComputerName     : 8.8.8.8
+
+RemoteAddress    : 8.8.8.8
+
+RemotePort       : 443
+
+InterfaceAlias   : Ethernet 2
+
+SourceAddress    : 192.168.122.201
+
+TcpTestSucceeded : True
+```
+
 ## PowerShell Change Timestamp of Directory:
 
 ```PS> (Get-Item "C:\Windows\system32\MyDir").CreationTime=("01 March 2019 19:00:00")```
