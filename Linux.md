@@ -574,6 +574,12 @@ Cleanup RDP:
 meterpreter > run multi_console_command -rc /root/.msf4/logs/scripts/getgui/clean_up__20110112.2448.rc
 ```
 
+Run modules against file of hosts:
+
+```
+msf6> set RHOSTS file:/tmp/nmap_output_hosts.txt
+```
+
 Search for interesting files:
 
 ```
