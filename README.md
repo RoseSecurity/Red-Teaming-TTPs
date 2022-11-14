@@ -410,6 +410,25 @@ OPTIONS:
 ARGS:
     <filename>    File containing an IP per line. Non-IPs are ignored
 ```
+# Threat Intelligence Streams with Python and Reddit:
+
+Enumerate new Reddit comments for threat intelligence. This script can be modified with regular expressions to hone in on exploit development, modern threats, and any newsworthy cyber events. 
+
+```
+#!/usr/bin/env python3
+
+import praw
+
+reddit = praw.Reddit(client_id ='xxxxxxxxxxxxxxx', 
+                     client_secret ='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 
+                     user_agent ='Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', 
+                     username ='username', 
+                     password ='pass') 
+
+
+for comment in reddit.subreddit('hacking+infosec+redteamsec+cybersecurity+netsec+hackernews+malware+blueteamsec').stream.comments():
+    print(comment.body)
+```
 
 # Enumerating Anonymous FTP Logins Using Python:
 
