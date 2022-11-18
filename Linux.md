@@ -240,6 +240,14 @@ tcpdump -nt 'src port 53 and udp[10] & 0x80 = 0x80'
 /version : Linux Version Information.
 /var/log/auth* : Log of authorization login attempts. /var/log/lastlog : Log of last boot process.
 ```
+## Old-Fashioned Log Cleaning:
+
+Grep to remove sensitive attacker information then copy into original logs
+
+```
+# cat /var/log/auth.log | grep -v "<Attacker IP>" > /tmp/cleanup.log
+# mv /tmp/cleanup.log /var/log/auth.log
+```
 
 # Reverse Shells:
 
