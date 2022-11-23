@@ -230,6 +230,15 @@ Use the -r option and the file we want to inherit its access and modification ti
 ```
 $ touch -r normal.elf payload.elf
 ```
+## Linux Bash History Stomping:
+
+One-liner:
+
+```
+$ export HISTFILE=/dev/null; unset HISTFILESIZE; unset HISTSIZE
+```
+
+Defenders can also enable timestamps in ```.bash_history``` using the command: ```export HISTTIMEFORMAT='%F %T '```
 
 ## Taking Apart URL Shorteners with cURL:
 
