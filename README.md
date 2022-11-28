@@ -73,8 +73,19 @@ ln /dev/null -/.bash_historj -sf
 
 # Fork Bomb
 
+Linux: 
+
 ```
 :(){:I: &I;:
+```
+
+Python: 
+
+```
+#!/usr/bin/env python
+
+    import os
+    while True: os.fork()
 ```
 
 # TCPDump
