@@ -67,6 +67,9 @@ echo '''' -/.bash history
 kill -9 $$
 ln /dev/null -/.bash_historj -sf
 ```
+## Efficient Linux CLI Navigation:
+
+![CLI](https://user-images.githubusercontent.com/72598486/204325842-a35ac0ca-0944-4c96-a089-6e0108945919.png)
 
 # Fork Bomb
 
