@@ -103,6 +103,8 @@ time
 net session
 psloglist "Security" -i 528 -s | find /i "Logon Type: 10"
 net statistics
+nltest /dclist
+net group /domain "Domain Admins"
 date
 hostname
 ipconfig
