@@ -56,7 +56,21 @@ root@RoseSecurity# gcore <pid> -o dumpfile
 # Search for passwords
 root@RoseSecurity# strings -n 5 dumpfile | grep -i pass
 ```
- 
+
+## Searching Man Pages:
+
+Struggling to find a command that you are looking for? Try the ```man -k``` option!
+
+```bash
+$ man -k ssh
+git-shell(1)             - Restricted login shell for Git-only SSH access
+scp(1)                   - OpenSSH secure file copy
+sftp(1)                  - OpenSSH secure file transfer
+sftp-server(8)           - OpenSSH SFTP server subsystem
+ssh(1)                   - OpenSSH remote login client
+ssh-add(1)               - adds private key identities to the OpenSSH authentication agent
+ssh-agent(1)             - OpenSSH authentication agent
+```
 
 ## Username Enumeration with Getent:
 
