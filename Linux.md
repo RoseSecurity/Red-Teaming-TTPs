@@ -22,6 +22,16 @@ Finding server strings from a file of URLs
 curl -s --head -K servers.txt | grep -i server
 ```
 
+## Enumerating User Files for Interesting Information
+
+```
+cat ~/.bash_history
+cat ~/.nano_history
+cat ~/.atftp_history
+cat ~/.mysql_history
+cat ~/.php_history
+```
+
 ## Search for Hardcoded Passwords:
 
 ```
