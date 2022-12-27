@@ -721,6 +721,16 @@ meterpreter> search -f *.docx
 meterpreter> search -f *.sql
 ```
 
+Metasploit Web Server Interface:
+
+Start the web service, listening on any host address:
+
+```
+# msfdb --component webservice --address 0.0.0.0 start
+```
+
+
+
 Metasploit Email Harvesting:
 
 ```
