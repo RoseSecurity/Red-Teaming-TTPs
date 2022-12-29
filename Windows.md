@@ -215,6 +215,16 @@ Password managers offer many benefits for selection and storage of passwords.
 PS C:\> $x=""; while($true) { $y=get-clipboard -raw; if ($x -ne $y) { Write-Host $y; $x=$y} }
 ```
 
+## Discovering WiFi Passwords:
+
+```
+netsh wlan show profiles
+```
+
+```
+netsh wlan show profile name="SSID" key=clear
+```
+
 ## Searching the Registry for Passwords:
 
 ```
