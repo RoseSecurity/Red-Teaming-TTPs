@@ -91,6 +91,11 @@ TcpTestSucceeded : True
 ```
 PS> powershell.exe -command "netsh advfirewall set allprofiles state off"
 ```
+## Enumerating Domain Controllers with PowerShell:
+
+```
+[System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain().DomainControllers 
+```
 
 ## Enumerating Domain Users with PowerShell:
 
