@@ -81,6 +81,12 @@ cat ~/.mysql_history
 cat ~/.php_history
 ```
 
+## Finding World-Writable Files:
+
+```
+find /dir -xdev -perm +o=w ! \( -type d -perm +o=t \) ! -type l -print
+```
+
 ## Search for Hardcoded Passwords:
 
 ```
