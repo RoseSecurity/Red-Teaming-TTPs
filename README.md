@@ -734,3 +734,53 @@ Or use this one-liner to screenshot web pages with EyeWitness!
 ```python
 root@RoseSecurity:~# python3 -c 'import requests; import os; url = str("https://web.archive.org/cdx/search/cdx?url=<website>/*&output=text&fl=original&collapse=urlkey"); url_request = requests.get(url); web_file = open("/tmp/website_enum.txt", "a"); web_file.write(url_request.text); web_file.close()'; eyewitness -f /tmp/website_enum.txt
 ```
+
+## Golang Webserver Banner Scanner:
+
+This program reads in a file of IP addresses, outputting the server fingerprint to the terminal.
+
+```go
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"net/http"
+	"os"
+)
+
+func readfile(filePath string) []string {
+	// Read file
+	readFile, err := os.Open(filePath)
+	if err != nil {
+		fmt.Println(err)
+	}
+	// Split lines and append to array
+	fileScanner := bufio.NewScanner(readFile)
+	fileScanner.Split(bufio.ScanLines)
+	var fileLines []string
+	for fileScanner.Scan() {
+		fileLines = append(fileLines, fileScanner.Text())
+	}
+	readFile.Close()
+	return fileLines
+}
+func scanIPs(ips []string) {
+	// Connect to device ports
+	for i := range ips {
+		target := "http://" + ips[i]
+		response, err := http.Get(target)
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(ips[i], response.Header.Get("Server"))
+	}
+}
+
+func main() {
+	// Command line argument to parse
+	filePath := os.Args[1]
+	ips := readfile(filePath)
+	scanIPs(ips)
+}
+```
