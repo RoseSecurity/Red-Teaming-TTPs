@@ -781,6 +781,9 @@ func main() {
 	// Command line argument to parse
 	filePath := os.Args[1]
 	ips := readfile(filePath)
-	scanIPs(ips)
+	// Goroutines
+	go scanIPs(ips)
+	var input string
+	fmt.Scanln(&input)
 }
 ```
