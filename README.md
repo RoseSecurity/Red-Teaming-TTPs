@@ -771,7 +771,7 @@ func scanIPs(ips []string) {
 		target := "http://" + ips[i]
 		response, err := http.Get(target)
 		if err != nil {
-			fmt.Println(err)
+			continue
 		}
 		fmt.Println(ips[i], response.Header.Get("Server"))
 	}
