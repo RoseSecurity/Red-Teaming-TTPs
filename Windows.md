@@ -633,3 +633,28 @@ $ smbclient -L ip -U username -m SMB2
 $ smbclient -L ip -U username -m SMB3
 ```
 
+## Registry Keys for Recent Documents:
+
+Recent documents opened by users:
+
+```
+NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs: Recent documents opened by the user
+```
+
+Recent Office documents:
+
+```
+NTUSER.DAT\Software\Microsoft\Office{Version}{Excel|Word}\FileMRU
+```
+Versions:
+
+- 14.0 Office 2010
+- 12.0 Office 2007
+- 11.0 Office 2003
+- 10.0 Office X
+
+Recent office documents:
+
+```
+NTUSER.DAT\Software\Microsoft\Office{Version}{Excel|Word} UserMRU\LiveID_###\FileMRU
+```
