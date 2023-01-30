@@ -1031,3 +1031,27 @@ root@RoseSecurity:~# msfconsole -q -r karma.rc_.txt
 
 At this point, we are up and running. All that is required now is for a client to connect to the fake access point. When they connect, they will see a fake ‘captive portal’ style screen regardless of what website they try to connect to. You can look through your output, and see that a wide number of different servers are started. From DNS, POP3, IMAP, to various HTTP servers, we have a wide net now cast to capture various bits of information.
 
+## Passive Fingerprinting with P0f:
+
+Use interface eth0 (-i eth0) in promiscuous mode (-p), saving the results to a file (-o /tmp/p0f.log):
+
+```
+root@RoseSecurity:~# p0f -i eth0 -p -o /tmp/p0f.log
+
+-- p0f 3.09b by Michal Zalewski <lcamtuf@coredump.cx> ---
+
+[+] Closed 1 file descriptor.
+[+] Loaded 322 signatures from '/etc/p0f/p0f.fp'.
+[+] Intercepting traffic on interface 'eth0'.
+[+] Default packet filtering configured [+VLAN].
+[+] Log file '/tmp/p0f.log' opened for writing.
+[+] Entered main event loop.
+
+.-[ 172.16.0.23/35834 -> 172.16.0.79/22 (syn) ]-
+|
+| client   = 172.16.0.23/35834
+| os       = Linux 4.11 and newer
+| dist     = 0
+| params   = none
+| raw_sig  = 4:64+0:0:1460:mss*20,7:mss,sok,ts,nop,ws:df,id+:0
+```
