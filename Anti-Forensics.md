@@ -69,6 +69,10 @@ Execute malicious.exe on a remote system
 wmic.exe /node:"192.168.0.99" process call create "malicious.exe"
 ```
 
+## Passive OS Detection and TCP Fingerprinting:
+
+![image](https://user-images.githubusercontent.com/72598486/216523402-aceea591-a143-4145-bdbc-f2b02027682e.png)
+
 ## Offline Microsoft Azure Active Directory Harvesting with PowerShell:
 
 This script demonstrates how to interact with Microsoft Azure Active Directory via PowerShell.  You will need an Azure AD account first, which is free: http://azure.microsoft.com/en-us/services/active-directory/
