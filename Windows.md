@@ -658,3 +658,29 @@ Recent office documents:
 ```
 NTUSER.DAT\Software\Microsoft\Office{Version}{Excel|Word} UserMRU\LiveID_###\FileMRU
 ```
+
+## Command Prompt from MSPaint:
+
+If you find yourself on a locked down system and aren’t able to open a command prompt but do have access to Microsoft’s Paint program then this might be the hack for you; courtesy of Simon.
+
+1. Load mspaint, it should start with a blank canvas
+2. Use the resize menu option to change the drawing to 6 pixels wide by 1 pixel high.
+3. Select the pencil drawing tool.
+4. Use the Edit Colours option to create custom colours using the following RGB values:
+
+```
+Pixel 1 = R(10), G(0), B(0)
+Pixel 2 = R(13), G(10), B(13)
+Pixel 3 = R(100), G(109), B(99)
+Pixel 4 = R(120), G(101), B(46)
+Pixel 5 = R(0), G(0), B(101)
+Pixel 6 = R(0), G(0), B(0)
+```
+5. For each color you create, paint 1 pixel working from left to right.
+6. The final image should look something like this:
+
+![pixels](https://user-images.githubusercontent.com/72598486/217630466-ef0dec9a-17a3-411f-9067-fa4914684b79.jpg)
+
+7. Now save the picture using the ```File | Save``` as option and choose 24-bit Bitmap as the type.  I saved it as command.bmp
+8. Make a copy of the file and rename it to command.bat.
+9. Double click the file to run the batch file and you will open a command prompt!
