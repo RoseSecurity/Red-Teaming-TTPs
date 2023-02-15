@@ -229,6 +229,14 @@ netsh wlan show profiles
 ```
 netsh wlan show profile name="SSID" key=clear
 ```
+## Potential Credential Files:
+
+```
+dir /a:h C:\Users\username\AppData\Local\Microsoft\Credentials\
+dir /a:h C:\Users\username\AppData\Roaming\Microsoft\Credentials\
+Get-ChildItem -Hidden C:\Users\username\AppData\Local\Microsoft\Credentials\
+Get-ChildItem -Hidden C:\Users\username\AppData\Roaming\Microsoft\Credentials\
+```
 
 ## Searching the Registry for Passwords:
 
