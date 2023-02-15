@@ -1055,3 +1055,37 @@ root@RoseSecurity:~# p0f -i eth0 -p -o /tmp/p0f.log
 | params   = none
 | raw_sig  = 4:64+0:0:1460:mss*20,7:mss,sok,ts,nop,ws:df,id+:0
 ```
+
+## Advanced Mitm Attacks with Bettercap Filters:
+
+Display a message if the tcp port is 22:
+
+```
+if (ip.proto == TCP) {
+   if (tcp.src == 22 || tcp.dst == 22) {
+      msg("SSH packet\n");
+   }
+}
+```
+
+Log all telnet traffic:
+
+```
+if (ip.proto == TCP) {
+   if (tcp.src == 23 || tcp.dst == 23) {
+      log(DATA.data, "./telnet.log");
+   }
+}
+```
+
+Log ssh decrypted packets matching the regexp:
+
+```
+if (ip.proto == TCP) {
+   if (tcp.src == 22 || tcp.dst == 22) {
+      if (regex(DECODED.data, ".*login.*")) {
+         log(DECODED.data, "./decrypted_log");
+      }
+   }
+}
+```
