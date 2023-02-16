@@ -112,6 +112,8 @@ net statistics
 nltest /dclist
 net group /domain "Domain Admins"
 date
+tzutil /g
+tracert 8.8.8.8
 hostname
 ipconfig
 arp -a
