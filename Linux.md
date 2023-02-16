@@ -628,6 +628,19 @@ Poorly written fingerd implementations allow attackers to pipe commands through 
 
 uid=0(root) gid=0(root)
 ```
+## Enumerating with Traceroute:
+
+Latency jumps in Traceroute values can identify geographic data:
+
+```
+1 ms – within your LAN
+25 ms – my home cable service in London to servers located in mainland UK
+90 ms – typical home DSL in the US to google.com
+100-150 ms – the transatlantic cable between the UK and New York state
+600-2000 ms – typical VSAT remote to hub link
+```
+
+```source: https://www.tolaris.com/2008/10/09/identifying-undersea-fibre-and-satellite-links-with-traceroute/```
 
 ## Changing MAC Addresses:
 
