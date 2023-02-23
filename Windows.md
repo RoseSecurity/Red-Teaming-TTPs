@@ -219,6 +219,11 @@ Password managers offer many benefits for selection and storage of passwords.
 ```
 PS C:\> $x=""; while($true) { $y=get-clipboard -raw; if ($x -ne $y) { Write-Host $y; $x=$y} }
 ```
+## Python LM Hash Generation:
+
+```
+python -c 'from passlib.hash import lmhash;print lmhash.hash("password")'
+```
 
 ## Discovering WiFi Passwords:
 
