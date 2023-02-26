@@ -460,6 +460,19 @@ for comment in reddit.subreddit('hacking+infosec+redteamsec+cybersecurity+netsec
     print(comment.body)
 ```
 
+# Python HTTPS Server:
+
+```python
+from http.server import HTTPServer, BaseHTTPRequestHandler
+import ssl
+
+httpd = HTTPServer(('0.0.0.0', 443), BaseHTTPRequestHandler)
+httpd.socket = ssl.wrap_socket(httpd.socket, certfile="./server.pem", server_side=True)
+httpd.serve_forever()
+```
+
+Source: ```https://book.hacktricks.xyz/generic-methodologies-and-resources/exfiltration```
+
 # Enumerating Anonymous FTP Logins Using Python:
 
 ```python
