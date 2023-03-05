@@ -498,6 +498,20 @@ Fire up SMBRelayx tool that will listen for incoming SMB authentication requests
 ```
 smbrelayx.py -h <Victim IP> -c "ipconfig"
 ```
+
+## Active Directory DNS Enumeration:
+
+The tool ```adidnsdump``` enables enumeration and exporting of all DNS records in the zone for recon purposes of internal networks.
+
+```bash
+git clone https://github.com/dirkjanm/adidnsdump
+cd adidnsdump
+pip install .
+
+adidnsdump -u domain_name\\username ldap://10.10.10.10 -r
+cat records.csv
+```
+
 ## PSexec with NMAP:
 
 ```
