@@ -248,6 +248,25 @@ Get-ChildItem -Hidden C:\Users\username\AppData\Roaming\Microsoft\Credentials\
 ```
 reg query HKLM /f password  /t REG_SZ  /s 
 ```
+## Local Domain Recon:
+
+Shows the domain:
+
+```
+echo %USERDOMAIN%
+```
+
+Maps AD trust relationships:
+
+```
+nltest /domain_trusts 
+```
+
+Prints the domain controller name:
+
+```
+echo %logonserver% 
+```
 
 ## Searching the File System for Files of Interest:
 
