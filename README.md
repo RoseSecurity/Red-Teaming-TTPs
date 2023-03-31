@@ -440,6 +440,23 @@ OPTIONS:
 ARGS:
     <filename>    File containing an IP per line. Non-IPs are ignored
 ```
+
+# Extracting PDF Text with Python Image OCR:
+
+```python
+#!/usr/bin/env python3
+
+from PIL import Image
+import pyTesseract
+import numpy as np
+
+# Simple PDF Image OCR Extractor
+
+file = '/home/rosesecurity/Desktop/Target_OrgChart.pdf'
+pdf_img = np.array(Image.open(file))
+text = pyTesseract.image_to_string(pdf_img)
+```
+
 # Threat Intelligence Streams with Python and Reddit:
 
 Enumerate new Reddit comments for threat intelligence. This script can be modified with regular expressions to hone in on exploit development, modern threats, and any newsworthy cyber events. 
