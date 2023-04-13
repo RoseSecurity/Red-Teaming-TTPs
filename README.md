@@ -115,7 +115,7 @@ unset HISTSIZE
 echo "" /var/log/auth.log 
 echo '''' -/.bash history
 kill -9 $$
-ln /dev/null -/.bash_historj -sf
+ln /dev/null -/.bash_history -sf
 ```
 ## Efficient Linux CLI Navigation:
 
