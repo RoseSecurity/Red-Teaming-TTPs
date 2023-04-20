@@ -219,6 +219,19 @@ Password managers offer many benefits for selection and storage of passwords.
 ```
 PS C:\> $x=""; while($true) { $y=get-clipboard -raw; if ($x -ne $y) { Write-Host $y; $x=$y} }
 ```
+
+## PowerShell List Named Pipes:
+
+```
+ls \\.\pipe\
+```
+
+To run using ```cmd.exe```:
+
+```
+dir \\.\pipe\\
+```
+
 ## Python LM Hash Generation:
 
 ```
