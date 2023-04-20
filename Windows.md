@@ -789,3 +789,9 @@ After this, we run the /resume switch to get the download started.
 ```
 bitsadmin /resume winupdatejob
 ```
+
+## PSexec from WebDAV:
+
+```
+\\live.sysinternals.com\tools\PSExec64.exe -accepteula
+```
