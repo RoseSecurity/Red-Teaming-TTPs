@@ -910,3 +910,13 @@ func main() {
     http.ListenAndServe(address, handler)
 }
 ```
+
+## Pre-Commit Hooks to Prevent Credential Leaks:
+
+```yaml
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+    -   id: detect-aws-credentials
+    -   id: detect-private-key
+```
