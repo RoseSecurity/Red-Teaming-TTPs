@@ -920,3 +920,9 @@ func main() {
     -   id: detect-aws-credentials
     -   id: detect-private-key
 ```
+
+## Mac SMB Lateral Movement:
+
+```
+open "smb://rosesecurity@10.9.11.105/"
+```
