@@ -664,6 +664,46 @@ s3 site:amazonaws.com filetype:log
 $ curl -k -v -H “Authorization: Bearer <jwt_token>” -H “Content-Type: application/json” https://<master_ip>:6443/api/v1/namespaces/default/secrets | jq -r ‘.items[].data’
 ```
 
+## Kubernetes Ninja Commands:
+
+```bash
+# List all pods in the current namespace.
+kubectl get pods
+
+# Get detailed information about a pod.
+kubectl describe pod <pod-name>
+
+# Create a new pod.
+kubectl create pod <pod-name> 
+
+# List all nodes in the cluster.
+kubectl get nodes 
+
+# Get detailed information about a node.
+kubectl describe node <node-name> 
+
+# Create a new node
+kubectl create node <node-name> 
+
+# List all services in the cluster.
+kubectl get services 
+
+# Get detailed information about a service.
+kubectl describe service <service-name> 
+
+# Create a new service.
+kubectl create service <service-name> 
+
+# List all secrets in the cluster.
+kubectl get secrets 
+
+# Get detailed information about a secret.
+kubectl describe secret <secret-name> 
+
+# Create a new secret.
+kubectl create secret <secret-name> 
+```
+
 # Web Applications:
 
 ## Command Injection:
