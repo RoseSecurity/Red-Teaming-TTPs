@@ -1209,3 +1209,11 @@ int main( int argc, char *argv[] )
 	return 0;
 }
 ```
+
+## TruffleHog GitHub Organizations:
+
+Enumerate GitHub organizations for secrets and credentials
+
+```console
+root@RoseSecurity# orgs=$(curl -s https://api.github.com/organizations | jq -r '.[] | .name'); for i in $orgs; do trufflehog github --org=$i; done
+```
