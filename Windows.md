@@ -314,6 +314,13 @@ Get-ChildItem -Hidden C:\Users\username\AppData\Local\Microsoft\Credentials\
 Get-ChildItem -Hidden C:\Users\username\AppData\Roaming\Microsoft\Credentials\
 ```
 
+## Find GPP Passwords in SYSVOL:
+
+```
+findstr /S cpassword $env:logonserver\sysvol\*.xml
+findstr /S cpassword %logonserver%\sysvol\*.xml (cmd.exe)
+```
+
 ## Searching the Registry for Passwords:
 
 ```
