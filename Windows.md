@@ -860,3 +860,17 @@ bitsadmin /resume winupdatejob
 ```
 \\live.sysinternals.com\tools\PSExec64.exe -accepteula
 ```
+
+## CrackMapExec Tips and Tricks:
+
+Null session:
+
+```
+crackmapexec smb 192.168.2.24 -u "" up ""
+```
+
+Connect to target using local account:
+
+```
+crackmapexec smb 192.168.2.24 -u 'Administrator' -p 'Password' --local-auth
+```
