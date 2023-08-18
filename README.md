@@ -991,3 +991,28 @@ while read -r line; do
     trufflehog github --concurrency=5 -j --org="$line" >> truffle_org.txt
 done < orgs.txt
 ```
+
+## Turning Nmap into a Vulnerability Scanner Using GitHub Actions:
+
+```yaml
+name: Nmap GitHub Action
+on:
+  push:
+    branches:
+      - main
+jobs:
+  run_script_with_package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Install Nmap
+        run: sudo apt-get update && sudo apt-get install -y nmap
+
+      - name: Run Nmap Vulnerability Scanner
+        run: |
+          git clone https://github.com/scipag/vulscan scipag_vulscan
+          sudo ln -s `pwd`/scipag_vulscan /usr/share/nmap/scripts/vulscan
+          nmap -sV --script=vulscan/vulscan.nse rosesecurityresearch.com
+```
