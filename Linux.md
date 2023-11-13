@@ -159,6 +159,36 @@ Uses crt.sh to identify certificates for target domain before screenshotting and
 root@RoseSecurity:~# curl -s 'https://crt.sh/?q=<Website_You_Want_To_Enumerate>&output=json' | jq -r '.[].name_value' | sed 's/\*\.//g' | sort -u > ~/URLs.txt; eyewitness -f ~/URLs.txt --active-scan
 ```
 
+# Nmap TTPs:
+
+Below are useful Nmap scripts and their descriptions. You can find a full list of available scripts [here](https://nmap.org/nsedoc/scripts/):
+
+- `sshv1`: Checks if an SSH server supports the obsolete and less secure SSH Protocol Version 1.
+
+- `DHCP discover`: Sends a DHCPINFORM request to a host on UDP 67 to obtain all the local configuration parameters without allocating a new address.
+
+- `ftp-anon`: Checks if an FTP server allows anonymous logins.
+
+- `ftp-brute`: Performs brute force password auditing against FTP servers.
+
+- `http-enum`: Enumerates directories used by popular web applications and servers.
+
+- `http-passwd`: Checks if a webserver is vulnerable to directory traversal by attempting to retrieve etc/passwd or \boot(ini).
+
+- `http-methods`: Finds out what options are supported by an HTTP server by sending an OPTIONS request.
+
+- `ms-sql-info`: Attempts to determine configuration and version information for Microsoft SQL server instances.
+
+- `mysql-enum`: Performs valid-user enumeration against MySQL server using a bug.
+
+- `NSF-showmount`: Shows NFS exports, like the showmount -e command.
+
+- `rdp-enum-encryption`: Determines which encryption level is supposed by the RDP service.
+
+- `smb-enum-shares`: Attempts to list shares.
+
+- `tftp-enum`: Enumerates TFTP filenames by testing for a list of common ones.
+
 ## Nmap Scan Every Interface that is Assigned an IP:
 
 ```
