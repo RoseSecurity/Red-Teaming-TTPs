@@ -679,8 +679,8 @@ Python code to check if AWS key has permissions to read s3 buckets:
 import boto3
 import json
 
-aws_access_key_id = 'AKIA2OGYBAH6S4M5DDZO'
-aws_secret_access_key = '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'
+aws_access_key_id = 'AKIAQYLPMN5HIUI65MP3'
+aws_secret_access_key = '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'
 region = 'us-east-2'
 
 session = boto3.Session(
