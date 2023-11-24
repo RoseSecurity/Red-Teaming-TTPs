@@ -1033,6 +1033,31 @@ $ tshark -r <pcap> 'ntlmssp.auth.username' | awk '{print $13}' | sort -u
 $ tshark -i <interface> 'ntlmssp.auth.username' | awk '{print $13}' | sort -u
 ```
 
+## IP Information:
+
+```bash
+#!/usr/bin/env bash
+#
+# Access information on IP Addresses
+#
+# Color Output
+NC='\033[0m' 
+RED='\033[0;31m'          
+GREEN='\033[0;32m'
+
+ip=$1
+ipinfo () {
+	if [ -z ip ]; then	
+		echo -e "\n${RED}No IP Address Provided${NC}"
+	else
+		echo -e "\n${GREEN} IP Information for: $ip ${NC}"
+		curl ipinfo.io/$ip/json	
+	fi
+}
+
+ipinfo
+```
+
  ## Cloning Websites for Social Engineering with Wget:
  
  ```
