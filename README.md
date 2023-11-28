@@ -1003,6 +1003,25 @@ func main() {
     -   id: detect-private-key
 ```
 
+## Scanning Git History for Secrets:
+
+```
+# Install git-secrets and build
+git clone https://github.com/awslabs/git-secrets.git
+cd git-secrets
+make install
+
+# Register needed plugins
+git secrets -register-azure
+git secrets -register-aws
+git secrets — register-gcp
+
+# Scan Git
+git secrets --scan 
+git secrets --scan-history 
+git secrets --scan /path/to/file
+```
+
 ## Mac SMB Lateral Movement:
 
 ```
