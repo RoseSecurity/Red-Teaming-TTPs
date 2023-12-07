@@ -93,6 +93,14 @@ cat ~/.php_history
 find /dir -xdev -perm +o=w ! \( -type d -perm +o=t \) ! -type l -print
 ```
 
+## Search GitHub for Personal Access Tokens:
+
+To use this regex expression on the webpage, prepend and append a `/` to the expression:
+
+```
+^github_pat_[A-Za-z0-9_]+$
+```
+
 ## Search for Hardcoded Passwords:
 
 ```
