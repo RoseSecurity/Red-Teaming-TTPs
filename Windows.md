@@ -944,3 +944,38 @@ Using the option `-o READ_ONLY=false` all files will be copied on the host
 ```
 crackmapexec smb targets.txt -u 'user' -p 'pass' -M spider_plus -o READ_ONLY=false
 ```
+
+## NetExec:
+
+ZeroLogon:
+
+```
+nxc smb <ip> -u '' -p '' -M zerologon
+```
+
+PetitPotam:
+
+```
+nxc smb <ip> -u '' -p '' -M petitpotam
+```
+
+noPAC:
+
+```
+nxc smb <ip> -u 'user' -p 'pass' -M nopac
+```
+
+Map Network Hosts:
+
+```
+nxc smb 192.168.1.0/24
+```
+
+Checking if Null Session is enabled on the network, can be very useful on a Domain Controller to enumerate users, groups, password policy etc:
+
+```
+nxc smb 10.10.10.161 -u '' -p ''
+nxc smb 10.10.10.161 --pass-pol
+nxc smb 10.10.10.161 --users
+nxc smb 10.10.10.161 --groups
+```
