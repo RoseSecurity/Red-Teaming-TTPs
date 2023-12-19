@@ -990,3 +990,9 @@ nxc smb 10.10.10.161 --pass-pol
 nxc smb 10.10.10.161 --users
 nxc smb 10.10.10.161 --groups
 ```
+
+WMI Spray:
+
+```
+nxc wmi 10.10.10.0/24 -u userfile -p passwordfile
+```
