@@ -112,6 +112,8 @@ chattr (+/-)i file
 unset HISTFILE
 unset HISTFILESIZE
 unset HISTSIZE
+TERM=vt100
+export TERM
 echo "" /var/log/auth.log 
 echo '''' -/.bash history
 kill -9 $$
