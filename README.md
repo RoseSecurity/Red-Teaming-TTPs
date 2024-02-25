@@ -1007,6 +1007,15 @@ func main() {
 }
 ```
 
+## Apple Filing Protocol (AFP)
+
+The Apple Filing Protocol (AFP), once known as AppleTalk Filing Protocol, is a specialized network protocol included within the Apple File Service (AFS). It is designed to provide file services for macOS and the classic Mac OS.
+
+```sh
+msf> use auxiliary/scanner/afp/afp_server_info
+nmap -sV --script "afp-* and not dos and not brute" -p <PORT> <IP>
+```
+
 ## Pre-Commit Hooks to Prevent Credential Leaks:
 
 ```yaml
