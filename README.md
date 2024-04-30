@@ -797,6 +797,53 @@ curl "http://metadata.google.internal/computeMetadata/v1/instance/attributes/?re
     -H "Metadata-Flavor: Google"
 ```
 
+## Cloud Subdomain Takeover:
+
+```python
+import requests
+from bs4 import BeautifulSoup
+import dns.resolver
+import argparse
+from tqdm import tqdm
+
+parser = argparse.ArgumentParser(
+    description='Query crt.sh and perform a DNS lookup.')
+parser.add_argument('domain', help='The domain to query.')
+args = parser.parse_args()
+
+response = requests.get(f"https://crt.sh/?q={args.domain}")
+soup = BeautifulSoup(response.text, 'html.parser')
+domain_names = [td.text for td in soup.find_all('td') if not td.attrs]
+
+for domain in tqdm(domain_names, desc="Checking for subdomain takeovers"):
+    # Skip invalid and wildcard domains
+    if '*' in domain or len(domain) > 253 or any(len(label) > 63 for label in domain.split('.')):
+        continue
+
+    # Identify cloud services and check for potential subdomain takeovers
+    try:
+        answers = dns.resolver.resolve(domain, 'CNAME')
+        for rdata in answers:
+            cname = str(rdata.target)
+            if '.amazonaws.com' in cname:
+                response = requests.get(f"http://{domain}")
+                if response.status_code in [403, 404]:
+                    print(
+                        f"Potential Amazon S3 bucket for subdomain takeover: {domain}")
+            elif '.googleapis.com' in cname:
+                response = requests.get(f"http://{domain}")
+                if response.status_code in [403, 404]:
+                    print(
+                        f"Potential Google Cloud Storage bucket for subdomain takeover: {domain}")
+            elif '.blob.core.windows.net' in cname:
+                response = requests.get(f"http://{domain}")
+                if response.status_code == 404:
+                    print(
+                        f"Potential Azure blob storage for subdomain takeover: {domain}")
+    except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN, dns.resolver.YXDOMAIN, dns.resolver.NoNameservers):
+        continue
+```
+
 ## Kubernetes Secrets Harvesting:
 
 ```bash
