@@ -714,6 +714,12 @@ except Exception as e:
     print(f"Error: {e}")
 ```
 
+Find S3 Buckets Using Subfinder and HTTPX Tool
+
+```sh
+subfinder -d <TARGET_DOMAIN> -all -silent | httpx -silent -webserver -threads 100 | grep -i AmazonS3
+```
+
 ## GCP:
 
 SSRF URL:
