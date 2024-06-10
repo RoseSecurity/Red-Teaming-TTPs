@@ -49,3 +49,14 @@ dscl . read /Groups/[group]
 
 # Domain Enumeration
 dsconfigad -show
+```
+
+### SMB Shares
+
+```sh
+# SMB share enumeration
+smbutil view -G //servername.domain
+sharing -l
+smbutil statshares -a
+```
+
