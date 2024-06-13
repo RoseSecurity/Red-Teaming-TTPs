@@ -60,3 +60,12 @@ sharing -l
 smbutil statshares -a
 ```
 
+### AFP Shares
+
+```sh
+# AFP share enumeration
+dns-sd -B _afpovertcp._tcp
+nmap -p 548 --script afp-showmount --script-args afp.username=yourusername,afp.password=yourpassword yourserveraddress
+sudo sharing -l
+```
+
