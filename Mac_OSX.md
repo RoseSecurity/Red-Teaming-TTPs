@@ -28,6 +28,33 @@ cd /Applications/Lens.app
 ls -R
 ```
 
+### Basic System Enumeration
+
+Versions:
+
+```sh
+❯ sw_vers
+ProductName:		macOS
+ProductVersion:		14.5
+BuildVersion:		23F79
+```
+
+Environment Variables:
+
+```sh
+❯ printenv
+LANG=en_US.UTF-8
+PWD=/Users/rosesecurity
+```
+
+Home Folders:
+
+```sh
+❯ ls -ma ~/
+.!48082!pack-8ad6a5dc9b062d5e0e8d0bd9fa08146698e612e9.rev, .!48110!index, .., .CFUserTextEncoding, .DS_Store, .Trash, .aws,
+.azure, .bash_history, .bashrc, .boto,
+```
+
 ### Users
 
 The three types of MacOS users are:
@@ -68,4 +95,5 @@ dns-sd -B _afpovertcp._tcp
 nmap -p 548 --script afp-showmount --script-args afp.username=yourusername,afp.password=yourpassword yourserveraddress
 sudo sharing -l
 ```
+
 
