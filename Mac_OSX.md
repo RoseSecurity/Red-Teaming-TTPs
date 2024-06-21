@@ -108,4 +108,11 @@ nmap -p 548 --script afp-showmount --script-args afp.username=yourusername,afp.p
 sudo sharing -l
 ```
 
+### SSH Scanning
+
+Browse for all SSH services that are currently advertised on the local network
+
+```sh
+dns-sd -B _ssh._tcp
+```
 
