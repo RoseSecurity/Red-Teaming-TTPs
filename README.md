@@ -384,7 +384,7 @@ echo 'package main;import"os/exec";import"net";func main(){c,_:=net.Dial("tcp","
 # Query IP geolocation information with IP2Location.io
 
 ``` bash
-curl -s "https://api.ip2location.io/?ip=8.8.8.8&format=json"
+curl -s "https://api.ip2location.io/?ip=8.8.8.8&format=json" | jq
 ```
 
 ```json
