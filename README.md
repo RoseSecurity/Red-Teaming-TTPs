@@ -387,7 +387,7 @@ echo 'package main;import"os/exec";import"net";func main(){c,_:=net.Dial("tcp","
 curl -s "https://api.ip2location.io/?ip=8.8.8.8&format=json"
 ```
 
-```
+```json
 {
     "ip": "8.8.8.8",
     "country_code": "US",
