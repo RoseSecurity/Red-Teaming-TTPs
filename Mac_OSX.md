@@ -116,3 +116,42 @@ Browse for all SSH services that are currently advertised on the local network
 dns-sd -B _ssh._tcp
 ```
 
+### System Profiler
+
+It is an application created to gather detailed information about the Mac on which it is running.
+
+```sh
+system_profiler SPSoftwareDataType SPHardwareDataType
+
+Software:
+
+    System Software Overview:
+
+      System Version: macOS 14.5 (23F79)
+      Kernel Version: Darwin 23.5.0
+      Boot Volume: Macintosh HD
+      Boot Mode: Normal
+      Computer Name: Salsa-Dancer.RoseSecurity
+      User Name: RoseSecurity (rose)
+      Secure Virtual Memory: Enabled
+      System Integrity Protection: Enabled
+      Time since boot: 10 days, 14 hours, 54 minutes
+
+Hardware:
+
+    Hardware Overview:
+
+      Model Name: MacBook Pro
+      Model Identifier: Mac14,9
+      Model Number: Z17G002HTLL/A
+      Chip: Apple M2 Pro
+      Total Number of Cores: 10 (6 performance and 4 efficiency)
+      Memory: 32 GB
+      System Firmware Version: 10151.121.1
+      OS Loader Version: 10151.121.1
+      Serial Number (system): XXXXXXXX
+      Hardware UUID: 0012DE66-XXXXXXXX
+      Provisioning UDID: 00006020-XXXX
+      Activation Lock Status: Disabled
+```
+
