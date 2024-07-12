@@ -39,6 +39,33 @@ ProductVersion:		14.5
 BuildVersion:		23F79
 ```
 
+A basic script for gathering system information using `osascript`:
+
+```scpt
+-- System Information
+set systemInfo to do shell script "system_profiler SPSoftwareDataType"
+set hardwareInfo to do shell script "system_profiler SPHardwareDataType"
+
+-- Network Information
+set networkInfo to do shell script "ifconfig"
+
+-- Disk Usage
+set diskUsage to do shell script "df -h"
+
+-- Output Results
+set result to "System Information:\n" & systemInfo & "\n\n"
+set result to result & "Hardware Information:\n" & hardwareInfo & "\n\n"
+set result to result & "Network Information:\n" & networkInfo & "\n\n"
+set result to result & "Disk Usage:\n" & diskUsage
+
+-- Display Results
+result
+```
+
+```sh
+osascript enumerate_mac.scpt
+```
+
 Environment Variables:
 
 ```sh
@@ -154,4 +181,3 @@ Hardware:
       Provisioning UDID: 00006020-XXXX
       Activation Lock Status: Disabled
 ```
-
