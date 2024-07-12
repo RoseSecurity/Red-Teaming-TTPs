@@ -746,6 +746,87 @@ subfinder -d <TARGET_DOMAIN> -all -silent | httpx -silent -webserver -threads 10
 
 ## GCP:
 
+Enumerate IP addresses:
+
+```sh
+#!/bin/bash
+
+# Function to list all projects in the organization
+list_all_projects() {
+  gcloud projects list --format="value(projectId)"
+}
+
+# Function to check if a specific API is enabled for a project
+is_api_enabled() {
+  local project=$1
+  local api=$2
+  gcloud services list --project="$project" --filter="name:$api" --format="value(name)"
+}
+
+# Function to list all instances in a given project
+list_instances() {
+  local project=$1
+  gcloud compute instances list --project="$project" --format="json"
+}
+
+# Main function
+main() {
+  # Create or clear the files to store public IPs
+  output_file="public_ips.txt"
+  ip_only_file="ip_addresses.txt"
+  : > "$output_file"
+  : > "$ip_only_file"
+  
+  # Get the list of all projects
+  projects=$(list_all_projects)
+  for project in $projects; do
+    echo "Processing Project: $project"
+    
+    # Check if Resource Manager API is enabled for the project
+    if [[ -z "$(is_api_enabled "$project" "cloudresourcemanager.googleapis.com")" ]]; then
+      echo "Resource Manager API is not enabled for project $project. Skipping..."
+      continue
+    fi
+    
+    # Check if Compute Engine API is enabled for the project
+    if [[ -z "$(is_api_enabled "$project" "compute.googleapis.com")" ]]; then
+      echo "Compute Engine API is not enabled for project $project. Skipping..."
+      continue
+    fi
+
+    # Get the list of all instances in the current project
+    instances=$(list_instances "$project")
+
+    # Check if there are any instances
+    if [[ "$instances" != "[]" ]]; then
+      # Loop through each instance and extract public IPs
+      for instance in $(echo "$instances" | jq -r '.[] | @base64'); do
+        _jq() {
+          echo "$instance" | base64 --decode | jq -r "$1"
+        }
+        instance_name=$(_jq '.name')
+        zone=$(_jq '.zone' | awk -F/ '{print $NF}')
+        public_ips=$(_jq '.networkInterfaces[].accessConfigs[]?.natIP')
+        
+        # Check if there is a public IP and write to the output files
+        if [[ -n "$public_ips" ]]; then
+          for ip in $public_ips; do
+            echo "$project,$zone,$instance_name,$ip" >> "$output_file"
+            echo "$ip" >> "$ip_only_file"
+          done
+        fi
+      done
+    fi
+  done
+
+  echo "Public IPs have been written to $output_file"
+  echo "IP addresses have been written to $ip_only_file"
+}
+
+# Execute main function
+main
+```
+
 SSRF URL:
 
 ```sh
