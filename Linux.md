@@ -1346,8 +1346,8 @@ Victim Host:
 Using a process listing with ps, we can easily find the process, which would probably be noticed relatively quickly in a forensic investigation:
 
 ```sh
-ps aux | grep DISTANT
-root     22665  0.1  0.3 709792  5520 [..] ./DISTANT_VISUAL
+ps aux | grep MALICIOUS
+root     22665  0.1  0.3 709792  5520 [..] ./MALICIOUS
 root     22710  0.0  0.0 112808   968 [..] grep --color=auto M```sh
 ./MALICIOUS &
 ```
