@@ -1,3 +1,7 @@
+![Red_Teaming_Logo](https://github.com/user-attachments/assets/9a8e387d-351d-4dcc-a672-487cf3d003d7)
+
+---
+
 # :boom: Free Resources to Practice:
 
 Share with your friends:
