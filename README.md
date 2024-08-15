@@ -2,12 +2,12 @@
 
 ---
 
-> [!IMPORTANT]
+> [!CAUTION]
 > This repository contains cheatsheets, notes, and scripts related to my learning in cybersecurity, particularly Red Teaming. You'll find a variety of resources that I've compiled over the years, including:
 >
-> - [X] Cheatsheets: Quick reference guides for common tools and techniques.
-> - [X] Notes: Detailed explanations and insights on various cybersecurity topics.
-> - [X] Scripts: Useful scripts for automating tasks and improving efficiency.
+> - [X] **Cheatsheets**: Quick reference guides for common tools and techniques.
+> - [X] **Notes**: Detailed explanations and insights on various cybersecurity topics.
+> - [X] **Scripts**: Useful scripts for automating tasks and improving efficiency.
 > Feel free to explore, use, and contribute to these resources. Any notes, improvements, or additional content are welcome!
 
 ## :boom: Free Resources to Practice
