@@ -10,6 +10,18 @@
 > - [X] **Scripts**: Useful scripts for automating tasks and improving efficiency.
 > Feel free to explore, use, and contribute to these resources. Any notes, improvements, or additional content are welcome!
 
+## Table of Contents
+
+- [Cheatsheets](./Cheatsheets)
+- [Cloud](Cloud.md)
+- [Guides](./Guides)
+- [ICS](ICS.md)
+- [Linux](Linux.md)
+- [Mac OSX](Mac_OSX.md)
+- [Threat Intel](Theat_Intel.md)
+- [Web](Web.md)
+- [Windows](Windows.md)
+
 ## :boom: Free Resources to Practice
 
 Share with your friends:
