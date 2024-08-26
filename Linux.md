@@ -102,6 +102,25 @@ systemctl --user start persistence.service
 
 On the next user login systemd will happily start a reverse shell.
 
+## Udev Rules Persistence
+
+`udev` rules in Linux are configuration files that allow the system to dynamically manage device files in the /dev directory. These rules can trigger specific actions or scripts when devices are added, removed, or change state. By matching attributes like device type, vendor ID, or kernel name, udev rules help automate tasks related to hardware events, making device management more flexible and customizable.
+
+Example:
+
+1. First, create a new rule file under `/etc/udev/rules.d/`:
+
+```sh
+KERNEL=="random", SUBSYSTEM=="char", ACTION=="add", RUN+="/usr/local/bin/random-persistence.sh"
+```
+
+2. After saving the rule file, reload the `udev` rules:
+
+```sh
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+```
+
 ## Backdooring Sudo
 
 Add to `.bashrc`
