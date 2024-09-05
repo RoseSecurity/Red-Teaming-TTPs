@@ -292,6 +292,21 @@ for domain in tqdm(domain_names, desc="Checking for subdomain takeovers"):
 $ curl -k -v -H “Authorization: Bearer <jwt_token>” -H “Content-Type: application/json” https://<master_ip>:6443/api/v1/namespaces/default/secrets | jq -r ‘.items[].data’
 ```
 
+## Kubernetes Service Enumeration
+
+You can find everything exposed to the public with:
+
+```sh
+kubectl get namespace -o custom-columns='NAME:.metadata.name' | grep -v NAME | while IFS='' read -r ns; do
+    echo "Namespace: $ns"
+    kubectl get service -n "$ns"
+    kubectl get ingress -n "$ns"
+    echo "=============================================="
+    echo ""
+    echo ""
+done | grep -v "ClusterIP"
+```
+
 ## Kubernetes Ninja Commands
 
 ```bash
