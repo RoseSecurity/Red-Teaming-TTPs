@@ -121,6 +121,46 @@ sudo udevadm control --reload-rules
 sudo udevadm trigger
 ```
 
+## Systemd Timer Persistence
+
+Systemd-timers are similar to cron jobs but offer more flexibility and integration with systemd. These can be harnessed to execute a script or binary at specified intervals or times, maintaining persistence on a compromised system.
+
+1. Create a Timer Unit File
+
+```toml
+# /etc/systemd/system/shout.timer
+
+[Unit]
+Description=Shout Timer
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=1h
+
+[Install]
+WantedBy=timers.target
+```
+
+2. Create a Corresponding Service Unit File
+
+```toml
+# /etc/systemd/system/shout.service
+
+[Unit]
+Description=Shout Service
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /tears/for/fears/shout.sh
+```
+
+3. Enable and Start the Timer
+
+```sh
+sudo systemctl enable shout.timer
+sudo systemctl start shout.timer
+```
+
 ## Backdooring Sudo
 
 Add to `.bashrc`
