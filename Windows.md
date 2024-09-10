@@ -956,6 +956,8 @@ Pixel 6 = R(0), G(0), B(0)
 
 ## BITS Jobs and Downloads
 
+Windows includes the Background Intelligent Transfer Service (BITS), which facilitates file transfers via HTTP and SMB. `bitsadmin` and PowerShell cmdlets are available to manage these transfers, but they can be abused to download and execute malicious payloads on a compromised host, requiring Administrator privileges.
+
 Starting with creating a job named “winupdatejob”, then we add the payload file in the job that we just created.
 
 ```
