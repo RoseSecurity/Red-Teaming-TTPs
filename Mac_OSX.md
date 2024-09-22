@@ -105,6 +105,43 @@ dscl . read /Groups/[group]
 dsconfigad -show
 ```
 
+### Last Login
+
+This command reads the contents of the login window preferences plist file. This can potentially expose information such as:
+
+1. Automatic login settings
+2. Display of usernames and other login screen options
+3. Shutdown and restart privileges
+4. Login hooks (scripts that run at login)
+
+```sh
+❯ sudo defaults read /Library/Preferences/com.apple.loginwindow
+
+Password:
+{
+    AccountInfo =     {
+        FirstLogins =         {
+            rosesec = 1;
+        };
+        MaximumUsers = 1;
+        OnConsole =         {
+        };
+    };
+    GuestEnabled = 0;
+    Hide500Users = 1;
+    OptimizerLastRunForBuild = 48630688;
+    OptimizerLastRunForSystem = 235274496;
+    RecentUsers =     (
+        rosesec,
+        "doctor.pepper"
+    );
+    UseVoiceOverLegacyMigrated = 1;
+    lastLoginPanic = "746632045.290429";
+    lastUser = loggedIn;
+    lastUserName = rosie.odonnell;
+}
+```
+
 ### Passwords
 
 The following one-liner which will dump credentials of all non-service accounts in Hashcat format `-m 7100` (`macOS PBKDF2-SHA512`):
