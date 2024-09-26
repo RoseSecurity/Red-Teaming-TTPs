@@ -210,6 +210,25 @@ Browse for all SSH services that are currently advertised on the local network
 dns-sd -B _ssh._tcp
 ```
 
+### Network Service Scanning
+
+`dns-sd`: Uses Bonjour to discover network services like AFP, SMB, and more.
+
+```sh
+❯ dns-sd -B _services._dns-sd._udp
+
+Browsing for _services._dns-sd._udp
+14:35:41.500  ...STARTING...
+Timestamp     A/R    Flags  if Domain               Service Type         Instance Name
+14:35:41.501  Add        3  16 .                    _tcp.local.          _androidtvremote2
+14:35:41.501  Add        3  16 .                    _tcp.local.          _ssh
+14:35:41.501  Add        2  16 .                    _tcp.local.          _sftp-ssh
+14:35:41.659  Add        3  26 .                    _tcp.local.          _airplay
+14:35:41.660  Add        2  26 .                    _tcp.local.          _vstreamdeck2
+14:35:42.663  Add        3  16 .                    _tcp.local.          _googlecast
+14:35:42.663  Add        2  16 .                    _tcp.local.          _googlezone
+```
+
 ### System Profiler
 
 It is an application created to gather detailed information about the Mac on which it is running.
