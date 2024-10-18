@@ -449,3 +449,14 @@ set rport 4800
 set rhosts 212.x.x.14
 run
 ```
+
+## MQTT Broker Enumeration
+
+MQTT is a lightweight messaging protocol often used in IoT (Internet of Things) applications.
+
+- 1883: Default port for MQTT.
+- 8883: Default port for MQTT over TLS/SSL.
+
+```sh
+nmap -p 1883 --script mqtt-info <target>
+```
