@@ -267,3 +267,23 @@ Hardware:
       Provisioning UDID: 00006020-XXXX
       Activation Lock Status: Disabled
 ```
+
+## Persistence
+
+### Extended Attributes
+
+Extended attributes (EAs) on macOS can be used maliciously by attackers to hide data, evade detection, or persist malicious code, since EAs are not visible through typical file inspection methods
+
+```sh
+# Create the malicious extended attribute. In our case, this is a simple echo command
+❯ xattr -w user.hiddenPayload "ZWNobyAiSSdtIG9uIHlvdXIgc3lzdGVtIgo=" not_malicious.txt
+
+# Viewing the extended attributes
+❯ xattr not_malicious.txt
+com.apple.provenance
+user.hiddenPayload
+
+# Executing the extended attributes
+❯ xattr -p user.hiddenPayload not_malicious.txt | base64 -d | bash
+I'm on your system
+```
