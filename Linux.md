@@ -226,6 +226,12 @@ To use this regex expression on the webpage, prepend and append a `/` to the exp
 ^github_pat_[A-Za-z0-9_]+$
 ```
 
+## Search for OpenAI API Keys
+
+```sh
+sk(-[a-zA-Z0-9]+)*-[A-Za-z0-9]{48}
+```
+
 ## Search for Hardcoded Passwords
 
 ```sh
