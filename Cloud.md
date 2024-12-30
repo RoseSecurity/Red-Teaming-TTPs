@@ -75,6 +75,44 @@ Find S3 Buckets Using Subfinder and HTTPX Tool
 subfinder -d <TARGET_DOMAIN> -all -silent | httpx -silent -webserver -threads 100 | grep -i AmazonS3
 ```
 
+### Cognito
+
+> [!NOTE]
+> Before proceeding, capture the session's JWT during login and save to a file (ex: `access_token.txt`)
+> This can be accomplished using your browser developer tools or another method
+
+1. Get user information:
+
+```sh
+aws cognito-idp get-user --access-token $(cat access_token.txt)
+```
+
+2. Test admin authentication:
+
+```sh
+aws cognito-idp admin-initiate-auth --access-token $(cat access_token)
+```
+
+3. List user groups:
+
+```sh
+aws cognito-idp admin-list-groups-for-user \
+  --username user.name@email.com \
+  --user-pool-id "Group-Name"
+```
+
+4. Attempt sign up
+
+```sh
+aws cognito-idp sign-up --client-id <client-id> --username <username> --password <password>
+```
+
+5. Modify attributes
+
+```sh
+aws cognito-idp update-user-attributes --access-token $(cat access_token) --user-attributes Name=<attribute>,Value=<value>
+```
+
 ## GCP
 
 Enumerate IP addresses:
