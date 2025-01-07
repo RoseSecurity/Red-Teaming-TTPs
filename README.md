@@ -48,6 +48,7 @@ Share with your friends:
 - [Penetration Testing Practice Labs](https://lnkd.in/e6wVANYd)
 - [PentestIT LAB](https://lab.pentestit.ru)
 - [PicoCTF](https://picoctf.com)
+- [Practical Windows Forensics](https://github.com/bluecapesecurity/PWF)
 - [PWNABLE](https://lnkd.in/eMEwBJzn)
 - [Root-Me](https://www.root-me.org)
 - [Root in Jail](http://rootinjail.com)
