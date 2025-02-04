@@ -82,6 +82,12 @@ Home Folders:
 .azure, .bash_history, .bashrc, .boto,
 ```
 
+Wireless Network:
+
+```sh
+ipconfig getsummary $(networksetup -listallhardwareports | awk '/Hardware Port: Wi-Fi/{getline; print $2}') | awk -F ' SSID : ' '/ SSID : / {print $2}'
+```
+
 ### Users
 
 The three types of MacOS users are:
