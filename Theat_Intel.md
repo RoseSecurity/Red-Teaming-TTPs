@@ -286,3 +286,51 @@ faker_df = pd.DataFrame({'date':[fake.date() for i in range(10)],
                          'text':[fake.text() for i in range(10)]})
 faker_df
 ```
+
+## Shodan CLI
+
+The `shodan` command-line interface (CLI) is packaged with the official Python library for Shodan, which means if you're running the latest version of the library you already have access to the CLI. To install the new tool simply execute:
+
+```sh
+easy_install shodan
+```
+
+Once the tool is installed you have to initialize the environment with your [API key](https://account.shodan.io/) using `shodan init`:
+
+```sh
+shodan init YOUR_API_KEY
+```
+
+### `count`
+
+Returns the number of results for a search query:
+
+```sh
+shodan count microsoft iis 6.0
+5310594
+```
+
+### `host`
+
+See information about the host such as where it's located, what ports are open and which organization owns the IP:
+
+```sh
+shodan host 189.201.128.250
+```
+
+### `myip`
+
+Returns your Internet-facing IP address:
+
+```sh
+shodan myip
+199.30.49.210
+```
+
+### `search`
+
+This command lets you search Shodan and view the results in a terminal-friendly way. By default it will display the IP, port, hostnames and data. You can use the `--fields` parameter to print whichever banner fields you're interested in:
+
+```sh
+shodan search --fields ip_str,port,org,hostnames microsoft iis 6.0
+```
