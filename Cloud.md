@@ -113,6 +113,28 @@ aws cognito-idp sign-up --client-id <client-id> --username <username> --password
 aws cognito-idp update-user-attributes --access-token $(cat access_token) --user-attributes Name=<attribute>,Value=<value>
 ```
 
+### AWS Trivy Scanning
+
+1. Install the Trivy AWS plugin: `trivy plugin install github.com/aquasecurity/trivy-aws`
+
+2. Scan a full AWS account (all supported services):
+
+```sh
+trivy aws --region us-east-1
+```
+
+3. Scan a specific service:
+
+```sh
+trivy aws --service s3
+```
+
+4. Show results for a specific AWS resource:
+
+```sh
+trivy aws --service s3 --arn arn:aws:s3:::example-bucket
+```
+
 ## GCP
 
 Enumerate IP addresses:
