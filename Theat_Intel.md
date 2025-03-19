@@ -44,6 +44,34 @@ curl -s "https://api.ip2location.io/?ip=8.8.8.8&format=json" | jq
 
 You can also utilize https://cybergordon.com/ to check for IP reputation!
 
+## Enumerating Domains with RDAP
+
+The Registration Data Access Protocol (RDAP) is the definitive source for delivering generic top-level domain name (gTLD) registration information in place of sunsetted WHOIS services. The `rdap` command is a full-featured, command-line interface (CLI) client for RDAP. It supports RDAP bootstrapping, caching, different output formats, and many more features.
+
+![rdap](https://github.com/user-attachments/assets/e744a79f-75b0-4e40-a3b1-29fe1cd94455)
+
+### Basic Queries
+
+```sh
+# Domain
+rdap example.com
+
+# TLD
+rdap .com
+
+# IP Address
+rdap 192.0.2.1
+
+# CIDR
+rdap 10/8
+
+# ASN
+rdap as64496
+
+# URL
+rdap https://rdap.iana.org/domain/com
+```
+
 ## Email Recon
 
 ```curl emailrep.io/john.smith@gmail.com```
