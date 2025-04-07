@@ -135,6 +135,54 @@ trivy aws --service s3
 trivy aws --service s3 --arn arn:aws:s3:::example-bucket
 ```
 
+### API Gateway
+
+AWS API Gateway is a service offered by Amazon Web Services (AWS) designed for developers to create, publish, and oversee APIs on a large scale. It functions as an entry point to an application, permitting developers to establish a framework of rules and procedures. This framework governs the access external users have to certain data or functionalities within the application.
+
+Enumeration:
+
+```sh
+# Generic info
+aws apigatewayv2 get-domain-names
+aws apigatewayv2 get-domain-name --domain-name <name>
+aws apigatewayv2 get-vpc-links
+
+# Enumerate APIs
+aws apigatewayv2 get-apis # This will also show the resource policy (if any)
+aws apigatewayv2 get-api --api-id <id>
+
+## Get all the info from an api at once
+aws apigatewayv2 export-api --api-id <id> --output-type YAML --specification OAS30 /tmp/api.yaml
+
+## Get stages
+aws apigatewayv2 get-stages --api-id <id>
+
+## Get routes
+aws apigatewayv2 get-routes --api-id <id>
+aws apigatewayv2 get-route --api-id <id> --route-id <route-id>
+
+## Get deployments
+aws apigatewayv2 get-deployments --api-id <id>
+aws apigatewayv2 get-deployment --api-id <id> --deployment-id <dep-id>
+
+## Get integrations
+aws apigatewayv2 get-integrations --api-id <id>
+
+## Get authorizers
+aws apigatewayv2 get-authorizers --api-id <id>
+aws apigatewayv2 get-authorizer --api-id <id> --authorizer-id <uth-id>
+
+## Get domain mappings
+aws apigatewayv2 get-api-mappings --api-id <id> --domain-name <dom-name>
+aws apigatewayv2 get-api-mapping --api-id <id> --api-mapping-id <map-id> --domain-name <dom-name>
+
+## Get models
+aws apigatewayv2 get-models --api-id <id>
+
+## Call API
+https://<api-id>.execute-api.<region>.amazonaws.com/<stage>/<resource>
+```
+
 ## GCP
 
 Enumerate IP addresses:
