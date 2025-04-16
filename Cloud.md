@@ -135,6 +135,88 @@ trivy aws --service s3
 trivy aws --service s3 --arn arn:aws:s3:::example-bucket
 ```
 
+### SSM
+
+Script to quickly enumerate and select AWS SSM-managed EC2 instances via `fzf`, then start an SSM session without needing SSH or public access.
+
+```sh
+#!/bin/zsh
+
+function main() {
+  if ! command -v fzf >/dev/null || ! command -v aws >/dev/null; then
+    echo "This function requires 'aws' CLI and 'fzf' to be installed." >&2
+    return 1
+  fi
+
+  echo -e "Fetching SSM instances..."
+
+  local instances
+  instances=$(aws ssm describe-instance-information \
+    --query "InstanceInformationList[*].[InstanceId,ComputerName]" \
+    --output text)
+
+  if [[ -z "$instances" ]]; then
+    echo "No SSM-managed instances found." >&2
+    return 1
+  fi
+
+  # Extract Instance IDs
+  local ids=()
+  while read -r id _; do
+    ids+=("$id")
+  done <<< "$instances"
+
+  # Get Name tags for all instance IDs
+  local name_data
+  name_data=$(aws ec2 describe-instances \
+    --instance-ids "${ids[@]}" \
+    --query "Reservations[].Instances[].{InstanceId:InstanceId, Name:(Tags[?Key=='Name']|[0].Value)}" \
+    --output text)
+
+  declare -A name_map
+  while read -r id name; do
+    name_map["$id"]="${name:-N/A}"
+  done <<< "$name_data"
+
+  # Combine data with aligned formatting
+  local enriched
+  enriched=$(while read -r line; do
+    id=$(awk '{print $1}' <<< "$line")
+    hostname=$(awk '{print $2}' <<< "$line")
+    platform=$(awk '{print $3}' <<< "$line")
+    name="${name_map[$id]:-N/A}"
+    printf "%-30s %-20s %-30s\n" "$name" "$id" "$hostname"
+  done <<< "$instances")
+
+  # Dynamically size the FZF selection window based on amount of instances
+  local line_count
+  line_count=$(echo "$enriched" | wc -l)
+
+  local height
+  if (( line_count < 10 )); then
+    height=30
+  elif (( line_count < 20 )); then
+    height=50
+  else
+    height=80
+  fi
+
+  local selected instance_id
+  selected=$(echo "$enriched" | fzf --header="Select an instance to connect via SSM" --height="${height}%" --reverse)
+  instance_id=$(awk '{print $2}' <<< "$selected")
+
+  if [[ -n "$instance_id" ]]; then
+    echo "Starting SSM session to $instance_id..." >&2
+    aws ssm start-session --target "$instance_id"
+  else
+    echo "No instance selected." >&2
+    return 1
+  fi
+}
+
+main
+```
+
 ### API Gateway
 
 AWS API Gateway is a service offered by Amazon Web Services (AWS) designed for developers to create, publish, and oversee APIs on a large scale. It functions as an entry point to an application, permitting developers to establish a framework of rules and procedures. This framework governs the access external users have to certain data or functionalities within the application.
