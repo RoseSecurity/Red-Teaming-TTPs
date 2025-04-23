@@ -246,6 +246,14 @@ sk(-[a-zA-Z0-9]+)*-[A-Za-z0-9]{48}
 AIza[0-9A-Za-z-_]{35}
 ```
 
+## Search for Slack Tokens
+
+```sh
+(path:*.(xml|json|properties|sql|txt|log|tmp|backup|bak|enc|yml|yaml|toml|ini|config|conf|cfg|env|envrc|prod|secret|private|key))
+AND (access_key|secret_key|access_token|api_key|apikey|api_secret|apiSecret|app_secret|application_key|app_key|appkey|auth_token|authsecret)
+AND ("xox" AND slack)
+```
+
 ## Search for Hardcoded Passwords
 
 ```sh
