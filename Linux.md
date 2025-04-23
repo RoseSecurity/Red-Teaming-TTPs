@@ -240,6 +240,12 @@ To use this regex expression on the webpage, prepend and append a `/` to the exp
 sk(-[a-zA-Z0-9]+)*-[A-Za-z0-9]{48}
 ```
 
+## Search for Google API Keys
+
+```sh
+AIza[0-9A-Za-z-_]{35}
+```
+
 ## Search for Hardcoded Passwords
 
 ```sh
