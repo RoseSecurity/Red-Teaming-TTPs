@@ -42,6 +42,12 @@ S3 Log Google Dorking
 s3 site:amazonaws.com filetype:log
 ```
 
+Public Redshift Cluster Enumeration
+
+```sh
+sudo masscan 0.0.0.0/0 --exclude 255.255.255.255 -p5439 --rate=1000 -oG - 2>/dev/null | grep "Ports: 5439/open" | awk '{print $2}' | tee open_5439_ips.txt | xargs -r -n1 -P5 -I{} nmap -p 5439 --script ssl-cert {} | grep -i redshift
+```
+
 Python code to check if AWS key has permissions to read s3 buckets:
 
 ```python
