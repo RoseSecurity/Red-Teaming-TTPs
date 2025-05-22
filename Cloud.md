@@ -223,6 +223,14 @@ function main() {
 main
 ```
 
+Parameter Store:
+
+Lists the parameters in the AWS account or the parameters shared with the authenticated user (secrets can be stored here):
+
+```sh
+aws ssm describe-parameters
+```
+
 ### API Gateway
 
 AWS API Gateway is a service offered by Amazon Web Services (AWS) designed for developers to create, publish, and oversee APIs on a large scale. It functions as an entry point to an application, permitting developers to establish a framework of rules and procedures. This framework governs the access external users have to certain data or functionalities within the application.
