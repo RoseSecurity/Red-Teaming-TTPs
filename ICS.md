@@ -199,6 +199,12 @@ cgi-bin/MANGA/index.cgi
 
 ## Miscellaneous
 
+IEC 60870-5-104 (power grid SCADA)
+
+```
+port:2404 asdu
+```
+
 Nordex Wind Turbine Farms
 
 ```
