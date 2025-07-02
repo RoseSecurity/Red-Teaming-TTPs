@@ -456,7 +456,7 @@ set rhosts 212.x.x.14
 run
 ```
 
-## MQTT Broker Enumeration
+## MQTT Enumeration
 
 MQTT is a lightweight messaging protocol often used in IoT (Internet of Things) applications.
 
@@ -465,4 +465,65 @@ MQTT is a lightweight messaging protocol often used in IoT (Internet of Things) 
 
 ```sh
 nmap -p 1883 --script mqtt-info <target>
+```
+
+### Topic Enumeration
+
+The following Rust application enumerates the topics of an MQTT target:
+
+Usage:
+
+```sh
+./mqtt-topic-enumerator test.mosquitto.org
+
+Topic: /PostGeneratorSensorValues/8e7acc5a-6d51-49ea-b289-d32c0a19eeb9/02df6380-958b-494d-a164-dc81038aade9
+Topic: /SETE_TECNOLOGIA/relay52805/out/sw_version
+Topic: /Sentinel/relay49847/out/hw_version
+Topic: /Sentinel/relay49847/out/i1Topic: /ac/is_valid
+Topic: /ac/power
+Topic: /clientnotification/bridge1_status
+Topic: /connection/statu0
+```
+
+Program:
+
+```rust
+use rumqttc::{Client, Event, MqttOptions, Packet, QoS};
+use std::collections::HashSet;
+use std::env;
+use std::time::Duration;
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+    let host = args
+        .get(1)
+        .map(String::as_str)
+        .unwrap_or("test.mosquitto.org");
+    let port: u16 = args.get(2).and_then(|p| p.parse().ok()).unwrap_or(1883);
+
+    let mut mqttoptions = MqttOptions::new("rumqtt-enumerator", host, port);
+    mqttoptions.set_keep_alive(Duration::from_secs(5));
+    let (client, mut connection) = Client::new(mqttoptions, 10);
+
+    client.subscribe("#", QoS::AtMostOnce).unwrap();
+
+    let mut seen: HashSet<String> = HashSet::new();
+    println!("Listening… press Ctrl-C to stop");
+
+    for event in connection.iter() {
+        match event {
+            Ok(Event::Incoming(Packet::Publish(p))) => {
+                let topic = &*p.topic; // Arc<str> → &str
+                if seen.insert(topic.to_string()) {
+                    println!("Topic: {topic}");
+                }
+            }
+            Ok(_) => {}
+            Err(e) => {
+                eprintln!("Connection error: {e}");
+                break;
+            }
+        }
+    }
+}
 ```
