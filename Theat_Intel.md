@@ -362,3 +362,168 @@ This command lets you search Shodan and view the results in a terminal-friendly 
 ```sh
 shodan search --fields ip_str,port,org,hostnames microsoft iis 6.0
 ```
+
+## Azure Subdomain Enumeration
+
+A simple Go program for enumerating Azure targets:
+
+```go
+package main
+
+import (
+	"flag"
+	"fmt"
+	"net"
+	"os"
+
+	"github.com/miekg/dns"
+)
+
+type Config struct {
+	Domain       string
+	Permutations bool
+	EnumA        bool
+	EnumCNAME    bool
+	EnumMX       bool
+	EnumNS       bool
+	EnumSOA      bool
+	EnumTXT      bool
+}
+
+func main() {
+	cfg := parseFlags()
+	if cfg.Domain == "" {
+		flag.Usage()
+		os.Exit(1)
+	}
+
+	subdomains := []string{
+		".onmicrosoft.com", ".scm.azurewebsites.net", ".azurewebsites.net", ".p.azurewebsites.net", ".cloudapp.net",
+		".file.core.windows.net", ".blob.core.windows.net", ".queue.core.windows.net", ".table.core.windows.net",
+		".mail.protection.outlook.com", ".sharepoint.com", ".redis.cache.windows.net", ".documents.azure.com",
+		".database.windows.net", ".vault.azure.net", ".azureedge.net", ".search.windows.net", ".azure-api.net", ".azurecr.io",
+	}
+
+	targets := generateTargetDomains(cfg, subdomains)
+	for _, t := range targets {
+		if cfg.EnumA && hasARecord(t) {
+			fmt.Printf("[+] Discovered: %s\n", t)
+			performLookups(cfg, t)
+		}
+	}
+}
+
+func parseFlags() Config {
+	var c Config
+	flag.StringVar(&c.Domain, "domain", "", "Target domain without TLD (e.g., victim)")
+	flag.BoolVar(&c.Permutations, "perm", false, "Generate keyword permutations around the domain")
+	flag.BoolVar(&c.EnumA, "a", true, "Enumerate A records")
+	flag.BoolVar(&c.EnumCNAME, "cname", true, "Enumerate CNAME records")
+	flag.BoolVar(&c.EnumMX, "mx", true, "Enumerate MX records")
+	flag.BoolVar(&c.EnumNS, "ns", true, "Enumerate NS records")
+	flag.BoolVar(&c.EnumSOA, "soa", true, "Enumerate SOA records")
+	flag.BoolVar(&c.EnumTXT, "txt", true, "Enumerate TXT records")
+	flag.Parse()
+	return c
+}
+
+func generateTargetDomains(cfg Config, subs []string) []string {
+	bases := []string{cfg.Domain}
+	if cfg.Permutations {
+		keywords := []string{
+			"root", "web", "api", "azure", "azure-logs", "data", "database", "data-private", "data-public", "dev",
+			"development", "demo", "files", "filestorage", "internal", "keys", "logs", "private", "prod", "production",
+			"public", "service", "services", "splunk", "sql", "staging", "storage", "storageaccount", "test", "useast",
+			"useast2", "centralus", "northcentralus", "westcentralus", "westus", "westus2",
+		}
+		for _, k := range keywords {
+			bases = append(bases, fmt.Sprintf("%s-%s", cfg.Domain, k))
+			bases = append(bases, fmt.Sprintf("%s-%s", k, cfg.Domain))
+		}
+	}
+
+	var targets []string
+	for _, b := range bases {
+		for _, s := range subs {
+			targets = append(targets, b+s)
+		}
+	}
+	return targets
+}
+
+func hasARecord(d string) bool {
+	_, err := net.LookupIP(d)
+	return err == nil
+}
+
+func performLookups(cfg Config, d string) {
+	if cfg.EnumA {
+		if ips, _ := net.LookupIP(d); len(ips) > 0 {
+			fmt.Printf("  A     %v\n", ips)
+		}
+	}
+	if cfg.EnumCNAME {
+		if c, err := net.LookupCNAME(d); err == nil {
+			fmt.Printf("  CNAME %s\n", c)
+		}
+	}
+	if cfg.EnumNS {
+		if nss, err := net.LookupNS(d); err == nil {
+			var hosts []string
+			for _, ns := range nss {
+				hosts = append(hosts, ns.Host)
+			}
+			fmt.Printf("  NS    %v\n", hosts)
+		}
+	}
+	if cfg.EnumMX {
+		if mxs, err := net.LookupMX(d); err == nil {
+			var entries []string
+			for _, mx := range mxs {
+				entries = append(entries, fmt.Sprintf("%s (%d)", mx.Host, mx.Pref))
+			}
+			fmt.Printf("  MX    %v\n", entries)
+		}
+	}
+	if cfg.EnumTXT {
+		if txts, err := net.LookupTXT(d); err == nil {
+			fmt.Printf("  TXT   %v\n", txts)
+		}
+	}
+	if cfg.EnumSOA {
+		if soa, err := querySOA(d); err == nil {
+			fmt.Printf("  SOA   %s\n", soa)
+		}
+	}
+}
+
+func querySOA(name string) (string, error) {
+	m := new(dns.Msg)
+	m.SetQuestion(dns.Fqdn(name), dns.TypeSOA)
+
+	in, err := dns.Exchange(m, "8.8.8.8:53")
+	if err != nil {
+		return "", err
+	}
+	for _, ans := range in.Answer {
+		if soa, ok := ans.(*dns.SOA); ok {
+			return soa.String(), nil
+		}
+	}
+	return "", fmt.Errorf("SOA record not found")
+}
+```
+
+Output:
+
+```sh
+azscan -domain umgc
+
+[+] Discovered: umgc.mail.protection.outlook.com
+  A     [2a01:111:f403:c927::1 2a01:111:f403:f90c:: 2a01:111:f403:f802::3 2a01:111:f403:c927:: 52.101.10.6 52.101.40.2 52.101.11.7 52.101.41.54]
+  CNAME umgc.mail.protection.outlook.com.
+[+] Discovered: umgc.vault.azure.net
+  A     [20.125.170.76 20.125.170.77 20.125.170.78]
+  CNAME data-prod-ncu.vaultcore.azure.net.
+```
+
