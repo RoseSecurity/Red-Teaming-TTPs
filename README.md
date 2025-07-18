@@ -8,7 +8,8 @@
 > - [X] **Cheatsheets**: Quick reference guides for common tools and techniques.
 > - [X] **Guides**: Detailed explanations and insights on various cybersecurity topics.
 > - [X] **Scripts**: Useful scripts for automating tasks and improving efficiency.
-> An updated PDF of these TTPs is available [here](Guides/Red_Teaming_TTPs.md) as well.
+>
+> An updated PDF of these TTPs is available [here](Guides/Red_Teaming_TTPs.pdf) as well.
 > Feel free to explore, use, and contribute to these resources. Any notes, improvements, or additional content are welcome!
 
 ## Table of Contents
