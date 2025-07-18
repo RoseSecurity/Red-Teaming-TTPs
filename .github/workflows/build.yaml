@@ -36,7 +36,7 @@ jobs:
 
       - name: Generate combined PDF
         working-directory: .github
-        run: node bookify.js --paper Letter --css custom.css
+        run: node bookify.js --paper Letter --css .github/custom.css
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
