@@ -6,8 +6,8 @@ on:
     branches: [main]
     paths:
       - '**/*.md'
-      - 'bookify.js'
-      - 'custom.css'
+      - '.github/bookify.js'
+      - '.github/custom.css'
 
 jobs:
   build:
@@ -34,7 +34,7 @@ jobs:
         run: npm ci
 
       - name: Generate combined PDF
-        run: node bookify.js --paper Letter --css custom.css
+        run: node .github/bookify.js --paper Letter --css .github/custom.css
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
