@@ -1,0 +1,104 @@
+/* book.css – styling for Red Teaming TTPs PDF */
+
+/* ----- Page setup -------------------------------------------------------- */
+@page {
+  margin: 1in;
+  size: Letter; /* change to A4 if needed */
+}
+
+/* ----- Base typography --------------------------------------------------- */
+body {
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-size: 11pt;
+  line-height: 1.5;
+  color: #222;
+}
+
+/* ----- Headings ---------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
+  color: #b30000; /* red accent matches repo theme */
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  font-size: 2rem;
+  border-bottom: 2px solid #b30000;
+  padding-bottom: 0.3em;
+  page-break-before: always; /* start new chapter on new page */
+}
+
+h2 { font-size: 1.6rem; }
+h3 { font-size: 1.3rem; }
+h4 { font-size: 1.1rem; }
+
+/* Prevent headings from dangling at bottom of page */
+h2, h3, h4, h5, h6 { page-break-after: avoid; }
+
+/* ----- Code blocks & inline code ---------------------------------------- */
+code, pre {
+  font-family: "Courier New", monospace;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+pre {
+  padding: 0.75em 1em;
+  overflow-x: auto;
+  page-break-inside: avoid;
+  border: 1px solid #e0e0e0;
+}
+
+/* ----- Tables ----------------------------------------------------------- */
+table {
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 0.4em 0.6em;
+}
+
+table thead {
+  background-color: #f0f0f0;
+}
+
+/* ----- Blockquotes ------------------------------------------------------ */
+blockquote {
+  border-left: 4px solid #b30000;
+  padding-left: 1em;
+  color: #555;
+  margin: 1em 0;
+  font-style: italic;
+}
+
+/* ----- Horizontal rule -------------------------------------------------- */
+hr {
+  border: none;
+  border-top: 1px dashed #b30000;
+  margin: 2em 0;
+}
+
+/* ----- Images ----------------------------------------------------------- */
+img {
+  max-width: 100%;
+  page-break-inside: avoid;
+}
+
+/* ----- Links ------------------------------------------------------------ */
+a {
+  color: #b30000;
+  text-decoration: none;
+}
+
+a:hover { text-decoration: underline; }
+
+/* ----- Footnotes / Small text ------------------------------------------ */
+.small {
+  font-size: 0.85em;
+  color: #666;
+}
+

@@ -1,0 +1,48 @@
+name: Build Red Teaming TTPs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.md'
+      - 'bookify.js'
+      - 'custom.css'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate combined PDF
+        run: node bookify.js --paper Letter --css custom.css
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Red_Teaming_TTPs
+          path: Guides/Red_Teaming_TTPs.pdf
+
+      - name: Commit PDF back to repo
+        uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          commit_message: "chore(doc): regenerate Red_Teaming_TTPs.pdf"
+          file_pattern: Guides/Red_Teaming_TTPs.pdf
