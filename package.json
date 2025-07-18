@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "markdown-pdf": "^11.0.0",
+    "yargs": "^18.0.0"
+  }
+}
