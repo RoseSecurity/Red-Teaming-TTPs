@@ -28,13 +28,15 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('.github/package-lock.json') }}
 
       - name: Install dependencies
+        working-directory: .github
         run: npm ci
 
       - name: Generate combined PDF
-        run: node .github/bookify.js --paper Letter --css .github/custom.css
+        working-directory: .github
+        run: node bookify.js --paper Letter --css custom.css
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
