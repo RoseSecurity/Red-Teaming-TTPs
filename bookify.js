@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
+const fs = require("fs/promises");
 const path = require("path");
 const yargs = require("yargs/yargs");
 const { hideBin } = require("yargs/helpers");
-const markdownpdf = require("markdown-pdf");
+const { mdToPdf } = require("md-to-pdf");
 
 const argv = yargs(hideBin(process.argv))
   .option("paper", {
@@ -31,25 +31,44 @@ const chapters = [
   "Cloud.md",
 ].map((f) => path.resolve(f));
 
-// Verify that every chapter exists before starting
-for (const file of chapters) {
-  if (!fs.existsSync(file)) {
-    console.error(`✗ Missing chapter: ${file}`);
-    process.exit(1);
-  }
-}
-
-const outputPath = path.resolve("Guides/Red_Teaming_TTPs.pdf");
-
-markdownpdf({
-  paperFormat: argv.paper,
-  cssPath: argv.css ? path.resolve(argv.css) : undefined,
-})
-  .concat.from.paths(chapters)
-  .to(outputPath, function (err) {
-    if (err) {
-      console.error("PDF generation failed:", err);
+(async () => {
+  // Ensure all chapters exist
+  for (const file of chapters) {
+    try {
+      await fs.access(file);
+    } catch {
+      console.error(`✗ Missing chapter: ${file}`);
       process.exit(1);
     }
+  }
+
+  const pageBreak = "\n\n<div class=\"page-break\"></div>\n\n";
+  const combinedMarkdown = (
+    await Promise.all(chapters.map((f) => fs.readFile(f, "utf8")))
+  ).join(pageBreak);
+
+  await fs.mkdir(path.resolve("Guides"), { recursive: true });
+  const outputPath = path.resolve("Guides/Red_Teaming_TTPs.pdf");
+
+  try {
+    await mdToPdf(
+      { content: combinedMarkdown },
+      {
+        dest: outputPath,
+        stylesheet: argv.css ? [path.resolve(argv.css)] : undefined,
+        pdf_options: {
+          format: argv.paper,
+          margin: "25mm",
+          printBackground: true,
+        },
+        launch_options: {
+          args: ["--no-sandbox", "--disable-setuid-sandbox"], // for CI runners
+        },
+      }
+    );
     console.log(`✓ PDF generated at ${outputPath}`);
-  });
+  } catch (err) {
+    console.error("PDF generation failed:", err);
+    process.exit(1);
+  }
+})();
