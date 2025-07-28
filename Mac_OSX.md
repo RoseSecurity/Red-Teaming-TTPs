@@ -164,6 +164,34 @@ Retrieve Safari history for user:
 sqlite3 ~/Library/Safari/History.db "select datetime(history_visits.visit_time + 978307200, 'unixepoch') as last_visited, history_items.url from history_visits, history_items where history_visits.history_item=history_items.id order by last_visited;"
 ```
 
+### Safari Settings
+
+To view all the settings for Safari, run:
+
+```sh
+defaults read com.apple.Safari
+```
+
+Output example:
+
+```console
+{
+    AutoFillCreditCardData = 0;
+    AutoplayPolicyWhitelistConfigurationUpdateDate = "2025-07-28 15:35:52 +0000";
+    AutoplayQuirksWhitelistConfigurationUpdateDate = "2025-07-28 15:35:52 +0000";
+    CloseTabsAutomatically = 1;
+    DefaultBrowserPromptingState3 = 4;
+    DidActivateReaderAtleastOnce = 1;
+    DidClearLegacySpotlightMetadataCaches = 1;
+    DidGrantSearchProviderAccessToWebNavigationExtensions = 1;
+    DidMigrateAppExtensionPermissions = 1;
+    DidMigrateDefaultsToSandboxSecureDefaults = 1;
+    DidMigrateDownloadFolderToSandbox = 1;
+    DidMigrateLastSessionPlist = 1;
+    ...
+}
+```
+
 ### Keychains
 
 ```sh
