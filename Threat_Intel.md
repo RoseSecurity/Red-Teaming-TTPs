@@ -527,3 +527,40 @@ azscan -domain umgc
   CNAME data-prod-ncu.vaultcore.azure.net.
 ```
 
+## GitHub Email Addresses
+
+A script for enumerating GitHub to find a user's email:
+
+```sh
+#!/usr/bin/env bash
+
+# A script for enumerating GitHub to find a user's email
+
+USERNAME="$1"
+if [ -z "$USERNAME" ]; then
+  echo "Usage: $0 <github_username>"
+  exit 1
+fi
+
+echo "Searching emails for GitHub user: $USERNAME"
+
+echo -e "\nChecking public profile..."
+PROFILE_EMAIL=$(curl -s "https://api.github.com/users/$USERNAME" | jq -r '.email')
+if [ "$PROFILE_EMAIL" != "null" ] && [ -n "$PROFILE_EMAIL" ]; then
+  echo "Public profile email: $PROFILE_EMAIL"
+else
+  echo "No public email found on profile."
+fi
+
+echo -e "\nChecking recent commit activity..."
+EMAILS=$(curl -s "https://api.github.com/users/$USERNAME/events/public" |
+  jq -r '.[].payload.commits[]? | select(.author.email | contains("noreply") | not) | .author.email' |
+  sort -u)
+
+if [ -n "$EMAILS" ]; then
+  echo "Emails found in recent commits:"
+  echo "$EMAILS"
+else
+  echo "No commit emails found."
+fi
+```
