@@ -1,8 +1,8 @@
 # :cloud: Enum_AzureSubdomains: Anonymously Enumerating Azure Services
 
-<p align="center">
-  <img alt="AzureDoggo" src="https://user-images.githubusercontent.com/72598486/216847358-a72ce9e8-7d25-4b27-b386-f21d339580fa.png">
-</p>
+<div align="center">
+  <img width="530" height="471" alt="image" src="https://github.com/user-attachments/assets/b4bb4193-06f9-4d82-98ed-d7ebf78678b2" />
+</div>
 
 Microsoft makes use of a number of different domains and subdomains for each of their Azure services. From SQL databases to SharePoint drives, each service maps to its respective domain/subdomain, and with the proper toolset, these can be identified through DNS enumeration to yield information about the target domain's infrastructure. ```enum_azuresubdomains.rb``` is a Metasploit module for enumerating public Azure services by validating legitimate subdomains through various DNS record queries. This cloud reconnaissance module rapidly identifies API services, storage accounts, key vaults, databases, and more! Expedite your cloud reconnaissance phases with ```enum_azuresubdomains.rb```.
 
@@ -33,7 +33,7 @@ Microsoft makes use of a number of different domains and subdomains for each of 
 
 # Demo:
 
-https://user-images.githubusercontent.com/72598486/217250582-eada89ee-ac4a-41c3-8421-314aa8e75bca.mov
+https://github.com/user-attachments/assets/ffe508b6-a146-454d-b453-96b9d59b7e27
 
 # Install:
 
