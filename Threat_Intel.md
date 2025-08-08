@@ -564,3 +564,11 @@ else
   echo "No commit emails found."
 fi
 ```
+
+## Code Enumeration with Grep App
+
+- Rapidly scan millions of code repositories with Grep App:
+
+```sh
+curl -s -H "Accept: application/json" "https://grep.app/api/search?q=-----BEGIN+RSA+PRIVATE+KEY-----" | jq '.'
+```
