@@ -101,6 +101,86 @@ PCWorx devices allow unaunthenticated requests that query for system information
 
 # Shodan.io Queries
 
+## Common ICS Devices
+
+Siemens:
+
+```sh
+# SIMATIC devices
+"SIMATIC" port:502,80,443,161,102
+
+# SCALANCE switches
+"SCALANCE" port:80,443,161,23
+
+# SIMOTION controllers
+"SIMOTION" port:502,102,80
+
+# SIPLUS devices
+"SIPLUS" port:502,102,80,443
+
+# LOGO! controllers
+"LOGO!" port:502,102,80
+
+# RUGGEDCOM devices
+"RUGGEDCOM" port:80,443,161,23
+
+# S7-300 series
+"S7-300" port:102,502
+
+# S7-1200 series
+"S7-1200" port:102,502,80,443
+
+# S7-1500 series
+"S7-1500" port:102,502,80,443
+
+# Generic S7 devices
+"S7" port:102,502
+
+# SCALANCE X-series switches
+"XB-" OR "XR-" port:80,443,161,23
+
+# Siemens article numbers (6-prefix format)
+"6GK" OR "6ES" OR "6EP" OR "6AV" port:102,502,80,443,161
+
+# Specific SCALANCE article numbers
+"6GK5" port:80,443,161,23
+```
+
+Omron:
+
+```sh
+# CJ series PLCs
+"CJ2" OR "CJ1" port:9600,502,80
+
+# NX/NJ series
+"NX" OR "NJ" manufacturer:"Omron" port:502,80,443
+
+# CP series
+"CP1" OR "CP2" port:502,80,9600
+
+# CRT/DRT series
+"CRT" OR "DRT" manufacturer:"Omron" port:502,80
+
+# Specific Omron models (using article number pattern)
+"CJ2H-" OR "CP1L-" OR "NJ101-" port:502,80,9600
+```
+
+ABB:
+
+```sh
+# AC500 series PLCs
+"AC500" port:502,80,443
+
+# ABB industrial devices
+manufacturer:"ABB" port:502,80,443,161
+
+# PM/TB series devices
+"PM56" OR "TB54" manufacturer:"ABB" port:502,80,443
+
+# ABB article number format (1SAP...)
+"1SAP" manufacturer:"ABB" port:502,80,443
+```
+
 ## PLCs
 
 Shodan one-liner for enumerating Siemens PLCs, SCADA software, and HMI web pages
