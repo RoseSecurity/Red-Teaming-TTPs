@@ -43,6 +43,7 @@ Share with your friends:
 - [Hacking-Lab](https://hacking-lab.com/)
 - [HSTRIKE](https://hstrike.com)
 - [ImmersiveLabs](https://immersivelabs.com)
+- [LabEx Cybersecurity Free Labs](https://labex.io/free-labs/cybersecurity)
 - [NewbieContest](https://lnkd.in/ewBk6fU5)
 - [OverTheWire](http://overthewire.org)
 - [Practical Pentest Labs](https://lnkd.in/esq9Yuv5)
