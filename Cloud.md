@@ -601,6 +601,35 @@ kubectl create secret <secret-name>
 “Generic JWT”: “[A-Za-z0-9-]{20,}\.[A-Za-z0-9-]{20,}\.[A-Za-z0-9-_]{20,}”
  ```
 
+## Go Environment Variable Enumeration
+
+A sample script that enumerates environment variables. This script pairs well with the regex list provided above:
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func main() {
+	sensitiveKeywords := []string{"password", "secret", "key", "token", "api", "auth", "credential"}
+
+	envVars := os.Environ()
+	for _, e := range envVars {
+		envLower := strings.ToLower(e)
+		for _, keyword := range sensitiveKeywords {
+			if strings.Contains(envLower, keyword) {
+				fmt.Printf("SENSITIVE: %s\n", e)
+				break
+			}
+		}
+	}
+}
+```
+
 ## Jira
 
 ### Privileges
