@@ -572,3 +572,33 @@ fi
 ```sh
 curl -s -H "Accept: application/json" "https://grep.app/api/search?q=-----BEGIN+RSA+PRIVATE+KEY-----" | jq '.'
 ```
+
+## Certificate Transparency Logs Enumeration with Go
+
+Certificate Transparency (CT) logs are publicly accessible repositories that record all SSL/TLS certificates issued by Certificate Authorities. These logs make it possible to monitor certificate issuance, detect misissued certificates, and discover subdomains and services associated with a target domain.
+
+A popular way to search these logs is via [crt.sh](https://crt.sh), which provides a web interface and API for querying certificate records. For programmatic access in Go applications, the [go-crtsh](https://github.com/The-Infra-Company/go-crtsh) library offers a convenient wrapper around the crt.sh API:
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "log"
+
+    gocrtsh "github.com/The-Infra-Company/go-crtsh"
+)
+
+func main() {
+    client := gocrtsh.New()
+    ctx := context.Background()
+
+    records, err := client.BasicSearch(ctx, "target.com")
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    fmt.Printf("Found %d certificates for target.com\n", len(records))
+}
+```
