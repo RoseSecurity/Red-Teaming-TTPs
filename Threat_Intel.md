@@ -117,6 +117,14 @@ rdap https://rdap.iana.org/domain/com
 }
 ```
 
+### Hunter.io
+
+- Search for email addresses associated with a specific domain or company. You can also search for specific individuals by providing their name and the company domain:
+
+```sh
+curl -X GET "https://api.hunter.io/v2/email-finder?domain=reddit.com&first_name=Alexis&last_name=Ohanian&api_key=XXXXXXXXXXXXXXX"
+```
+
 ## nrich IP Enumeration
 
 A command-line tool to quickly analyze all IPs in a file and see which ones have open ports/ vulnerabilities. Can also be fed data from stdin to be used in a data pipeline.
