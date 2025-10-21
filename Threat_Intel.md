@@ -581,6 +581,14 @@ fi
 curl -s -H "Accept: application/json" "https://grep.app/api/search?q=-----BEGIN+RSA+PRIVATE+KEY-----" | jq '.'
 ```
 
+```sh
+curl -sG "https://grep.app/search" \
+  --data-urlencode "regexp=true" \
+  --data-urlencode 'q="AKIA[A-Z0-9]{16}|ASIA[A-Z0-9]{16}"' \
+  | sed -n 's/.*<mark>\([^<]*\)<\/mark>.*/\1/p' \
+  | sort -u
+```
+
 ## Certificate Transparency Logs Enumeration with Go
 
 Certificate Transparency (CT) logs are publicly accessible repositories that record all SSL/TLS certificates issued by Certificate Authorities. These logs make it possible to monitor certificate issuance, detect misissued certificates, and discover subdomains and services associated with a target domain.
