@@ -537,7 +537,7 @@ azscan -domain umgc
 
 ## GitHub Email Addresses
 
-A script for enumerating GitHub to find a user's email:
+- A script for enumerating GitHub to find a user's email:
 
 ```sh
 #!/usr/bin/env bash
@@ -571,6 +571,41 @@ if [ -n "$EMAILS" ]; then
 else
   echo "No commit emails found."
 fi
+```
+
+- Script to enumerate all users in a GitHub organization and find their public emails
+
+```sh
+#!/usr/bin/env bash
+
+# Script to enumerate all users in a GitHub org and find their public emails using gh CLI
+
+ORG="$1"
+PER_PAGE=100
+
+if [ -z "$ORG" ]; then
+  echo "Usage: $0 <github_organization>"
+  exit 1
+fi
+
+echo "Enumerating users and searching for public emails in GitHub organization: $ORG"
+
+page=1
+while :; do
+  USERS=$(gh api "/orgs/$ORG/members?per_page=$PER_PAGE&page=$page" | jq -r '.[].login')
+  [ -z "$USERS" ] && break
+
+  for USERNAME in $USERS; do
+    PROFILE_EMAIL=$(gh api "/users/$USERNAME" | jq -r '.email // empty')
+    if [ -n "$PROFILE_EMAIL" ]; then
+      echo "$USERNAME: $PROFILE_EMAIL"
+    else
+      echo "$USERNAME: No public email"
+    fi
+  done
+
+  ((page++))
+done
 ```
 
 ## Code Enumeration with Grep App
