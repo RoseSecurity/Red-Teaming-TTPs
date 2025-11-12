@@ -640,3 +640,32 @@ In Jira, privileges can be checked by any user, authenticated or not, through th
 # Check non-authenticated privileges
 curl https://org.atlassian.net/rest/api/2/mypermissions | jq | grep -iB6 '"havePermission": true'
 ```
+
+## Kafka Recon
+
+Use Nmap to detect Kafka brokers and check for open ports:
+
+```sh
+nmap -p 9092,9093,2181 -sV target.com
+```
+
+List brokers via `kafkacat`:
+
+```sh
+❯ kcat -b target.com -L
+Metadata for all topics (from broker -1: target.com:9092/bootstrap):
+ 1 brokers:
+  broker 1 at target.com:9092 (controller)
+ 3 topics:
+  topic "RemoteMonitoringConnectedDevices" with 1 partitions:
+    partition 0, leader 1, replicas: 1, isrs: 1
+  topic "AlertNotifications" with 1 partitions:
+    partition 0, leader 1, replicas: 1, isrs: 1
+  topic "__consumer_offsets" with 50 partitions:
+```
+
+Save messages for offline analysis;
+
+```sh
+kcat -b target.com:9092 -t AlertNotifications -C -J | jq . > messages.json
+```
