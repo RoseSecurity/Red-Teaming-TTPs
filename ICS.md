@@ -1,6 +1,33 @@
-# :mechanical_arm:  ICS/SCADA Enumeration Techniques for Effective Scanning, Network Reconnaissance, and Tactical Host Probing
+# ICS/SCADA Enumeration Techniques
 
-## General Enumeration
+## Table of Contents
+
+- [General Enumeration](#general-enumeration) - T0846
+- [Siemens S7](#siemens-s7) - T0846
+- [Stopping S7 CPUs with Python](#stopping-s7-cpus-with-python) - T0816
+- [Modbus Scanning](#modbus-scanning) - T0846
+- [Bacnet](#bacnet) - T0846
+- [Enip](#enip) - T0846
+- [Niagara fOX](#niagara-fox) - T0846
+- [Omron](#omron) - T0846
+- [PCWorx Devices](#pcworx-devices) - T0846
+- [Shodan.io Queries](#shodanio-queries) - T0883
+  - [Common ICS Devices](#common-ics-devices)
+  - [PLCs](#plcs)
+  - [Maritime](#maritime)
+  - [Miscellaneous](#miscellaneous)
+  - [Exposed DICOM Servers](#exposed-dicom-servers)
+  - [Zyxel Firewall Vulnerability](#zyxel-firewall-unauthenticated-remote-command-injection)
+  - [SDT-CW3B1 Command Injection](#sdt-cw3b1-11---os-command-injection-cve-2021-46422)
+  - [Setting Up Shodan for Target Monitoring](#setting-up-shodan-for-target-monitoring)
+- [ICS Common File Extensions](#ics-common-file-extensions) - T1083
+- [Automated Tank Gauge (ATG) Remote Configuration Disclosure](#automated-tank-gauge-atg-remote-configuration-disclosure) - T0801
+- [Access Moxa Devices](#access-moxa-devices) - T0846
+- [MQTT Enumeration](#mqtt-enumeration) - T0883
+
+---
+
+## General Enumeration (T0846)
 
 ```bash
 nmap -Pn -sT --scan-delay 1s --max-parallelism 1 \
