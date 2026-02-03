@@ -1,6 +1,29 @@
 # Web Application TTPs
 
-## HPING3 DoS
+## Table of Contents
+
+- [HPING3 DoS](#hping3-dos) - T1498
+- [Hydra Online Brute Force](#hydra-online-brute-force) - T1110
+- [Download HTTP File and Execute](#download-http-file-and-execute) - T1105
+- [Hashcat](#hashcat) - T1110.002
+- [Malicious Javascript](#malicious-javascript) - T1059.007
+- [Execute Fileless Scripts in Golang](#execute-fileless-scripts-in-golang) - T1059
+- [Golang Reverse Shell](#golang-reverse-shell) - T1059
+- [Web Applications](#web-applications)
+  - [Command Injection](#command-injection) - T1059
+- [WayBack Machine Enumerator](#wayback-machine-enumerator) - T1596
+- [Golang Webserver Banner Scanner](#golang-webserver-banner-scanner) - T1046
+- [Minimal Golang WebDAV Server](#minimal-golang-webdav-server) - T1071.001
+- [Apple Filing Protocol (AFP)](#apple-filing-protocol-afp) - T1021
+- [Pre-Commit Hooks to Prevent Credential Leaks](#pre-commit-hooks-to-prevent-credential-leaks) - T1552
+- [Scanning Git History for Secrets](#scanning-git-history-for-secrets) - T1552.001
+- [Truffleroasting GitHub Organizations](#truffleroasting-github-organizations) - T1552.001
+- [Turning Nmap into a Vulnerability Scanner Using GitHub Actions](#turning-nmap-into-a-vulnerability-scanner-using-github-actions) - T1595.002
+- [XSS Testing](#xss-testing) - T1189
+
+---
+
+## HPING3 DoS (T1498)
 
 ```bash
 hping3 targetiP --flood --frag --spoof ip --destport # --syn
