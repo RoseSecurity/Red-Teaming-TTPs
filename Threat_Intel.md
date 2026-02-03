@@ -24,6 +24,10 @@
 ---
 
 ## Query IP geolocation information with IP2Location.io (T1016)
+> [!IMPORTANT]
+> For a comprehensive list of threat intelligence search engines, see this [awesome list](https://github.com/edoardottt/awesome-hacker-search-engines)
+
+## Query IP geolocation information with IP2Location.io
 
 ``` bash
 curl -s "https://api.ip2location.io/?ip=8.8.8.8&format=json" | jq
