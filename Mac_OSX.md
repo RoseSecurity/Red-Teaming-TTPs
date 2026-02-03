@@ -2,25 +2,25 @@
 
 ## Table of Contents
 
-- [Enumeration](#enumeration) - T1082
-  - [Gathering System Information Using IOPlatformExpertDevice](#gathering-system-information-using-ioplatformexpertdevice) - T1082
-  - [Exploring Application Bundles](#exploring-application-bundles) - T1083
-  - [Basic System Enumeration](#basic-system-enumeration) - T1082
-  - [Users](#users) - T1087.001
-  - [Last Login](#last-login) - T1087
-  - [Passwords](#passwords) - T1003
-  - [Safari History](#safari-history) - T1217
-  - [Safari Settings](#safari-settings) - T1217
-  - [Keychains](#keychains) - T1555.001
-  - [Network Services](#network-services) - T1046
-  - [SMB Shares](#smb-shares) - T1135
-  - [AFP Shares](#afp-shares) - T1135
-  - [SSH Scanning](#ssh-scanning) - T1046
-  - [Network Service Scanning](#network-service-scanning) - T1046
-  - [System Profiler](#system-profiler) - T1082
-- [Persistence](#persistence) - T1543.001
-  - [Extended Attributes](#extended-attributes) - T1564.004
-  - [LaunchAgent Backdoors](#launchagent-backdoors) - T1543.001
+- [Enumeration (T1082)](#enumeration-t1082)
+  - [Gathering System Information Using IOPlatformExpertDevice (T1082)](#gathering-system-information-using-ioplatformexpertdevice-t1082)
+  - [Exploring Application Bundles (T1083)](#exploring-application-bundles-t1083)
+  - [Basic System Enumeration (T1082)](#basic-system-enumeration-t1082)
+  - [Users (T1087.001)](#users-t1087001)
+  - [Last Login (T1087)](#last-login-t1087)
+  - [Passwords (T1003)](#passwords-t1003)
+  - [Safari History (T1217)](#safari-history-t1217)
+  - [Safari Settings (T1217)](#safari-settings-t1217)
+  - [Keychains (T1555.001)](#keychains-t1555001)
+  - [Network Services (T1046)](#network-services-t1046)
+  - [SMB Shares (T1135)](#smb-shares-t1135)
+  - [AFP Shares (T1135)](#afp-shares-t1135)
+  - [SSH Scanning (T1046)](#ssh-scanning-t1046)
+  - [Network Service Scanning (T1046)](#network-service-scanning-t1046)
+  - [System Profiler (T1082)](#system-profiler-t1082)
+- [Persistence (T1543.001)](#persistence-t1543001)
+  - [Extended Attributes (T1564.004)](#extended-attributes-t1564004)
+  - [LaunchAgent Backdoors (T1543.001)](#launchagent-backdoors-t1543001)
 
 ---
 

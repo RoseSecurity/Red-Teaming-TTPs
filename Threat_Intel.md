@@ -2,24 +2,24 @@
 
 ## Table of Contents
 
-- [Query IP geolocation information with IP2Location.io](#query-ip-geolocation-information-with-ip2locationio) - T1016
-- [Enumerating IPs with IPInfo](#enumerating-ips-with-ipinfo) - T1016
-- [Enumerating Domains with RDAP](#enumerating-domains-with-rdap) - T1589
-- [Email Recon](#email-recon) - T1589.002
-- [nrich IP Enumeration](#nrich-ip-enumeration) - T1595.002
-- [Extracting PDF Text with Python Image OCR](#extracting-pdf-text-with-python-image-ocr) - T1213
-- [Threat Intelligence Streams with Python and Reddit](#threat-intelligence-streams-with-python-and-reddit) - T1589
-- [Python HTTPS Server](#python-https-server) - T1105
-- [Enumerating Anonymous FTP Logins Using Python](#enumerating-anonymous-ftp-logins-using-python) - T1046
-- [Python Keylogger](#python-keylogger) - T1056.001
-- [Python Reverse Shell](#python-reverse-shell) - T1059.006
-- [Python Basic File Upload](#python-basic-file-upload) - T1105
-- [Generating HoneyDocs with Python](#generating-honeydocs-with-python) - T1203
-- [Shodan CLI](#shodan-cli) - T1595
-- [Azure Subdomain Enumeration](#azure-subdomain-enumeration) - T1595.003
-- [GitHub Email Addresses](#github-email-addresses) - T1589.002
-- [Code Enumeration with Grep App](#code-enumeration-with-grep-app) - T1213
-- [Certificate Transparency Logs Enumeration with Go](#certificate-transparency-logs-enumeration-with-go) - T1596.002
+- [Query IP geolocation information with IP2Location.io (T1016)](#query-ip-geolocation-information-with-ip2locationio-t1016)
+- [Enumerating IPs with IPInfo (T1016)](#enumerating-ips-with-ipinfo-t1016)
+- [Enumerating Domains with RDAP (T1589)](#enumerating-domains-with-rdap-t1589)
+- [Email Recon (T1589.002)](#email-recon-t1589002)
+- [nrich IP Enumeration (T1595.002)](#nrich-ip-enumeration-t1595002)
+- [Extracting PDF Text with Python Image OCR (T1213)](#extracting-pdf-text-with-python-image-ocr-t1213)
+- [Threat Intelligence Streams with Python and Reddit (T1589)](#threat-intelligence-streams-with-python-and-reddit-t1589)
+- [Python HTTPS Server (T1105)](#python-https-server-t1105)
+- [Enumerating Anonymous FTP Logins Using Python (T1046)](#enumerating-anonymous-ftp-logins-using-python-t1046)
+- [Python Keylogger (T1056.001)](#python-keylogger-t1056001)
+- [Python Reverse Shell (T1059.006)](#python-reverse-shell-t1059006)
+- [Python Basic File Upload (T1105)](#python-basic-file-upload-t1105)
+- [Generating HoneyDocs with Python (T1203)](#generating-honeydocs-with-python-t1203)
+- [Shodan CLI (T1595)](#shodan-cli-t1595)
+- [Azure Subdomain Enumeration (T1595.003)](#azure-subdomain-enumeration-t1595003)
+- [GitHub Email Addresses (T1589.002)](#github-email-addresses-t1589002)
+- [Code Enumeration with Grep App (T1213)](#code-enumeration-with-grep-app-t1213)
+- [Certificate Transparency Logs Enumeration with Go (T1596.002)](#certificate-transparency-logs-enumeration-with-go-t1596002)
 
 ---
 

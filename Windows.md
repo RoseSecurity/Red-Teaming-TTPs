@@ -3,64 +3,64 @@
 ## Table of Contents
 
 - [PowerShell Tricks](#powershell-tricks)
-- [Windows System Enumeration](#windows-system-enumeration) - T1082
-- [Windows Persistence](#windows-persistence) - T1547.001
-- [Start RDP](#start-rdp) - T1021.001
-- [PowerShell Enumeration](#powershell-enumeration) - T1059.001
-- [PowerShell Launching Meterpreter Payload](#powershell-launching-meterpreter-payload) - T1059.001
-- [Windows User Lockout](#windows-user-lockout) - T1110.001
-- [Windows DHCP Exhaustion](#windows-dhcp-exhaustion) - T1498
-- [Rolling Reboot](#rolling-reboot) - T1529
-- [PowerShell Azure DoS](#powershell-azure-dos) - T1498
-- [PowerShell Port Scanning](#powershell-port-scanning) - T1046
-- [PowerShell Change Timestamp of Directory](#powershell-change-timestamp-of-directory) - T1070.006
-- [PowerShell Changing Modification Time of a File](#powershell-changing-modification-time-of-a-file) - T1070.006
-- [PowerShell Changing Access Time of a File](#powershell-changing-access-time-of-a-file) - T1070.006
-- [PowerShell Disabling Firewall](#powershell-disabling-firewall) - T1562.004
-- [Enumerating Domain Controllers with PowerShell](#enumerating-domain-controllers-with-powershell) - T1018
-- [Enumerating Domain Users with PowerShell](#enumerating-domain-users-with-powershell) - T1087.002
-- [Sneaky PowerShell Commands](#sneaky-powershell-commands) - T1059.001
-- [TrickBot PowerShell Download TTP](#trickbot-powershell-download-ttp) - T1059.001
-- [Enable PowerShell Remoting](#enable-powershell-remoting) - T1021.006
-- [PowerShell Password Manager and Clipboard Access](#powershell-password-manager-and-clipboard-access) - T1115
-- [PowerShell List Named Pipes](#powershell-list-named-pipes) - T1559
-- [Python LM Hash Generation](#python-lm-hash-generation) - T1110.002
-- [Discovering WiFi Passwords](#discovering-wifi-passwords) - T1552.002
-- [Potential Credential Files](#potential-credential-files) - T1552.001
-- [Find GPP Passwords in SYSVOL](#find-gpp-passwords-in-sysvol) - T1552.006
-- [Searching the Registry for Passwords](#searching-the-registry-for-passwords) - T1552.002
-- [Local Domain Recon](#local-domain-recon) - T1016
-- [Searching the File System for Files of Interest](#searching-the-file-system-for-files-of-interest) - T1083
-- [Living off the Land](#living-off-the-land) - T1218
-- [Living Off the Land: Windows Packet Capturing](#living-off-the-land-windows-packet-capturing) - T1040
-- [SMB Password Guessing](#smb-password-guessing) - T1110.001
-- [SMB Lateral Movement](#smb-lateral-movement) - T1021.002
-- [Active Directory DNS Enumeration](#active-directory-dns-enumeration) - T1018
-- [PSexec with NMAP](#psexec-with-nmap) - T1569.002
-- [AV LSASS Dump](#av-lsass-dump) - T1003.001
-- [Certutil Download Cradle](#certutil-download-cradle) - T1105
-- [Kerberoasting with Impacket](#kerberoasting-with-impacket) - T1558.003
-- [Dumping LSASS With Visual Studio](#dumping-lsass-with-visual-studio) - T1003.001
-- [Dumping LSASS Without Mimikatz](#dumping-lsass-without-mimikatz) - T1003.001
-- [Dumping LSASS With NetExec](#dumping-lsass-with-netexec) - T1003.001
-- [Stealing Signatures with SigThief](#stealing-signatures-with-sigthief) - T1553.002
-- [CertOC Downloads](#certoc-downloads) - T1105
-- [Shodan for SMB](#shodan-for-smb) - T1595
-- [Plundering Account Information with RPCClient and SMBClient](#plundering-account-information-with-rpcclient-and-smbclient) - T1087.002
-- [Registry Keys for Recent Documents](#registry-keys-for-recent-documents) - T1083
-- [Command Prompt from MSPaint](#command-prompt-from-mspaint) - T1218
-- [BITS Jobs and Downloads](#bits-jobs-and-downloads) - T1197
-- [PSexec from WebDAV](#psexec-from-webdav) - T1569.002
-- [CrackMapExec Tips and Tricks](#crackmapexec-tips-and-tricks) - T1087
-- [NetExec](#netexec) - T1087
-- [Disabling Prefetch](#disabling-prefetch) - T1070
-- [Windows AutoStart Persistence Locations](#windows-autostart-persistence-locations) - T1547.001
-- [WMIC Tricks and Tips](#wmic-tricks-and-tips) - T1047
-- [Passive OS Detection and TCP Fingerprinting](#passive-os-detection-and-tcp-fingerprinting) - T1040
-- [Offline Microsoft Azure Active Directory Harvesting with PowerShell](#offline-microsoft-azure-active-directory-harvesting-with-powershell) - T1087.004
-- [PowerShell](#powershell) - T1059.001
-- [Execute Payloads Utilizing Windows Event Logs](#execute-payloads-utilizing-windows-event-logs) - T1546.003
-- [NTLM Leak via Desktop.ini](#ntlm-leak-via-desktopini) - T1187
+- [Windows System Enumeration (T1082)](#windows-system-enumeration-t1082)
+- [Windows Persistence (T1547.001)](#windows-persistence-t1547001)
+- [Start RDP (T1021.001)](#start-rdp-t1021001)
+- [PowerShell Enumeration (T1059.001)](#powershell-enumeration-t1059001)
+- [PowerShell Launching Meterpreter Payload (T1059.001)](#powershell-launching-meterpreter-payload-t1059001)
+- [Windows User Lockout (T1110.001)](#windows-user-lockout-t1110001)
+- [Windows DHCP Exhaustion (T1498)](#windows-dhcp-exhaustion-t1498)
+- [Rolling Reboot (T1529)](#rolling-reboot-t1529)
+- [PowerShell Azure DoS (T1498)](#powershell-azure-dos-t1498)
+- [PowerShell Port Scanning (T1046)](#powershell-port-scanning-t1046)
+- [PowerShell Change Timestamp of Directory (T1070.006)](#powershell-change-timestamp-of-directory-t1070006)
+- [PowerShell Changing Modification Time of a File (T1070.006)](#powershell-changing-modification-time-of-a-file-t1070006)
+- [PowerShell Changing Access Time of a File (T1070.006)](#powershell-changing-access-time-of-a-file-t1070006)
+- [PowerShell Disabling Firewall (T1562.004)](#powershell-disabling-firewall-t1562004)
+- [Enumerating Domain Controllers with PowerShell (T1018)](#enumerating-domain-controllers-with-powershell-t1018)
+- [Enumerating Domain Users with PowerShell (T1087.002)](#enumerating-domain-users-with-powershell-t1087002)
+- [Sneaky PowerShell Commands (T1059.001)](#sneaky-powershell-commands-t1059001)
+- [TrickBot PowerShell Download TTP (T1059.001)](#trickbot-powershell-download-ttp-t1059001)
+- [Enable PowerShell Remoting (T1021.006)](#enable-powershell-remoting-t1021006)
+- [PowerShell Password Manager and Clipboard Access (T1115)](#powershell-password-manager-and-clipboard-access-t1115)
+- [PowerShell List Named Pipes (T1559)](#powershell-list-named-pipes-t1559)
+- [Python LM Hash Generation (T1110.002)](#python-lm-hash-generation-t1110002)
+- [Discovering WiFi Passwords (T1552.002)](#discovering-wifi-passwords-t1552002)
+- [Potential Credential Files (T1552.001)](#potential-credential-files-t1552001)
+- [Find GPP Passwords in SYSVOL (T1552.006)](#find-gpp-passwords-in-sysvol-t1552006)
+- [Searching the Registry for Passwords (T1552.002)](#searching-the-registry-for-passwords-t1552002)
+- [Local Domain Recon (T1016)](#local-domain-recon-t1016)
+- [Searching the File System for Files of Interest (T1083)](#searching-the-file-system-for-files-of-interest-t1083)
+- [Living off the Land (T1218)](#living-off-the-land-t1218)
+- [Living Off the Land: Windows Packet Capturing (T1040)](#living-off-the-land-windows-packet-capturing-t1040)
+- [SMB Password Guessing (T1110.001)](#smb-password-guessing-t1110001)
+- [SMB Lateral Movement (T1021.002)](#smb-lateral-movement-t1021002)
+- [Active Directory DNS Enumeration (T1018)](#active-directory-dns-enumeration-t1018)
+- [PSexec with NMAP (T1569.002)](#psexec-with-nmap-t1569002)
+- [AV LSASS Dump (T1003.001)](#av-lsass-dump-t1003001)
+- [Certutil Download Cradle (T1105)](#certutil-download-cradle-t1105)
+- [Kerberoasting with Impacket (T1558.003)](#kerberoasting-with-impacket-t1558003)
+- [Dumping LSASS With Visual Studio (T1003.001)](#dumping-lsass-with-visual-studio-t1003001)
+- [Dumping LSASS Without Mimikatz (T1003.001)](#dumping-lsass-without-mimikatz-t1003001)
+- [Dumping LSASS With NetExec (T1003.001)](#dumping-lsass-with-netexec-t1003001)
+- [Stealing Signatures with SigThief (T1553.002)](#stealing-signatures-with-sigthief-t1553002)
+- [CertOC Downloads (T1105)](#certoc-downloads-t1105)
+- [Shodan for SMB (T1595)](#shodan-for-smb-t1595)
+- [Plundering Account Information with RPCClient and SMBClient (T1087.002)](#plundering-account-information-with-rpcclient-and-smbclient-t1087002)
+- [Registry Keys for Recent Documents (T1083)](#registry-keys-for-recent-documents-t1083)
+- [Command Prompt from MSPaint (T1218)](#command-prompt-from-mspaint-t1218)
+- [BITS Jobs and Downloads (T1197)](#bits-jobs-and-downloads-t1197)
+- [PSexec from WebDAV (T1569.002)](#psexec-from-webdav-t1569002)
+- [CrackMapExec Tips and Tricks (T1087)](#crackmapexec-tips-and-tricks-t1087)
+- [NetExec (T1087)](#netexec-t1087)
+- [Disabling Prefetch (T1070)](#disabling-prefetch-t1070)
+- [Windows AutoStart Persistence Locations (T1547.001)](#windows-autostart-persistence-locations-t1547001)
+- [WMIC Tricks and Tips (T1047)](#wmic-tricks-and-tips-t1047)
+- [Passive OS Detection and TCP Fingerprinting (T1040)](#passive-os-detection-and-tcp-fingerprinting-t1040)
+- [Offline Microsoft Azure Active Directory Harvesting with PowerShell (T1087.004)](#offline-microsoft-azure-active-directory-harvesting-with-powershell-t1087004)
+- [PowerShell (T1059.001)](#powershell-t1059001)
+- [Execute Payloads Utilizing Windows Event Logs (T1546.003)](#execute-payloads-utilizing-windows-event-logs-t1546003)
+- [NTLM Leak via Desktop.ini (T1187)](#ntlm-leak-via-desktopini-t1187)
 
 ---
 

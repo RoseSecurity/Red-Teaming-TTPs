@@ -2,21 +2,21 @@
 
 ## Table of Contents
 
-- [Azure](#azure) - T1087.004
-- [AWS](#aws) - T1552.005
-  - [Cognito](#cognito) - T1087.004
-  - [AWS Trivy Scanning](#aws-trivy-scanning) - T1595.002
-  - [SSM](#ssm) - T1021.007
-  - [API Gateway](#api-gateway) - T1190
-- [GCP](#gcp) - T1087.004
-- [Cloud Subdomain Takeover](#cloud-subdomain-takeover) - T1584.001
-- [Kubernetes Secrets Harvesting](#kubernetes-secrets-harvesting) - T1552.007
-- [Kubernetes Service Enumeration](#kubernetes-service-enumeration) - T1046
-- [Kubernetes Ninja Commands](#kubernetes-ninja-commands) - T1609
-- [Password Hunting Regex](#password-hunting-regex) - T1552
-- [Go Environment Variable Enumeration](#go-environment-variable-enumeration) - T1082
-- [Jira](#jira) - T1087
-- [Pentesting Kafka](#pentesting-kafka) - T1046
+- [Azure (T1087.004)](#azure-t1087004)
+- [AWS (T1552.005)](#aws-t1552005)
+  - [Cognito (T1087.004)](#cognito-t1087004)
+  - [AWS Trivy Scanning (T1595.002)](#aws-trivy-scanning-t1595002)
+  - [SSM (T1021.007)](#ssm-t1021007)
+  - [API Gateway (T1190)](#api-gateway-t1190)
+- [GCP (T1087.004)](#gcp-t1087004)
+- [Cloud Subdomain Takeover (T1584.001)](#cloud-subdomain-takeover-t1584001)
+- [Kubernetes Secrets Harvesting (T1552.007)](#kubernetes-secrets-harvesting-t1552007)
+- [Kubernetes Service Enumeration (T1046)](#kubernetes-service-enumeration-t1046)
+- [Kubernetes Ninja Commands (T1609)](#kubernetes-ninja-commands-t1609)
+- [Password Hunting Regex (T1552)](#password-hunting-regex-t1552)
+- [Go Environment Variable Enumeration (T1082)](#go-environment-variable-enumeration-t1082)
+- [Jira (T1087)](#jira-t1087)
+- [Pentesting Kafka (T1046)](#pentesting-kafka-t1046)
 
 ---
 

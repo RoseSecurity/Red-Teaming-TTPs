@@ -2,24 +2,24 @@
 
 ## Table of Contents
 
-- [HPING3 DoS](#hping3-dos) - T1498
-- [Hydra Online Brute Force](#hydra-online-brute-force) - T1110
-- [Download HTTP File and Execute](#download-http-file-and-execute) - T1105
-- [Hashcat](#hashcat) - T1110.002
-- [Malicious Javascript](#malicious-javascript) - T1059.007
-- [Execute Fileless Scripts in Golang](#execute-fileless-scripts-in-golang) - T1059
-- [Golang Reverse Shell](#golang-reverse-shell) - T1059
+- [HPING3 DoS (T1498)](#hping3-dos-t1498)
+- [Hydra Online Brute Force (T1110)](#hydra-online-brute-force-t1110)
+- [Download HTTP File and Execute (T1105)](#download-http-file-and-execute-t1105)
+- [Hashcat (T1110.002)](#hashcat-t1110002)
+- [Malicious Javascript (T1059.007)](#malicious-javascript-t1059007)
+- [Execute Fileless Scripts in Golang (T1059)](#execute-fileless-scripts-in-golang-t1059)
+- [Golang Reverse Shell (T1059)](#golang-reverse-shell-t1059)
 - [Web Applications](#web-applications)
-  - [Command Injection](#command-injection) - T1059
-- [WayBack Machine Enumerator](#wayback-machine-enumerator) - T1596
-- [Golang Webserver Banner Scanner](#golang-webserver-banner-scanner) - T1046
-- [Minimal Golang WebDAV Server](#minimal-golang-webdav-server) - T1071.001
-- [Apple Filing Protocol (AFP)](#apple-filing-protocol-afp) - T1021
-- [Pre-Commit Hooks to Prevent Credential Leaks](#pre-commit-hooks-to-prevent-credential-leaks) - T1552
-- [Scanning Git History for Secrets](#scanning-git-history-for-secrets) - T1552.001
-- [Truffleroasting GitHub Organizations](#truffleroasting-github-organizations) - T1552.001
-- [Turning Nmap into a Vulnerability Scanner Using GitHub Actions](#turning-nmap-into-a-vulnerability-scanner-using-github-actions) - T1595.002
-- [XSS Testing](#xss-testing) - T1189
+  - [Command Injection (T1059)](#command-injection-t1059)
+- [WayBack Machine Enumerator (T1596)](#wayback-machine-enumerator-t1596)
+- [Golang Webserver Banner Scanner (T1046)](#golang-webserver-banner-scanner-t1046)
+- [Minimal Golang WebDAV Server (T1071.001)](#minimal-golang-webdav-server-t1071001)
+- [Apple Filing Protocol (AFP) (T1021)](#apple-filing-protocol-afp-t1021)
+- [Pre-Commit Hooks to Prevent Credential Leaks (T1552)](#pre-commit-hooks-to-prevent-credential-leaks-t1552)
+- [Scanning Git History for Secrets (T1552.001)](#scanning-git-history-for-secrets-t1552001)
+- [Truffleroasting GitHub Organizations (T1552.001)](#truffleroasting-github-organizations-t1552001)
+- [Turning Nmap into a Vulnerability Scanner Using GitHub Actions (T1595.002)](#turning-nmap-into-a-vulnerability-scanner-using-github-actions-t1595002)
+- [XSS Testing (T1189)](#xss-testing-t1189)
 
 ---
 

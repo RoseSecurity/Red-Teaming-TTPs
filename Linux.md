@@ -2,91 +2,91 @@
 
 ## Table of Contents
 
-- [System Enumeration / Post Exploitation](#system-enumeration--post-exploitation) - T1082
-- [Linux Miscellaneous Commands / Covering Tracks](#linux-miscellaneous-commands--covering-tracks) - T1070.003
+- [System Enumeration / Post Exploitation (T1082)](#system-enumeration--post-exploitation-t1082)
+- [Linux Miscellaneous Commands / Covering Tracks (T1070.003)](#linux-miscellaneous-commands--covering-tracks-t1070003)
 - [Efficient Linux CLI Navigation](#efficient-linux-cli-navigation)
-- [Fork Bomb](#fork-bomb) - T1499.002
-- [TCPDump](#tcpdump) - T1040
-- [One Liner to Add Persistence on a Box via Cron](#one-liner-to-add-persistence-on-a-box-via-cron) - T1053.003
-- [Systemd User Level Persistence](#systemd-user-level-persistence) - T1543.002
-- [Udev Rules Persistence](#udev-rules-persistence) - T1546
-- [Systemd Timer Persistence](#systemd-timer-persistence) - T1053.006
-- [Backdooring Sudo](#backdooring-sudo) - T1548.003
-- [ICMP Tunneling One Liner](#icmp-tunneling-one-liner) - T1572
-- [One Liner to Add Persistence on a Box via Sudoers File](#one-liner-to-add-persistence-on-a-box-via-sudoers-file) - T1548.003
-- [Find Server Strings from HTTP Responses](#find-server-strings-from-http-responses) - T1082
-- [Enumerating File Capabilities with Getcap](#enumerating-file-capabilities-with-getcap) - T1548.001
-- [Enumerating User Files for Interesting Information](#enumerating-user-files-for-interesting-information) - T1552.001
-- [Finding World-Writable Files](#finding-world-writable-files) - T1083
-- [Search GitHub for Personal Access Tokens](#search-github-for-personal-access-tokens) - T1552.001
-- [Search for OpenAI API Keys](#search-for-openai-api-keys) - T1552.001
-- [Search for Google API Keys](#search-for-google-api-keys) - T1552.001
-- [Search for Slack Tokens](#search-for-slack-tokens) - T1552.001
-- [Search for Hardcoded Passwords](#search-for-hardcoded-passwords) - T1552.001
-- [Search for Passwords in Memory and Core Dumps](#search-for-passwords-in-memory-and-core-dumps) - T1003
+- [Fork Bomb (T1499.002)](#fork-bomb-t1499002)
+- [TCPDump (T1040)](#tcpdump-t1040)
+- [One Liner to Add Persistence on a Box via Cron (T1053.003)](#one-liner-to-add-persistence-on-a-box-via-cron-t1053003)
+- [Systemd User Level Persistence (T1543.002)](#systemd-user-level-persistence-t1543002)
+- [Udev Rules Persistence (T1546)](#udev-rules-persistence-t1546)
+- [Systemd Timer Persistence (T1053.006)](#systemd-timer-persistence-t1053006)
+- [Backdooring Sudo (T1548.003)](#backdooring-sudo-t1548003)
+- [ICMP Tunneling One Liner (T1572)](#icmp-tunneling-one-liner-t1572)
+- [One Liner to Add Persistence on a Box via Sudoers File (T1548.003)](#one-liner-to-add-persistence-on-a-box-via-sudoers-file-t1548003)
+- [Find Server Strings from HTTP Responses (T1082)](#find-server-strings-from-http-responses-t1082)
+- [Enumerating File Capabilities with Getcap (T1548.001)](#enumerating-file-capabilities-with-getcap-t1548001)
+- [Enumerating User Files for Interesting Information (T1552.001)](#enumerating-user-files-for-interesting-information-t1552001)
+- [Finding World-Writable Files (T1083)](#finding-world-writable-files-t1083)
+- [Search GitHub for Personal Access Tokens (T1552.001)](#search-github-for-personal-access-tokens-t1552001)
+- [Search for OpenAI API Keys (T1552.001)](#search-for-openai-api-keys-t1552001)
+- [Search for Google API Keys (T1552.001)](#search-for-google-api-keys-t1552001)
+- [Search for Slack Tokens (T1552.001)](#search-for-slack-tokens-t1552001)
+- [Search for Hardcoded Passwords (T1552.001)](#search-for-hardcoded-passwords-t1552001)
+- [Search for Passwords in Memory and Core Dumps (T1003)](#search-for-passwords-in-memory-and-core-dumps-t1003)
 - [Searching Man Pages](#searching-man-pages)
-- [Username Enumeration with Getent](#username-enumeration-with-getent) - T1087.001
-- [Utilize Crt.sh and EyeWitness to Enumerate Web Pages](#utilize-crtsh-and-eyewitness-to-enumerate-web-pages) - T1596
-- [Nmap TTPs](#nmap-ttps) - T1046
-- [Encrypt Files with Vim](#encrypt-files-with-vim) - T1027
-- [Testssl.sh](#testsslsh) - T1046
-- [Apache Flink Directory Traversal](#apache-flink-directory-traversal) - T1083
-- [LD_PRELOAD Hijacking](#ld_preload-hijacking) - T1574.006
-- [Bash Keylogger](#bash-keylogger) - T1056.001
-- [Strace Keylogger](#strace-keylogger) - T1056.001
-- [Netcat UDP Scanner](#netcat-udp-scanner) - T1046
-- [Recon for Specific Device Before Enumerating](#recon-for-specific-device-before-enumerating) - T1040
-- [TTL Fingerprinting](#ttl-fingerprinting) - T1082
-- [Cisco IOS 11.2 - 12.2 Vulnerability](#cisco-ios-112---122-vulnerability) - T1190
-- [FTP Through Non-Interactive Shell](#ftp-through-non-interactive-shell) - T1071.002
-- [NetCat Listeners](#netcat-listeners) - T1095
-- [Python Reverse Shell](#python-reverse-shell) - T1059.006
-- [Bash Reverse Shell](#bash-reverse-shell) - T1059.004
-- [Turn Nmap into a Vulnerability Scanner](#turn-nmap-into-a-vulnerability-scanner) - T1595.002
-- [Nmap Privilege Escalation](#nmap-privilege-escalation) - T1548
-- [IDS/IPS Nmap Evasion](#idsips-nmap-evasion) - T1046
-- [Scanning Large Networks and Avoiding Sensitive IP Ranges](#scanning-large-networks-and-avoiding-sensitive-ip-ranges) - T1046
-- [Finding Open FTP Servers](#finding-open-ftp-servers) - T1046
-- [Scalable Heartbleed Hunting with Shodan](#scalable-heartbleed-hunting-with-shodan) - T1595.002
-- [Extract Passwords from HTTP POST Requests](#extract-passwords-from-http-post-requests) - T1040
-- [BPF'ing DNS Records](#bpfing-dns-records) - T1040
-- [Important Files](#important-files) - T1083
-- [Backdooring Systemd Services](#backdooring-systemd-services) - T1543.002
-- [Old-Fashioned Log Cleaning](#old-fashioned-log-cleaning) - T1070.002
-- [ASLR Enumeration](#aslr-enumeration) - T1082
-- [Reverse Shells](#reverse-shells) - T1059
-- [Password Harvesting](#password-harvesting) - T1552
-- [Unusual Accounts](#unusual-accounts) - T1087.001
-- [Enumerating with Finger](#enumerating-with-finger) - T1087
-- [Enumerating with Traceroute](#enumerating-with-traceroute) - T1016
-- [Changing MAC Addresses](#changing-mac-addresses) - T1036.005
-- [Routers](#routers) - T1018
-- [Metasploit Callback Automation](#metasploit-callback-automation) - T1219
-- [Confluence CVE-2022-26134](#confluence-cve-2022-26134) - T1190
-- [POP Syntax](#pop-syntax) - T1071.003
-- [SSH Dynamic Port Forwarding](#ssh-dynamic-port-forwarding) - T1572
-- [Dominating Samba with pdbedit](#dominating-samba-with-pdbedit) - T1087
-- [Encrypted File Transfers with Ncat](#encrypted-file-transfers-with-ncat) - T1573
-- [Tsharking for Domain Users](#tsharking-for-domain-users) - T1040
-- [IP Information](#ip-information) - T1016
-- [Cloning Websites for Social Engineering with Wget](#cloning-websites-for-social-engineering-with-wget) - T1189
-- [Spidering the Web with Wget](#spidering-the-web-with-wget) - T1213
-- [Hiding PID Listings From Non-Root Users](#hiding-pid-listings-from-non-root-users) - T1564
-- [Exporting Objects with Tshark](#exporting-objects-with-tshark) - T1040
-- [Rogue APs with Karmetasploit](#rogue-aps-with-karmetasploit) - T1557.002
-- [Passive Fingerprinting with P0f](#passive-fingerprinting-with-p0f) - T1040
-- [Advanced Mitm Attacks with Bettercap Filters](#advanced-mitm-attacks-with-bettercap-filters) - T1557
-- [Rust Reverse Shell](#rust-reverse-shell) - T1059
-- [Fake Sudo Program to Harvest Credentials](#fake-sudo-program-to-harvest-credentials) - T1056
-- [TruffleHog GitHub Organizations](#trufflehog-github-organizations) - T1552.001
-- [Bypass File System Protections for Containers](#bypass-file-system-protections-read-only-and-no-exec-for-containers) - T1611
-- [Dumping Printer NVRAM](#dumping-printer-nvram) - T1552
-- [Slash Proc Magic](#slash-proc-magic) - T1564.001
-- [Linux Timestomping](#linux-timestomping) - T1070.006
-- [Linux Bash History Stomping](#linux-bash-history-stomping) - T1070.003
-- [Taking Apart URL Shorteners with cURL](#taking-apart-url-shorteners-with-curl) - T1082
-- [Email Spoofing PHP](#email-spoofing-php) - T1566
-- [Linux SIEM Bypass](#linux-siem-bypass) - T1006
+- [Username Enumeration with Getent (T1087.001)](#username-enumeration-with-getent-t1087001)
+- [Utilize Crt.sh and EyeWitness to Enumerate Web Pages (T1596)](#utilize-crtsh-and-eyewitness-to-enumerate-web-pages-t1596)
+- [Nmap TTPs (T1046)](#nmap-ttps-t1046)
+- [Encrypt Files with Vim (T1027)](#encrypt-files-with-vim-t1027)
+- [Testssl.sh (T1046)](#testsslsh-t1046)
+- [Apache Flink Directory Traversal (T1083)](#apache-flink-directory-traversal-t1083)
+- [LD_PRELOAD Hijacking (T1574.006)](#ld_preload-hijacking-t1574006)
+- [Bash Keylogger (T1056.001)](#bash-keylogger-t1056001)
+- [Strace Keylogger (T1056.001)](#strace-keylogger-t1056001)
+- [Netcat UDP Scanner (T1046)](#netcat-udp-scanner-t1046)
+- [Recon for Specific Device Before Enumerating (T1040)](#recon-for-specific-device-before-enumerating-t1040)
+- [TTL Fingerprinting (T1082)](#ttl-fingerprinting-t1082)
+- [Cisco IOS 11.2 - 12.2 Vulnerability (T1190)](#cisco-ios-112---122-vulnerability-t1190)
+- [FTP Through Non-Interactive Shell (T1071.002)](#ftp-through-non-interactive-shell-t1071002)
+- [NetCat Listeners (T1095)](#netcat-listeners-t1095)
+- [Python Reverse Shell (T1059.006)](#python-reverse-shell-t1059006)
+- [Bash Reverse Shell (T1059.004)](#bash-reverse-shell-t1059004)
+- [Turn Nmap into a Vulnerability Scanner (T1595.002)](#turn-nmap-into-a-vulnerability-scanner-t1595002)
+- [Nmap Privilege Escalation (T1548)](#nmap-privilege-escalation-t1548)
+- [IDS/IPS Nmap Evasion (T1046)](#idsips-nmap-evasion-t1046)
+- [Scanning Large Networks and Avoiding Sensitive IP Ranges (T1046)](#scanning-large-networks-and-avoiding-sensitive-ip-ranges-t1046)
+- [Finding Open FTP Servers (T1046)](#finding-open-ftp-servers-t1046)
+- [Scalable Heartbleed Hunting with Shodan (T1595.002)](#scalable-heartbleed-hunting-with-shodan-t1595002)
+- [Extract Passwords from HTTP POST Requests (T1040)](#extract-passwords-from-http-post-requests-t1040)
+- [BPF'ing DNS Records (T1040)](#bpfing-dns-records-t1040)
+- [Important Files (T1083)](#important-files-t1083)
+- [Backdooring Systemd Services (T1543.002)](#backdooring-systemd-services-t1543002)
+- [Old-Fashioned Log Cleaning (T1070.002)](#old-fashioned-log-cleaning-t1070002)
+- [ASLR Enumeration (T1082)](#aslr-enumeration-t1082)
+- [Reverse Shells (T1059)](#reverse-shells-t1059)
+- [Password Harvesting (T1552)](#password-harvesting-t1552)
+- [Unusual Accounts (T1087.001)](#unusual-accounts-t1087001)
+- [Enumerating with Finger (T1087)](#enumerating-with-finger-t1087)
+- [Enumerating with Traceroute (T1016)](#enumerating-with-traceroute-t1016)
+- [Changing MAC Addresses (T1036.005)](#changing-mac-addresses-t1036005)
+- [Routers (T1018)](#routers-t1018)
+- [Metasploit Callback Automation (T1219)](#metasploit-callback-automation-t1219)
+- [Confluence CVE-2022-26134 (T1190)](#confluence-cve-2022-26134-t1190)
+- [POP Syntax (T1071.003)](#pop-syntax-t1071003)
+- [SSH Dynamic Port Forwarding (T1572)](#ssh-dynamic-port-forwarding-t1572)
+- [Dominating Samba with pdbedit (T1087)](#dominating-samba-with-pdbedit-t1087)
+- [Encrypted File Transfers with Ncat (T1573)](#encrypted-file-transfers-with-ncat-t1573)
+- [Tsharking for Domain Users (T1040)](#tsharking-for-domain-users-t1040)
+- [IP Information (T1016)](#ip-information-t1016)
+- [Cloning Websites for Social Engineering with Wget (T1189)](#cloning-websites-for-social-engineering-with-wget-t1189)
+- [Spidering the Web with Wget (T1213)](#spidering-the-web-with-wget-t1213)
+- [Hiding PID Listings From Non-Root Users (T1564)](#hiding-pid-listings-from-non-root-users-t1564)
+- [Exporting Objects with Tshark (T1040)](#exporting-objects-with-tshark-t1040)
+- [Rogue APs with Karmetasploit (T1557.002)](#rogue-aps-with-karmetasploit-t1557002)
+- [Passive Fingerprinting with P0f (T1040)](#passive-fingerprinting-with-p0f-t1040)
+- [Advanced Mitm Attacks with Bettercap Filters (T1557)](#advanced-mitm-attacks-with-bettercap-filters-t1557)
+- [Rust Reverse Shell (T1059)](#rust-reverse-shell-t1059)
+- [Fake Sudo Program to Harvest Credentials (T1056)](#fake-sudo-program-to-harvest-credentials-t1056)
+- [TruffleHog GitHub Organizations (T1552.001)](#trufflehog-github-organizations-t1552001)
+- [Bypass File System Protections for Containers (T1611)](#bypass-file-system-protections-read-only-and-no-exec-for-containers-t1611)
+- [Dumping Printer NVRAM (T1552)](#dumping-printer-nvram-t1552)
+- [Slash Proc Magic (T1564.001)](#slash-proc-magic-t1564001)
+- [Linux Timestomping (T1070.006)](#linux-timestomping-t1070006)
+- [Linux Bash History Stomping (T1070.003)](#linux-bash-history-stomping-t1070003)
+- [Taking Apart URL Shorteners with cURL (T1082)](#taking-apart-url-shorteners-with-curl-t1082)
+- [Email Spoofing PHP (T1566)](#email-spoofing-php-t1566)
+- [Linux SIEM Bypass (T1006)](#linux-siem-bypass-t1006)
 
 ---
 
