@@ -881,3 +881,17 @@ done
 
 echo "Results saved to $RESULTS_DIR/"
 ```
+
+## GitHub Fork Commit Reachability & Metadata Spoofing
+
+GitHub's architecture makes any commit pushed to a fork reachable by SHA from the parent repository — `victim/repo/commit/<SHA>` resolves even if the commit only exists in `attacker/repo`. Combined with Git's unauthenticated author/committer fields, an attacker can forge commits that appear to originate from trusted automation like Renovate bot, reference them under the parent repo's namespace, and exploit the GitHub UI's lack of fork attribution to lend credibility in social engineering or supply chain attacks.
+
+```bash
+GIT_AUTHOR_NAME="renovate[bot]" \
+GIT_AUTHOR_EMAIL="29139614+renovate[bot]@users.noreply.github.com" \
+GIT_AUTHOR_DATE="Wed Apr 1 18:51:43 2026 +0000" \
+GIT_COMMITTER_NAME="GitHub" \
+GIT_COMMITTER_EMAIL="noreply@github.com" \
+GIT_COMMITTER_DATE="Wed Apr 1 18:51:43 2026 +0000" \
+git commit --no-gpg-sign -m "fix(deps): update module golang.org/x/text to v0.35.0"
+```
