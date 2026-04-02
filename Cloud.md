@@ -844,3 +844,40 @@ for home in /home/* /root; do
   done
 done
 ```
+
+## GitHub TruffleHog Secret Scanning (T1552.001)
+
+Down and dirty scanning for all repos in a GitHub org for verified secrets using TruffleHog. Clones over SSH, no PAT needed for repo access, just an SSH key with org permissions.
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+for cmd in gh git trufflehog; do
+  if ! command -v "$cmd" &>/dev/null; then
+    echo "Error: $cmd is not installed" >&2
+    exit 1
+  fi
+done
+
+RESULTS_DIR="trufflehog-results"
+ORG="YOUR_ORG"
+mkdir -p "$RESULTS_DIR"
+
+REPOS=()
+while IFS= read -r line; do
+  REPOS+=("$line")
+done < <(gh repo list "$ORG" --limit 1000 --json name -q '.[].name')
+
+for repo in "${REPOS[@]}"; do
+  echo "Scanning $repo..."
+  if git clone --quiet git@github.com:"$ORG"/"$repo".git; then
+    trufflehog filesystem --only-verified "$repo" > "$RESULTS_DIR/$repo.txt" 2>&1
+    rm -rf "$repo"
+  else
+    echo "Warning: failed to clone $repo, skipping" >&2
+  fi
+done
+
+echo "Results saved to $RESULTS_DIR/"
+```
