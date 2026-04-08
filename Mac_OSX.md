@@ -18,6 +18,7 @@
   - [SSH Scanning (T1046)](#ssh-scanning-t1046)
   - [Network Service Scanning (T1046)](#network-service-scanning-t1046)
   - [System Profiler (T1082)](#system-profiler-t1082)
+  - [Unified Log Harvesting (T1552.001)](#unified-log-harvesting-t1552001)
 - [Persistence (T1543.001)](#persistence-t1543001)
   - [Extended Attributes (T1564.004)](#extended-attributes-t1564004)
   - [LaunchAgent Backdoors (T1543.001)](#launchagent-backdoors-t1543001)
@@ -333,6 +334,56 @@ Hardware:
       Provisioning UDID: 00006020-XXXX
       Activation Lock Status: Disabled
 ```
+
+### Unified Log Harvesting (T1552.001)
+
+`log` is a zsh builtin — use `/usr/bin/log`. `MATCHES` is fully anchored, so wrap regexes with `.*...*`. The `log` process logs itself; exclude with `NOT process == "log"` (avoid `!=`, zsh history-expands it).
+
+Sudo command history with PWD, target user, and full command path:
+
+```sh
+/usr/bin/log show --last 30d --info --debug --predicate 'process == "sudo" AND eventMessage CONTAINS "COMMAND="' --style compact
+```
+
+SSH client activity timeline (destinations are redacted, timestamps are not):
+
+```sh
+/usr/bin/log show --last 7d --predicate 'process == "ssh" OR process == "sshd"' --style compact
+```
+
+TCC entitlements the user has already approved (ideal for piggy-back persistence):
+
+```sh
+/usr/bin/log show --last 30d --predicate 'process == "tccd" AND eventMessage CONTAINS "REPLY"' --style compact
+```
+
+Emails seen in logs, with distnoted/Maps-tile noise filtered:
+
+```sh
+/usr/bin/log show --last 30d --info --debug --predicate 'eventMessage CONTAINS "@" AND NOT process == "distnoted" AND NOT process == "log"' 2>/dev/null | grep -oE '\b[A-Za-z0-9._%+-]{3,}@[A-Za-z0-9][A-Za-z0-9-]{1,}\.[A-Za-z]{2,6}\b' | grep -viE '@[0-9]x|\.png$|\.styl$|\.icon|\.peer$' | sort -u
+```
+
+Filesystem sweep for Bearer tokens, OAuth fields, API keys, and private key blocks in Electron/dev app logs (where secrets actually live on macOS):
+
+```sh
+grep -rIlEi '(bearer [A-Za-z0-9._-]{20,}|"(access|id|refresh)_token"|"client_secret"|(api|secret)[_-]?key["'"'"': =]+[A-Za-z0-9]{16,}|-----BEGIN (RSA|EC|OPENSSH| )?PRIVATE KEY-----)' ~/Library/Logs "$HOME/Library/Application Support" 2>/dev/null
+```
+
+Filesystem sweep for known token prefixes (AWS, GitHub, GitLab, Slack, OpenAI/Stripe, npm, JWT):
+
+```sh
+grep -rIoE '(AKIA|ASIA)[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9]{36,}|glpat-[A-Za-z0-9_-]{20,}|xox[baprs]-[A-Za-z0-9-]{10,}|sk-[A-Za-z0-9]{32,}|npm_[A-Za-z0-9]{36}|eyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}' ~/Library/Logs "$HOME/Library/Application Support" 2>/dev/null | sort -u
+```
+
+Collect the unified log archive for offline triage with a real secret scanner:
+
+```sh
+/usr/bin/log collect --last 30d --output /tmp/unified.logarchive
+/usr/bin/log show --archive /tmp/unified.logarchive --info --debug --style ndjson > /tmp/unified.ndjson
+trufflehog filesystem /tmp/unified.ndjson
+```
+
+Noisy processes to exclude from any keyword query: `log`, `bluetoothd`, `distnoted`, `airportd`, `launchd`, `mDNSResponder`, `symptomsd`, `tccd`.
 
 ## Persistence (T1543.001)
 
