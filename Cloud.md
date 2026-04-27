@@ -845,6 +845,12 @@ for home in /home/* /root; do
 done
 ```
 
+## GitLab TruffleHog Secret Scanning (T1552.001)
+
+```sh
+trufflehog gitlab --token=$(skate get GITLAB_PAT) --endpoint="https://gitlab.com/MYORG" --only-verified -j > findings.json
+```
+
 ## GitHub TruffleHog Secret Scanning (T1552.001)
 
 Down and dirty scanning for all repos in a GitHub org for verified secrets using TruffleHog. Clones over SSH, no PAT needed for repo access, just an SSH key with org permissions.
