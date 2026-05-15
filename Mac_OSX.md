@@ -217,6 +217,13 @@ Output example:
 }
 ```
 
+### Downloaded File Source
+
+```sh
+❯ xattr -p com.apple.metadata:kMDItemWhereFroms install.sh
+bplist00_phttps://malware.net/mgr/v1/download/install.shP
+```
+
 ### Keychains (T1555.001)
 
 ```sh
