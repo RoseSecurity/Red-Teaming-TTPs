@@ -468,6 +468,14 @@ curl "http://metadata.google.internal/computeMetadata/v1/instance/attributes/?re
     -H "Metadata-Flavor: Google"
 ```
 
+Project creator:
+
+```sh
+gcloud logging read --project <PROJECT> \
+  --order=asc --limit=1 \
+  --format='table(protoPayload.methodName, protoPayload.authenticationInfo.principalEmail)'
+```
+
 ## Cloud Subdomain Takeover (T1584.001)
 
 ```python
