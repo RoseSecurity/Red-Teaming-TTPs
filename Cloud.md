@@ -8,6 +8,7 @@
   - [AWS Trivy Scanning (T1595.002)](#aws-trivy-scanning-t1595002)
   - [SSM (T1021.007)](#ssm-t1021007)
   - [API Gateway (T1190)](#api-gateway-t1190)
+  - [User Data (T1552)](#user-data-t1552)
 - [GCP (T1087.004)](#gcp-t1087004)
 - [Cloud Subdomain Takeover (T1584.001)](#cloud-subdomain-takeover-t1584001)
 - [Kubernetes Secrets Harvesting (T1552.007)](#kubernetes-secrets-harvesting-t1552007)
@@ -302,6 +303,20 @@ aws apigatewayv2 get-models --api-id <id>
 
 ## Call API
 https://<api-id>.execute-api.<region>.amazonaws.com/<stage>/<resource>
+```
+
+### User Data (T1552)
+
+In AWS, User Data is a feature of Amazon EC2 that allows you to pass scripts or commands to an instance during its launch process. It is primarily used for bootstrapping, which automates the configuration and software installation of a server without manual intervention. These bootstrap scripts can sometimes contain sensitive strings, passwords, and other credentials.
+
+```sh
+aws ec2 describe-instance-attribute \
+    --instance-id <INSTANCE_ID> \
+    --attribute userData \
+    --query 'UserData.Value' \
+    --output text \
+    | base64 --decode \
+    | trufflehog stdin
 ```
 
 ## GCP (T1087.004)
