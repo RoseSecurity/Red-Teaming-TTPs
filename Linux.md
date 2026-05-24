@@ -1626,7 +1626,7 @@ Enumerate GitHub organizations for secrets and credentials
 root@RoseSecurity# orgs=$(curl -s https://api.github.com/organizations | jq -r '.[] | .name'); for i in $orgs; do trufflehog github --org=$i; done
 ```
 
-## ## TruffleHog OpenAI Copilot (T1552.001)
+## TruffleHog OpenAI Copilot (T1552.001)
 
 The Codex directory (typically `.codex/`) is a project-specific folder that stores local configurations, logs, sessions, custom commands, and environment settings.
 
