@@ -1626,6 +1626,14 @@ Enumerate GitHub organizations for secrets and credentials
 root@RoseSecurity# orgs=$(curl -s https://api.github.com/organizations | jq -r '.[] | .name'); for i in $orgs; do trufflehog github --org=$i; done
 ```
 
+## ## TruffleHog OpenAI Copilot (T1552.001)
+
+The Codex directory (typically `.codex/`) is a project-specific folder that stores local configurations, logs, sessions, custom commands, and environment settings.
+
+```sh
+trufflehog filesystem ~/.codex/
+```
+
 ## Bypass File System Protections (Read-Only and No-Exec) for Containers (T1611)
 
 It's increasingly common to find Linux machines mounted with read-only (ro) file system protection, especially in containers. This is because running a container with `ro` file system is as easy as setting `readOnlyRootFilesystem: true` in the `securitycontext`:
