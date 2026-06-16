@@ -12,8 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      PUPPETEER_CACHE_DIR: ${{ runner.temp }}/puppeteer
     permissions:
       contents: write
 
@@ -38,10 +36,14 @@ jobs:
 
       - name: Install Chrome for Puppeteer
         working-directory: .github
+        env:
+          PUPPETEER_CACHE_DIR: ${{ runner.temp }}/puppeteer
         run: npx puppeteer browsers install chrome
 
       - name: Generate combined PDF
         working-directory: .github
+        env:
+          PUPPETEER_CACHE_DIR: ${{ runner.temp }}/puppeteer
         run: node bookify.js --paper Letter --css .github/custom.css
 
       - name: Upload PDF artifact
