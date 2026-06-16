@@ -34,12 +34,6 @@ jobs:
         working-directory: .github
         run: npm ci
 
-      - name: Cache Puppeteer browsers
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/puppeteer
-          key: ${{ runner.os }}-puppeteer-${{ hashFiles('.github/package-lock.json') }}
-
       - name: Install Chrome for Puppeteer
         working-directory: .github
         run: npx puppeteer browsers install chrome
