@@ -40,7 +40,7 @@ const chapters = [
     try {
       await fs.access(file);
     } catch {
-      console.error(`✗ Missing chapter: ${file}`);
+      console.error(`Missing chapter: ${file}`);
       process.exit(1);
     }
   }
@@ -70,7 +70,7 @@ const chapters = [
         },
       }
     );
-    console.log(`✓ PDF generated at ${path.relative(repoRoot, outputPath)}`);
+    console.log(`PDF generated at ${path.relative(repoRoot, outputPath)}`);
   } catch (err) {
     console.error("PDF generation failed:", err);
     process.exit(1);
