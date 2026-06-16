@@ -680,3 +680,54 @@ func main() {
     fmt.Printf("Found %d certificates for target.com\n", len(records))
 }
 ```
+
+## Google Dorks
+
+### General Exposure
+
+- `allinurl:XFrame.html` - Microsoft Lync Server AutoDiscover
+- `"index of" "*.usernames.txt"` - Sensitive username files
+- `intext:"index of" "upi" "wp-content"` - Uploads / transaction details
+- `inurl:"/index.php?route=account/password"` - Account password pages
+- `intitle:"index of" "wp-config.php.bak"` - WordPress config backups
+- `inurl:"/.git"` - Exposed `.git` folders
+
+### Backups And Documents
+
+- `ext:bkf | ext:bkp | ext:bak | ext:old | ext:backup` - Backup files
+- `ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv` - Document files
+- `not for distribution | confidential | "employee only" | proprietary | top secret | classified | trade secret | internal | private filetype:xls OR filetype:csv OR filetype:doc OR filetype:pdf` - Confidential files
+
+### Configs And Databases
+
+- `ext:xml | ext:conf | ext:cnf | ext:reg | ext:inf | ext:rdp | ext:cfg | ext:txt | ext:ora | ext:env | ext:ini` - Config files
+- `ext:sql | ext:dbf | ext:mdb` - Database files
+
+### Errors And Debug Info
+
+- `intext:"sql syntax near" | intext:"syntax error has occurred" | intext:"incorrect syntax near" | intext:"unexpected end of SQL command" | intext:"Warning: mysql_connect()" | intext:"Warning: mysql_query()" | intext:"Warning: pg_connect()"` - SQL errors
+- `"PHP Parse error" | "PHP Warning" | "PHP Error"` - PHP errors
+- `intitle:index.of | ext:log | ext:php intitle:phpinfo "published by the PHP Group" | inurl:shell | inurl:backdoor | inurl:wso | inurl:cmd | shadow | passwd | boot.ini | inurl:readme | inurl:license | inurl:install | inurl:setup | inurl:config | inurl:"/phpinfo.php" | inurl:".htaccess" | ext:swf` - Interesting files and debug pages
+
+### Apps And Portals
+
+- `inurl:wp-content | inurl:wp-includes` - WordPress files
+- `inurl:signup | inurl:register | intitle:Signup` - Signup / registration pages
+- `intitle:traefik inurl:8080/dashboard` - Traefik dashboards
+- `intitle:"Dashboard [Jenkins]"` - Jenkins dashboards
+- `ext:action | ext:struts | ext:do` - Apache Struts endpoints
+- `inurl:redir | inurl:url | inurl:redirect | inurl:return | inurl:src=http | inurl:r=http` - Open redirect parameters
+
+### Third-Party Recon
+
+- `site:trello.com | site:*.atlassian.net "<domain_keyword>"` - Project management references
+- `site:*.domain.com` - Subdomains
+- `site:github.com | site:gitlab.com | site:bitbucket.org "<domain_keyword>"` - Git sites
+- `site:.s3.amazonaws.com | site:storage.googleapis.com | site:amazonaws.com "<domain_keyword>"` - Cloud buckets
+- `intitle:traefik inurl:8080/dashboard "<domain_keyword>"` - Traefik by keyword
+- `intitle:"Dashboard [Jenkins]" "<domain_keyword>"` - Jenkins by keyword
+- `site:sharecode.io | site:controlc.com | site:codepad.co | site:ideone.com | site:codebeautify.org | site:jsdelivr.com | site:codeshare.io | site:codepen.io | site:repl.it | site:jsfiddle.net "<domain_keyword>"` - Code sharing sites
+- `site:gitter.im | site:papaly.com | site:productforums.google.com | site:coggle.it | site:replt.it | site:ycombinator.com | site:libraries.io | site:npm.runkit.com | site:npmjs.com | site:scribd.com "<domain_keyword>"` - Other third-party sites
+- `site:stackoverflow.com "<domain>"` - Stack Overflow references
+- `site:justpaste.it | site:heypasteit.com | site:pastebin.com "<domain_keyword>"` - Paste sites
+- `site:linkedin.com employees "<domain>"` - LinkedIn employees
