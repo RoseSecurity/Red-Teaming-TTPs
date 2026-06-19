@@ -257,6 +257,35 @@ Lists the parameters in the AWS account or the parameters shared with the authen
 aws ssm describe-parameters
 ```
 
+### AWS Secrets Manager
+
+Lists the accessible secrets in AWS Secrets Manager:
+
+```sh
+aws secretsmanager list-secrets
+```
+
+Output:
+
+```json
+{
+    "SecretList": [
+        {
+            "ARN": "arn:aws:secretsmanager:us-east-1:ACCOUNT_ID:secret:redshiftcreds",
+            "Name": "redshiftcreds",
+            "LastChangedDate": "2022-08-25T14:22:39.924000-04:00",
+            "LastAccessedDate": "2026-01-14T19:00:00-05:00",
+            "SecretVersionsToStages": {
+                "XXXXXX-XXXX-XXXX-XXXX-XXXXXXXXX": [
+                    "AWSCURRENT"
+                ]
+            },
+            "CreatedDate": "2022-08-25T14:22:39.630000-04:00"
+        },
+    ]
+}
+```
+
 ### API Gateway (T1190)
 
 AWS API Gateway is a service offered by Amazon Web Services (AWS) designed for developers to create, publish, and oversee APIs on a large scale. It functions as an entry point to an application, permitting developers to establish a framework of rules and procedures. This framework governs the access external users have to certain data or functionalities within the application.
