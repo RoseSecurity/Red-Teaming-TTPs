@@ -573,6 +573,14 @@ for domain in tqdm(domain_names, desc="Checking for subdomain takeovers"):
         continue
 ```
 
+## Kubernetes API Server Anonymous Access
+
+To test anonymous authentication on the cluster, send unauthenticated HTTP requests directly to the kube-apiserver or the kubelet endpoint using `curl`.
+
+```bash
+curl -k https://<API_SERVER_IP>:6443/api/v1/namespaces
+```
+
 ## Kubernetes Secrets Harvesting (T1552.007)
 
 ```bash
