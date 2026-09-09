@@ -37,6 +37,9 @@ $ az login -u <user> -p <password>
 # Set Account Subscription
 $ az account set --subscription "Pay-As-You-Go"
 
+# Permissions for the currently logged-in account
+az role assignment list --assignee $(az account show --query user.name -o tsv) --all
+
 # Enumeration for Priv Esc
 $ az ad user list -o table
 $ az role assignment list -o table
