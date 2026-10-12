@@ -116,6 +116,14 @@ Find S3 Buckets Using Subfinder and HTTPX Tool
 subfinder -d <TARGET_DOMAIN> -all -silent | httpx -silent -webserver -threads 100 | grep -i AmazonS3
 ```
 
+Find AWS Console logins:
+
+```sh
+aws cloudtrail lookup-events \
+    --lookup-attributes AttributeKey=EventName,AttributeValue=ConsoleLogin \
+    --max-items 10
+```
+
 ### Cognito (T1087.004)
 
 > [!NOTE]
