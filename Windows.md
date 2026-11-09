@@ -768,7 +768,7 @@ nmap -p 445 <Victim IP> -sS --script smb-security-mode
 
 For SMB2/SMB3, also check whether message signing is required with `smb2-security-mode`; the legacy `smb-security-mode` script alone does not cover modern SMB signing settings:
 
-```
+```sh
 nmap -p 445 <Victim IP> -sS --script smb2-security-mode
 ```
 
