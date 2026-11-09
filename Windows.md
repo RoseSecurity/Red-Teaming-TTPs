@@ -772,7 +772,6 @@ For SMB2/SMB3, also check whether message signing is required with `smb2-securit
 nmap -p 445 <Victim IP> -sS --script smb2-security-mode
 ```
 
-
 Force authentication by crafting a HTML or file of your choice:
 
 ```
