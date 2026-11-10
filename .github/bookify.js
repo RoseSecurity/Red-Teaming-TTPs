@@ -76,4 +76,3 @@ const chapters = [
     process.exit(1);
   }
 })();
-

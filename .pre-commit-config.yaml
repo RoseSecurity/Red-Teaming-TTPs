@@ -2,12 +2,11 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
-      # Common errors
-      - id: trailing-whitespace # trims trailing whitespace.
-        args: [--markdown-linebreak-ext=md]
-      - id: mixed-line-ending
-
-  - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.47.0
-    hooks:
-    - id: markdownlint
+      -   id: end-of-file-fixer
+      -   id: check-merge-conflict
+      -   id: trailing-whitespace
+          args: [--markdown-linebreak-ext=md]
+      # Cross platform
+      - id: check-case-conflict # checks for files that would conflict in case-insensitive filesystems.
+      - id: mixed-line-ending # replaces or checks mixed line ending.
+        args: [--fix=lf]
